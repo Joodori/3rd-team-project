@@ -22,23 +22,9 @@
 
 ---
 
-## 1. 초기 설정 및 Repository Clone
+## 1. Repository Clone
 
-### 1.1 Git 설치 및 기본 설정
-
-```bash
-# Git 설치 확인
-git --version
-
-# 사용자 정보 설정 (최초 1회만)
-git config --global user.name "본인이름"
-git config --global user.email "본인이메일@example.com"
-
-# 설정 확인
-git config --list
-```
-
-### 1.2 Repository Clone하기
+### 1.1 Repository Clone하기
 
 ```bash
 # 1. 작업할 폴더로 이동
@@ -54,7 +40,7 @@ cd 3rd-team-project
 git status
 ```
 
-### 1.3 브랜치 확인 및 설정
+### 1.2 브랜치 확인 및 설정
 
 ```bash
 # 현재 브랜치 확인
@@ -65,6 +51,18 @@ git branch -r
 
 # 새로운 브랜치 생성하고 이동
 git checkout -b feature/본인이름-기능명
+```
+
+### 1.3 브랜치를 잘못 만들어서 삭제하고 싶을 때
+```bash
+# 1. 다시 master 브랜치로 이동
+git checkout master
+
+# 2. 'testbranch' 브랜치 삭제 (아직 커밋 했거나 push 하지 않은 상태라면 안전)
+git branch -d testbranch
+
+# 3. 커밋이 남아있는데도 삭제하고싶은 경우
+git branch -D testbranch
 ```
 
 ---
