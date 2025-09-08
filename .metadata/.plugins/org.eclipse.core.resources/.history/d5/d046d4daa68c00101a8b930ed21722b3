@@ -1,0 +1,5 @@
+package lx.edu.springmvc.dao2;
+
+public class CustomerDAO {
+
+}
