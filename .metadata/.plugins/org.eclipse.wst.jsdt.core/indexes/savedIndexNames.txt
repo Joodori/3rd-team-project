@@ -1,3 +1,0 @@
-INDEX VERSION 1.4+C:\lx\team-pj3\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3170596616.index
-1050191993.index
