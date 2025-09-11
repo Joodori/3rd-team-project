@@ -20,7 +20,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-@MapperScan(basePackages = "lx.edu.levelup.**.repository")
+@MapperScan(basePackages = "lx.edu.levelup.feature")
 public class SpringConfig {
 
 	
