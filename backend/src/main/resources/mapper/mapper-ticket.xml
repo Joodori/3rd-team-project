@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper-request">
+
+    <!-- Ticket + PartySize(VO) 매핑 -->
+    <resultMap id="ticketMap" type="lx.edu.levelup.feature.ticket.domain.Ticket">
+        <id property="ticketNo" column="TICKET_NO"/>
+        <result property="ticketName" column="TICKET_NAME"/>
+        <result property="ticketReserveDate" column="TICKET_RESERVE_DATE" jdbcType="DATE"/>
+
+
+        <association property="partySize" javaType="lx.edu.levelup.feature.ticket.domain.PartySize">
+            <!-- 생성자 방식이 아니라 세터 매핑 사용 (기본 생성자 필요) -->
+            <result property="adult" column="ADULT"/>
+            <result property="children" column="CHILDREN"/>
+        </association>
+    </resultMap>
+
+
+    <select id="findById" resultMap="ticketMap">
+        SELECT TICKET_NO, TICKET_NAME, TICKET_RESERVE_DATE, ADULT, CHILDREN
+        FROM TICKET
+        WHERE TICKET_NO = #{ticketNo}
+    </select>
+
+
+    <select id="findAll" resultMap="ticketMap">
+        SELECT TICKET_NO, TICKET_NAME, TICKET_RESERVE_DATE, ADULT, CHILDREN
+        FROM TICKET
+        ORDER BY TICKET_NO DESC
+    </select>
+
+
+    <insert id="insert" parameterType="lx.edu.levelup.feature.ticket.domain.Ticket"
+            useGeneratedKeys="true" keyProperty="ticketNo" keyColumn="TICKET_NO">
+        INSERT INTO TICKET (TICKET_NAME, TICKET_RESERVE_DATE, ADULT, CHILDREN)
+        VALUES (#{ticketName}, #{ticketReserveDate}, #{partySize.adult}, #{partySize.children})
+    </insert>
+
+
+    <update id="update" parameterType="lx.edu.levelup.feature.ticket.domain.Ticket">
+        UPDATE TICKET
+        SET TICKET_NAME = #{ticketName},
+            TICKET_RESERVE_DATE = #{ticketReserveDate},
+            ADULT = #{partySize.adult},
+            CHILDREN = #{partySize.children}
+        WHERE TICKET_NO = #{ticketNo}
+    </update>
+
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM TICKET WHERE TICKET_NO = #{ticketNo}
+    </delete>
+</mapper>
