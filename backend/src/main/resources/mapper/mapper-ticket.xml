@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper-request">
+<?xml version="1.0" encoding="UTF-8" ?>
 
-    <!--select-->
+<mapper namespace="mapper-ticket">
+
+	<insert id="insertDB" parameterType="lx.edu.levelup.feature.ticket.domain.TicketVO">
+		insert into ticket(ticket_name, adult, children)
+		values(#{ticket_name}, #{adult}, #{children})
+	</insert>
+
 
 </mapper>
