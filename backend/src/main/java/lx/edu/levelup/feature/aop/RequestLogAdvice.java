@@ -17,8 +17,8 @@ import lx.edu.levelup.feature.aop.domain.RequestLogVO;
 //@EnableAspectJAutoProxy
 public class RequestLogAdvice {
 	
-	@Autowired
-	RequestLogRepository dao;
+	//@Autowired
+	//RequestLogRepository dao;
 	
 	@Before("execution(* lx.edu.levelup.feature..*Controller.*(..))")
 	public void beforeLog(JoinPoint joinPoint) throws Exception {

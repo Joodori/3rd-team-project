@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper-user">
+<mapper namespace="lx.edu.levelup.feature.user.UserRepository">
 
-	<!-- 회원가입 -->
-	<insert id="insertDB" parameterType="lx.edu.levelup.feature.user.domain.UserVO"> <!-- alias 안됨 -->
+    <insert id="insertDB" parameterType="UserVO">
         insert into user
         (user_name, user_birth_date, user_mobile, user_address, user_id, user_password)
         values
-        (#{userName}, #{userBirthDate}, #{userMobile}, #{userAddress}, #{userId}, #{userPassword} )
-	</insert>
+            (#{userName}, #{userBirthDate}, #{userMobile}, #{userAddress}, #{userId}, #{userPassword} )
+    </insert>
 
 </mapper>
