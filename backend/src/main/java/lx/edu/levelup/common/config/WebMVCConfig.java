@@ -30,10 +30,12 @@ public class WebMVCConfig implements WebMvcConfigurer {
 		
 	}
 	
-	@Override
+/*	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor()).addPathPatterns("/addrbook_list.do", "/insert.do");
-	}
+        registry.addInterceptor(loginInterceptor())
+                .addPathPatterns("/**") // 모든 URL에 적용하되,
+                .excludePathPatterns("/login", "/resources/**"); // 로그인 페이지와 리소스 파일은 제외
+	}*/
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

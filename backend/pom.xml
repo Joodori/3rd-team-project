@@ -71,6 +71,7 @@
 			<version>3.0.5</version>
 		</dependency>
 
+
 		<!-- spring 관련 -->
 		<!--spring-webmvc
 			https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
@@ -142,6 +143,14 @@
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.1.0</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.40</version>
+        </dependency>
+
 
 
         <!-- Servlet  관련-->

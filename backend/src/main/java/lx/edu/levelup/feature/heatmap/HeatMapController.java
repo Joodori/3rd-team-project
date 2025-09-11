@@ -1,24 +1,27 @@
 package lx.edu.levelup.feature.heatmap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/*
- * 요청/응답 처리, API 엔드포인트
- */
+import java.util.List;
 
 @RestController
+@RequestMapping("/api/heatmap")
 public class HeatMapController {
 
-	@Autowired
-	HeatMapRepository repo;
-	
-	@RequestMapping("/")
-	public HeatMapDTO form(HeatMapDTO dto) { 
-		//VO를 바로 내보내면 예민함
-		//DTO에 필요한 것만 빼고 보냄
-		return dto; //객체 json
-	}
-	
+    @Autowired
+    private HeatMapService heatmapService;
+
+    /**
+     * 최근 히트맵 데이터를 JSON 형태로 제공하는 API
+     * GET /api/heatmap/points
+     * @return HeatmapDTO 리스트 (JSON 배열)
+     */
+    @GetMapping("/points")
+    public List<HeatMapDTO> getHeatmapPoints() {
+        // 서비스 레이어를 호출하여 최근 30분간의 데이터를 조회합니다.
+        return heatmapService.getRecentHeatmapPoints(30);
+    }
 }

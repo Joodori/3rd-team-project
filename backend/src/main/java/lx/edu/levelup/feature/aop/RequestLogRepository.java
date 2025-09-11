@@ -12,9 +12,9 @@ public class RequestLogRepository {
 	@Autowired
 	SqlSession session;
 
-	public int insertLogDB(RequestLogVO vo) throws Exception {
+	/*public int insertLogDB(RequestLogVO vo) throws Exception {
 		return session.insert("insertLogDB", vo);
-	}
+	}*/
 
 
 }
