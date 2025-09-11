@@ -14,7 +14,7 @@ public class LoginController {
 	@Autowired
 	LoginRepository repo;
 	
-	@RequestMapping("/")
+	@RequestMapping("/login")
 	public LoginDTO form(LoginDTO dto) {
 		//VO를 바로 내보내면 예민함
 		//DTO에 필요한 것만 빼고 보냄
