@@ -31,25 +31,27 @@ public class SpringConfig {
 		return dataSource;
 	}
 
-	@Bean
-	public SqlSessionFactoryBean sqlSessionFactory(ApplicationContext context) throws Exception {
-		SqlSessionFactoryBean fatory = new SqlSessionFactoryBean();
+    @Bean
+    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource, ApplicationContext context) throws Exception {
+        SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 
-		// 1. <property name="dataSource" ref="dataSource" />
-		fatory.setDataSource(dataSource());
+        factory.setDataSource(dataSource); // 파라미터로 받은 dataSource를 사용하는 것이 더 좋습니다.
 
-		// 2. <property name="mapperLocations" value="classpath:mapper-*.xml" />
-		fatory.setMapperLocations(context.getResources("classpath:mapper-*.xml"));
-		// 4. <bean class="org.apache.ibatis.session.Configuration">
-		org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+        // mapperLocations 경로를 properties 파일에서 읽어오도록 수정 (더 유연함)
+        factory.setMapperLocations(context.getResources(env.getProperty("mybatis.mapper-locations")));
 
-		// 5. <property name="mapUnderscoreToCamelCase" value="true"/>
-		configuration.setMapUnderscoreToCamelCase(true);
+        // properties 파일의 type-aliases-package 값을 설정에 추가
+        factory.setTypeAliasesPackage(env.getProperty("mybatis.type-aliases-package"));
 
-		// 3. <property name="configuration">
-		fatory.setConfiguration(configuration);
-		return fatory;
-	}
+        // 나머지 추가 설정 (mapUnderscoreToCamelCase 등)
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+        configuration.setMapUnderscoreToCamelCase(Boolean.parseBoolean(env.getProperty("mybatis.map-underscore-to-camel-case")));
+        // 필요하다면 다른 설정도 추가...
+        // configuration.setDefaultFetchSize(Integer.parseInt(env.getProperty("mybatis.default-fetch-size")));
+
+        factory.setConfiguration(configuration);
+        return factory;
+    }
 
 	@Bean
 	public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
