@@ -1,29 +1,66 @@
 <template>
-<div class ="container d-flex flex-row "> <!--영역하나로-->
-  <div class="row g-4"><!--여백설정 칸마다-->
-<div class="col-md-6">
-  <button class="btn btn-primary w-50">놀이동산 예약</button>
-</div>
-<div class="col-md-6">
-  <button class="btn btn-primary w-50">입장권 예메</button>
-</div>
+<div class="container d-flex flex-column w-100 h-100">
+<div class="containner d-flex w-100 h-50 "><!-- 1 -->
+    <div class ="d-flex flex-column w-50 h-100"><!-- a -->
+      
+      <div class="w-100 h-50 grid gap-3"><!--한번더위에 이등분-->
+        <button class="btn btn-primary w-100 mt-3">놀이동산 예약</button>
+      </div>
+
+      <div class="w-100 h-50 grid gap-3"><!--한번더위에 이등분-->
+        <button class="btn btn-primary w-100 mt-3">놀이동산 예약</button>
+      </div>
+      
+    </div>
+
+    <div class="d-flex flex-column w-50 h-100 justify-content-between gap-10"><!-- b -->
+      
+      <div class="h-25 w-100">
+       <button class="btn btn-primary w-100">놀이기구 및 시설안내</button>
+      </div>
+
+         <div class="h-25 w-100">
+       <button class="btn btn-primary w-100">입장</button>
+      </div>
+
+         <div class="h-25 w-100">
+       <button class="btn btn-primary w-100">티켓예메</button>
+      </div>
+
+
+    </div>
+    
+    
   </div>
-  <div>
-    <div class = "containner col md-6 d-grid gap-3">
-     <button type="reservationbutton" class="btn btn-primary btn-lg w-100">놀이동산예약 정보</button> <!--row -->
-    <button type="attraction_information" class="btn btn-primary primary btn-lg w-100">놀이기구 정보</button>
-    <button type="Amenities_information" class="btn btn-primary btn-lg w-100">편의시설 정보</button>
-</div>
-</div>
+  
+  <div id="carousel" class=" w-100 h-50 carousel slide mt-5" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
+  <div class="carousel-inner">
+    <!-- 첫 슬라이드만 active -->
+    <div class="carousel-item active">
+      <img src="/assets/hesung.jpg" class="d-block w-100" alt="hesung">
+    </div>
+    <div class="carousel-item">
+      <img src="/assets/baiking.jpg" class="d-block w-100" alt="baiking">
+    </div>
+    <div class="carousel-item">
+      <img src="/assets/holombride.jpg" class="d-block w-100" alt="holombride">
+    </div>
+    <div class="carousel-item">
+      <img src="/assets/jailoswing.jpg" class="d-block w-100" alt="jailoswing">
+    </div>
+    <div class="carousel-item">
+      <img src="/assets/jailoompdroop.jpg" class="d-block w-100" alt="jailoompdroop">
+    </div>
+  </div>
+  </div>
+  
 
 </div>
-
-
-
 
 </template>
 
 <script setup>
+
 //import { useRouter } from 'vue-router'
 //const router = useRouter()
 
@@ -49,7 +86,14 @@ import axios from 'axios'
 // 부트스트랩
 import { Modal } from 'bootstrap'
 
-// 업로드
+// 케레셸
+
+
+
+
+
+
+
 </script>
 <style scoped>
   .row > div{
@@ -60,5 +104,9 @@ import { Modal } from 'bootstrap'
     border: 2px solid black;
     height:100px;
   }
-  
+  .carouse{
+    max-height: 50vh;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 </style>
