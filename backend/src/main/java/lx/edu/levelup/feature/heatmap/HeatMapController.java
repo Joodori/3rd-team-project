@@ -14,7 +14,7 @@ public class HeatMapController {
 	@Autowired
 	HeatMapRepository repo;
 	
-	@RequestMapping("/")
+	@RequestMapping("/heatmap")
 	public HeatMapDTO form(HeatMapDTO dto) { 
 		//VO를 바로 내보내면 예민함
 		//DTO에 필요한 것만 빼고 보냄

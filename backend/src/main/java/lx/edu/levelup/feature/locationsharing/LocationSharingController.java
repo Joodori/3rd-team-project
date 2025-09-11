@@ -14,7 +14,7 @@ public class LocationSharingController {
 	@Autowired
     LocationSharingRepository repo;
 	
-	@RequestMapping("/")
+	@RequestMapping("/share")
 	public LocationSharingDTO form(LocationSharingDTO dto) {
 		//VO를 바로 내보내면 예민함
 		//DTO에 필요한 것만 빼고 보냄
