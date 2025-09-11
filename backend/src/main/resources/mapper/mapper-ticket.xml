@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        
+<mapper namespace="mapper-ticket">
+
+	<insert id="insertDB" parameterType="lx.edu.levelup.feature.ticket.domain.TicketVO">
+		insert into ticket(ticket_name, adult, children) 
+		values(#{ticket_name}, #{adult}, #{children})
+	</insert>
+
+
+</mapper>
