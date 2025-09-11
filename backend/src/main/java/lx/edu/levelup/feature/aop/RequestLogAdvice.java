@@ -20,7 +20,7 @@ public class RequestLogAdvice {
 	@Autowired
 	RequestLogRepository dao;
 	
-	@Before("execution(* lx.edu.springmvc.controller.Addr*.*(..))")
+	@Before("execution(* lx.edu.levelup.feature..*Controller.*(..))")
 	public void beforeLog(JoinPoint joinPoint) throws Exception {
 		System.out.println("LogAdvice.beforeLog()");
 		// 어떤 클래스의 어떤 메서드가 실행되었는지 알 수 있음.
