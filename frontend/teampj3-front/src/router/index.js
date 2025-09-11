@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('../views/sign_up.vue'),
     },
     {
+      path: '/user-info',
+      name: 'user_info',
+      component: () => import('../views/user_info.vue'),
+    },
+    {
       path: '/attraction-reservation',
       name: 'attraction_reservation',
       component: () => import('../views/attraction_reservation.vue'),
