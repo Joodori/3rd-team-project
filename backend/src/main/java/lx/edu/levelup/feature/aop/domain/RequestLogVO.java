@@ -1,4 +1,4 @@
-package lx.edu.levelup.common.aop;
+package lx.edu.levelup.feature.aop.domain;
 
 public class RequestLogVO {
 	

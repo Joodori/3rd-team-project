@@ -1,4 +1,4 @@
-package lx.edu.levelup.common.aop;
+package lx.edu.levelup.feature.aop;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
+import lx.edu.levelup.feature.aop.domain.RequestLogVO;
+
 @Aspect
 @Component
 @EnableAspectJAutoProxy
 public class RequestLogAdvice {
 	
 	@Autowired
-	RequestLogDAO dao;
+	RequestLogRepository dao;
 	
 	@Before("execution(* lx.edu.springmvc.controller.Addr*.*(..))")
 	public void beforeLog(JoinPoint joinPoint) throws Exception {

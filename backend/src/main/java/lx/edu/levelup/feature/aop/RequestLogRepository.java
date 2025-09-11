@@ -1,9 +1,13 @@
-package lx.edu.levelup.common.aop;
+package lx.edu.levelup.feature.aop;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-public class RequestLogDAO {
+import lx.edu.levelup.feature.aop.domain.RequestLogVO;
+
+@Repository
+public class RequestLogRepository {
 	
 	@Autowired
 	SqlSession session;
