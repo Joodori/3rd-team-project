@@ -5,19 +5,22 @@ export const useUserInfo = defineStore('user', () => {
     
     const user = ref(true)
 
+    const config = ref('')
+
     const login = ref(false)
 
-    const customer = ref({
+    const user_info = ref({
         user_id : '',
-        user_password: '',
         user_name : '',
+        user_birth_date: '',
         user_age : '',
+        user_address : '',
         user_mobile : ''
     })
 
 
     return{
-        user, login, customer
+        user, config, login, user_info
     }
 
 })

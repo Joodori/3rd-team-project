@@ -27,20 +27,26 @@
           </div>
           -->
           
-    <div v-if="user" class="d-flex flex-column justify-content-center align-items-center py-5">
+    <div v-if="user === true" class="d-flex flex-column justify-content-center align-items-center py-5">
         <div class="bg-white rounded p-4 w-100">
             <h2 class="mb-4 text-center fw-bold">로그인 유저의 정보</h2>
             <div class="fs-2 fw-bold mb-3">
-                <span>ID :</span> <span>유저</span>
+                <span>ID :</span> <span>{{user_info.user_id}}</span>
             </div>
             <div class="fs-2 fw-bold mb-3">
-                <span>이름 :</span> <span>유저</span>
+                <span>이름 :</span> <span>{{user_info.user_name}}</span>
             </div>
             <div class="fs-2 fw-bold mb-3">
-                <span>나이 :</span> <span>유저</span>
+                <span>생일 :</span> <span>{{ user_info.user_birth_date }}</span>
+            </div>
+            <div class="fs-2 fw-bold mb-3">
+                <span>나이 :</span> <span>{{ user_info.user_age }}</span>
+            </div>
+            <div class="fs-2 fw-bold mb-3">
+                <span>주소 :</span> <span>{{ user_info.user_address }}</span>
             </div>
             <div class="fs-2 fw-bold mb-4">
-                <span>전화번호 :</span> <span>유저</span>
+                <span>전화번호 :</span> <span>{{ user_info.user_mobile }}</span>
             </div>
 
             <div class="d-flex justify-content-center gap-3">
@@ -50,28 +56,39 @@
             </div>
         </div>
     </div>
-    <div v-if="!user" class="d-flex flex-column justify-content-center align-items-center py-5">
+
+    <div v-if="user === false" class="d-flex flex-column justify-content-center align-items-center py-5">
         <div class="bg-white rounded p-4 w-100">
             <h2 class="mb-4 text-center fw-bold">로그인 유저의 정보</h2>
             <div class="fs-2 fw-bold mb-3">
-                <span>ID :</span> <span>관리자</span>
+                <span>ID :</span> <span>{{ user_info.user_id }}</span>
             </div>
             <div class="fs-2 fw-bold mb-3">
-                <span>이름 :</span> <span>관리자</span>
+                <span>이름 :</span> <span>{{ user_info.user_name }}</span>
             </div>
             <div class="fs-2 fw-bold mb-3">
-                <span>나이 :</span> <span>관리자</span>
+                <span>나이 :</span> <span>{{ user_info.user_age }}</span>
             </div>
             <div class="fs-2 fw-bold mb-4">
-                <span>전화번호 :</span> <span>관리자</span>
+                <span>전화번호 :</span> <span>{{ user_info.user_mobile }}</span>
             </div>
 
             <div class="d-flex justify-content-center gap-3">
                 <button class="btn btn-primary px-4" @click="goToHome">돌아가기</button>
-                <button class="btn btn-danger px-4" @click="goToModifyInfo()">수정하기</button>
                 <button class="btn btn-info px-4" @click="logout()">로그아웃하기</button>
             </div>
         </div>
+    </div>
+
+    <div v-if="user === true">
+        <!-- 입장권 내역 -->
+
+        <!-- 놀이기구 예약 내역 -->
+    </div>
+
+    <div v-if="user === false">
+        <!-- 관리자가 보는 입장권 입금확인부분 -->
+         
     </div>
 
 </template>
@@ -83,7 +100,7 @@ import {useUserInfo} from '@/stores/user'
 import { ref, onMounted } from 'vue'
 
 const userStore = useUserInfo()
-const {user} = storeToRefs(useUserInfo)
+const {user, user_info} = storeToRefs(userStore)
 
 onMounted(()=> {
   console.log(`user_info 호출됨`)
@@ -91,6 +108,11 @@ onMounted(()=> {
 })
 
 async function configUserInfo() {
+
+    if (true) {
+
+    }
+
     try {
 
         const response = await axios({
