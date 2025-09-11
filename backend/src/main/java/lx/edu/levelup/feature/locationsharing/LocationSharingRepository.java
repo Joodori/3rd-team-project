@@ -1,4 +1,4 @@
-package lx.edu.levelup.feature.heatmap;
+package lx.edu.levelup.feature.locationsharing;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class HeatMapRepository {
+public class LocationSharingRepository {
 
 	@Autowired
 	SqlSession session;

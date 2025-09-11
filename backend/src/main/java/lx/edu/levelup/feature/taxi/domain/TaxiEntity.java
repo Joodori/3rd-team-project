@@ -1,5 +1,5 @@
-package lx.edu.levelup.feature.heatmap.domain;
+package lx.edu.levelup.feature.taxi.domain;
 
-public class HeatmapEntity {
+public class TaxiEntity {
 
 }
