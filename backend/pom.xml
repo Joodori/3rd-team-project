@@ -21,73 +21,9 @@
 	</properties>
 	<dependencies>
 
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${org.springframework-version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
+		<!-- DATA 관련 -->
 
-		<!-- Logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Servlet -->
-		<dependency>
-			<groupId>jakarta.servlet</groupId>
-			<artifactId>jakarta.servlet-api</artifactId>
-			<version>${jakarta.servlet-api-version}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- JSTL -->
-		<dependency>
-			<groupId>jakarta.servlet.jsp.jstl</groupId>
-			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<dependency> <!-- JSTL Implementation -->
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
-			<version>3.0.1</version>
-		</dependency>
-
-		<!-- Test -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>${org.junit-version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- MySql connector-j  
+		<!--mysql-connector-j 
 			https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -95,7 +31,23 @@
 			<version>8.2.0</version>
 		</dependency>
 
-		<!--dbcp2 
+		<!--mybatis 
+			https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.5.19</version>
+		</dependency>
+
+		<!--spring-context
+			https://mvnrepository.com/artifact/org.springframework/spring-context -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>6.2.10</version>
+		</dependency>
+
+		<!--dpcp2 
 			https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -103,7 +55,7 @@
 			<version>2.13.0</version>
 		</dependency>
 
-		<!-- spring jdbc
+		<!--spring-jdbc 
 			https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -111,12 +63,45 @@
 			<version>6.2.10</version>
 		</dependency>
 
-		<!-- Mybatis
-			https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<!--mybatis-spring 
+			https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.5.19</version>
+			<artifactId>mybatis-spring</artifactId>
+			<version>3.0.5</version>
+		</dependency>
+
+		<!-- spring 관련 -->
+		<!--spring-webmvc
+			https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>6.2.10</version>
+		</dependency>
+
+		<!--spring-aspects
+			https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>6.2.10</version>
+		</dependency>
+
+		<!-- logging 관련-->
+
+		<!-- SLF4J API -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.36</version>
+		</dependency>
+
+		<!-- SLF4J → Log4j 바인딩 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.36</version>
 		</dependency>
 
 		<!-- Log4j Core -->
@@ -126,36 +111,20 @@
 			<version>1.2.17</version>
 		</dependency>
 
-		<!--AOP
-		https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
+		<!-- JSON/XML 관련 -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-			<version>6.2.10</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.15.2</version>
 		</dependency>
 
-
-		<!-- jaxb-api
-			https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version>
-
-		</dependency>
-		<!--Mybatis 
-			https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>3.0.5</version>
 		</dependency>
 
-		<dependency>
-			<groupId>jakarta.annotation</groupId>
-			<artifactId>jakarta.annotation-api</artifactId>
-			<version>2.1.1</version>
-		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
