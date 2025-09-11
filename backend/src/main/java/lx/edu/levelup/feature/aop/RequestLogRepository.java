@@ -13,7 +13,7 @@ public class RequestLogRepository {
 	SqlSession session;
 
 	public int insertLogDB(RequestLogVO vo) throws Exception {
-		return session.insert("insertLogDB", vo);
+		return session.insert("mapper-log.insertLogDB", vo);
 	}
 
 
