@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 
 import lx.edu.levelup.feature.aop.domain.RequestLogVO;
 
-//@Aspect
-//@Component
-//@EnableAspectJAutoProxy
+@Aspect
+@Component
+@EnableAspectJAutoProxy
 public class RequestLogAdvice {
 	
 	//@Autowired
