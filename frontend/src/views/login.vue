@@ -85,8 +85,8 @@ async function login() {
       method: 'post',
       // id, password로 user테이블에서 select하는 쿼리문 들어있는 url
       //=========================================================================        
-      baseURL: 'http://localhost:8001',
-      url: 'land/login',
+      baseURL: 'http://localhost',
+      url: 'user/login',
       //========================================================================= 
       data: params,
       timeout: 5000,
