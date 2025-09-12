@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TicketController {
 
-	@Autowired
-    TicketRepository repo;
 	
 	@RequestMapping("/ticket")
-	public TicketDTO form(TicketDTO dto) {
-		//VO를 바로 내보내면 예민함
-		//DTO에 필요한 것만 빼고 보냄
+	public TicketRequestDTO form(TicketRequestDTO dto) {
+		
 		return dto; //객체 json
 	}
 	
