@@ -19,6 +19,7 @@ public class UserRepository {
 
 	// 아이디 중복확인 or 로그인 (동적 sql 활용함)
 	public UserVO findUser(UserVO vo) {
+		System.out.println(vo.getUserId());
 		return session.selectOne("mapper-user.findUser", vo);
 	}
 
