@@ -31,31 +31,31 @@
       <!-- 이름 입력 -->
       <div class="d-flex flex-column align-self-start mb-3 w-100">
         <label class="form-label fw-bold">이름</label>
-        <input type="text" placeholder="사용하실 이름을 입력하세요" v-model="customer_name" class="form-control" />
+        <input type="text" placeholder="사용하실 이름을 입력하세요" v-model="user_name" class="form-control" />
       </div>
 
       <!-- 생일 입력 -->
        <div class="d-flex flex-column align-self-start mb-3 w-100">
         <label class="form-label fw-bold">생년월일</label>
-        <input type="date" v-mode="customer_birth_date" class="form-control"></input>
+        <input type="date" v-mode="user_birth_date" class="form-control"></input>
       </div>
 
       <!-- 나이 입력 -->
       <div class="d-flex flex-column align-self-start mb-3 w-100">
         <label class="form-label fw-bold">나이</label>
-        <input type="text" placeholder="나이를 입력하세요" v-model="customer_age" ref="ageInput" class="form-control" />
+        <input type="text" placeholder="나이를 입력하세요" v-model="user_age" ref="ageInput" class="form-control" />
       </div>
 
-      <!-- 주소 입력 -->
+      <!-- 이메일주소 입력 -->
       <div class="d-flex flex-column align-self-start mb-3 w-100">
-        <label class="form-label fw-bold">주소</label>
-        <input type="text" placeholder="주소를 입력해주세요" v-model="customer_address" class="form-control" />
+        <label class="form-label fw-bold">이메일주소</label>
+        <input type="email" placeholder="이메일주소를 입력해주세요" v-model="user_address" class="form-control" />
       </div>
 
       <!-- 핸드폰번호 입력 -->
       <div class="d-flex flex-column align-self-start mb-4 w-100">
         <label class="form-label fw-bold">핸드폰번호</label>
-        <input type="tel" placeholder="전화번호를 입력하세요" v-model="customer_mobile" class="form-control" />
+        <input type="tel" placeholder="전화번호를 입력하세요" v-model="user_mobile" class="form-control" />
       </div>
 
       <!-- 버튼들 -->
@@ -88,11 +88,11 @@ import axios from 'axios'
 const id = ref('')
 const password = ref('')
 const password_re = ref('')
-const customer_name = ref('')
-const customer_birth_date = ref('')
-const customer_age = ref('')
-const customer_address = ref('')
-const customer_mobile = ref('')
+const user_name = ref('')
+const user_birth_date = ref('')
+const user_age = ref('')
+const user_address = ref('')
+const user_mobile = ref('')
 const ageInput = ref(null)
 const passwordCheck = ref(null)
 
@@ -122,10 +122,10 @@ async function signup() {
     return
   }
 
-  const ageNum = Number(customer_age.value)
+  const ageNum = Number(user_age.value)
   if (isNaN(ageNum)) {
     alert(`나이 칸에는 숫자를 입력해주세요`)
-    customer_age.value = ''
+    user_age.value = ''
     ageInput.value.focus()
     return
   }
@@ -134,18 +134,18 @@ async function signup() {
 
   // ==========================================
   // 제대로 입력이 되었으면 그 부분에서 쿼리문 출발
-  if (id.value && password.value && customer_name.value && customer_age.value && customer_mobile.value) {
+  if (id.value && password.value && user_name.value && user_age.value && user_mobile.value) {
     console.log(`입력값이 모두 입력됨`);
 
     try {
       const params = {
-        customer_id: id.value,
-        customer_password: password.value,
-        customer_name: customer_name.value,
-        customer_birth_date: customer_birth_date.value,
-        customer_age: customer_age.value,
-        customer_address : customer_address.value,
-        customer_mobile: customer_mobile.value
+        user_id: id.value,
+        user_password: password.value,
+        user_name: user_name.value,
+        user_birth_date: user_birth_date.value,
+        user_age: user_age.value,
+        user_address : user_address.value,
+        user_mobile: user_mobile.value
       }
 
       const response = await axios({
@@ -180,7 +180,7 @@ data: params,
   // ==========================================
   // 만약 뭔가를 빼먹었다면 alert사용
   else {
-    console.log(`id : ${id.value}, pw : ${password.value}, name : ${customer_name.value}, age : ${customer_age.value}`)
+    console.log(`id : ${id.value}, pw : ${password.value}, name : ${user_name.value}, age : ${user_age.value}`)
 
     alert('입력해야하는 칸을 모두 입력해주세요!');
 
@@ -204,7 +204,7 @@ async function searchSameID() {
   try {
 
     const params = {
-      customer_id: id.value
+      user_id: id.value
     }
     const response = await axios({
       method: 'post',
