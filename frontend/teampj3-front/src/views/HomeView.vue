@@ -1,9 +1,11 @@
 <template>
 <div class="container d-flex flex-column w-100 h-100">
-<div class="containner d-flex w-100 h-50 "><!-- 1 -->
-    <div class ="d-flex flex-column w-50 h-100 me-2" ><!-- a -->
+
+
+<div class="containner d-flex w-100 h-100"><!-- 1 -->
+    <div class ="d-flex flex-column justify-content-between w-50 h-100 me-2 gap-5" ><!-- a -->
       
-      <div class="w-100 h-50 d-grid gap-3"><!--한번더위에 이등분-->
+      <div class="w-100 h-100 d-grid gap-3"><!--한번더위에 이등분-->
         <button class="btn btn-primary w-100 h-100 ">놀이동산 예약</button>
       </div>
 
@@ -13,7 +15,7 @@
       
     </div>
 
-    <div class="d-flex flex-column w-50 h-100 justify-content-between gap-20"><!-- b -->
+    <div class="d-flex flex-column w-50 h-100 justify-content-between align-items-center gap-5"><!-- b -->
       
       <div class="h-25 w-100">
        <button class="btn btn-primary w-100">놀이기구 및 시설안내</button>
@@ -117,5 +119,9 @@ import { Modal } from 'bootstrap'
     max-height: 50vh;
     margin-left: 10px;
     margin-right: 10px;
+  }
+
+  .my-border {
+    border: 2px dashed violet;
   }
 </style>
