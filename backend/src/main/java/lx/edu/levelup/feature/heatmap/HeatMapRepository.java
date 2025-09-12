@@ -1,6 +1,5 @@
 package lx.edu.levelup.feature.heatmap;
 
-import lx.edu.levelup.feature.heatmap.domain.HeatmapVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 package lx.edu.levelup.feature.heatmap;
 
-import lx.edu.levelup.feature.heatmap.domain.HeatmapVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

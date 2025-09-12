@@ -10,7 +10,7 @@ import jakarta.annotation.PostConstruct;
 @Configuration
 public class Log4jConfig {
 
-    @PostConstruct //pom.xml에 의존성 추가하면 됨 (수현)
+    //pom.xml에 의존성 추가하면 됨 (수현)
     public void init() {
         // 콘솔 Appender 생성
         ConsoleAppender consoleAppender = new ConsoleAppender();

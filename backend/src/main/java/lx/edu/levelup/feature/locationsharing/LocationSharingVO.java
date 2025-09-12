@@ -1,4 +1,4 @@
-package lx.edu.levelup.feature.locationsharing.domain;
+package lx.edu.levelup.feature.locationsharing;
 
 /*
  * domain이란?   (일종의 vo를 모아뒀으며, DB의 정보를 여기서 매칭)
