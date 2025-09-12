@@ -1,6 +1,6 @@
 package lx.edu.levelup.feature.heatmap;
 
-import lx.edu.levelup.feature.heatmap.domain.HeatmapVO;
+import lx.edu.levelup.feature.heatmap.domain.HeatMapVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class HeatMapService {
         params.put("endTime", endTime);
 
         // Repository(Mapper)를 호출하여 DB에서 VO 리스트를 가져옵니다.
-        List<HeatmapVO> logs = heatmapRepository.findRecentLogs(params);
+        List<HeatMapVO> logs = heatmapRepository.findRecentLogs(params);
 
         // Stream API를 사용하여 VO 리스트를 DTO 리스트로 변환합니다.
         // Lombok의 @AllArgsConstructor 덕분에 new HeatmapDTO(...)가 가능합니다.
