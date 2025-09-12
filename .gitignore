@@ -1,7 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node
 
-##Tom
+###Metronic###
+levelup\frontend\public\assets/*
+
+##Tomcat
 Servers
 
 ### Eclipse ###
@@ -405,5 +408,18 @@ test/
 dist/
 npm-debug.log
 yarn-error.log
+
+.DS_Store
+dist-ssr
+*.local
+/cypress/videos/
+/cypress/screenshots/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node
