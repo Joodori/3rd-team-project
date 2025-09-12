@@ -91,7 +91,7 @@ public class UserController {
 		return response("success", "로그아웃 성공"); // 로그아웃 성공 메세지 반환
 	}
 
-	// ================= 아이디 찾기 메서드 =================
+	// ================= 이름이랑 주소로 아이디 찾기 메서드 =================
 	@RequestMapping("/find-id")
 	public Map<String, Object> findId(UserVO vo) {
 		String user = repo.findUserId(vo); // 조건에 맞는 userId 찾기
@@ -103,7 +103,7 @@ public class UserController {
 		return res;
 	}
 	
-	// ================= 비밀번호 찾기 메서드 =================
+	// ================= 이름, 이메일, 아이디로 비밀번호 찾기 메서드 =================
 		@RequestMapping("/find-pw")
 		public Map<String, Object> findPw(UserVO vo) {
 			String user = repo.findUserPw(vo); // 조건에 맞는 userId 찾기

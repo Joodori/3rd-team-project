@@ -10,14 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // 모든 필드를 파라미터로 받는 생성자 생성
 public class UserVO {
 
+	int userNo;
 	String userName;
 	String userBirthDate;
 	String userMobile;
 	String userAddress;
-	int userNo;
 	String userId;
 	String userPassword;
-	int ticketNo;
-
-
+	
 }
