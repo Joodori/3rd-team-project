@@ -30,7 +30,7 @@ const router = createRouter({
       component: () => import('../views/attraction_reservation.vue'),
     },
     {
-      path: '/ticket-purchase',
+      path: '/ticket_purchase',
       name: 'ticket_purchase',
       component: () => import('../views/ticket_purchase.vue'),
     },
@@ -39,6 +39,12 @@ const router = createRouter({
       name: 'facility_map',
       component: () => import('../views/facility_map.vue'),
     },
+    {
+      path: '/admin_reservation', //관리자 예약 하는거 뷰화면 만들기 
+      name: 'admin_reservation',
+      component: () => import('../views/admin_reservation.vue'),
+    },
+
   ],
 })
 
