@@ -1,0 +1,6 @@
+9/12
+
+npm.cmd run dev 하기 전에 해야 할 것
+
+npm.cmd install v-calendar@next @popperjs/core
+npm.cmd install axios
