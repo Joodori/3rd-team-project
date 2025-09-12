@@ -155,10 +155,10 @@ async function configUserInfo() {
         const response = await axios({
             method: 'post',
             //==============================================================
-            baseURL: 'http://localhost:8001',
-            url: '/market/v1/read-item',
+            baseURL: 'http://localhost',
+            url: 'user/check-id',
             data: {
-                uploader_name: customer.value.user_id
+                userId: user.value.user_id
                 //==============================================================
             },
             timeout: 5000,

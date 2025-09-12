@@ -9,7 +9,8 @@
       <h1>패스워드 입력</h1>
       <input type="password" placeholder="비밀번호를 입력하세요" v-model="password"></input>
       <br />
-      <button type="submit" class="btn btn-primary" @click="login()"> 로그인 </button>
+      <button type="submit"> asdasdsad</button>
+      <button type="button" class="btn btn-primary" @click="login()"> 로그인 </button>
       <div class="d-flex m-3 p-3 gap-5">
         <button class="btn btn-outline-info find-id-pw">아이디 찾기</button>
         <button class="btn btn-outline-info find-id-pw">비밀번호 찾기</button>
@@ -56,6 +57,10 @@
 // store변수에 user정보를 집어넣고 이것을 마이페이지에서 가져오기위함
 import { storeToRefs } from 'pinia'
 import {useUserInfo} from '@/stores/user'
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 const userStore = useUserInfo()
 const { user_info } = storeToRefs(userStore)
 
@@ -75,13 +80,14 @@ async function login() {
   }
 
   try {
+/**
+ * 
+ const params = {
+  userId : id.value,
+  userPassword : password.value
+}
 
-    const params = {
-      id : id.value,
-      password : password.value
-    }
-
-    const response = await axios({
+const response = await axios({
       method: 'post',
       // id, password로 user테이블에서 select하는 쿼리문 들어있는 url
       //=========================================================================        
@@ -92,10 +98,30 @@ async function login() {
       timeout: 5000,
       responseType: 'json'
     })
+    
+    console.log(`응답 -> ${JSON.stringify(response.data)}`)
+    */
 
+    const params = new URLSearchParams();
+    params.append('userId', id.value);
+    params.append('userPassword', password.value);
+
+    const response = await axios.post('http://localhost/user/login', params, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
     console.log(`응답 -> ${JSON.stringify(response.data)}`)
 
-    if (response.data.code == 200) {
+    if (response.data.length === 0 ) {
+      if(confirm(`일치하는 정보가 없습니다. 회원가입으로 이동하시겠습니까?`)) {
+        router.push('/sign-up')
+      }
+    }
+
+    /**
+     * 
+     if (response.data.status == "success") {
       // isadmin이라는 컬럼의 값이 null인경우 = 일반사용자
       // isadmin이라는 컬럼의 값이 있을 경우 = 관리자
       const userProfile = response.data.data.data[0]
@@ -120,16 +146,17 @@ async function login() {
           user_info.value.user_address = userProfile.user_address
           user_info.value.user_mobile = userProfile.user_mobile
           config.value = "admin"
-      }
-
-      // store 변수 저장 이후 메인페이지 이동
-      router.push('/')
-
-    } else {
-      alert(`일치하는 정보가 없습니다.`)
+        }
+        
+        // store 변수 저장 이후 메인페이지 이동
+        router.push('/')
+        
+      } else {
+        alert(`일치하는 정보가 없습니다.`)
       return
     }
-
+    */
+    
   } catch (err) {
     console.log(`login함수 실행중 에러발생 -> ${err}`)
   }
