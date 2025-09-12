@@ -1,5 +1,6 @@
 package lx.edu.levelup.feature.heatmap;
 
+import lx.edu.levelup.feature.heatmap.HeatMapVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,6 +18,6 @@ public interface HeatMapRepository {
      * @param params startTime, endTime을 담고 있는 Map 객체
      * @return HeatmapVO 객체들의 리스트
      */
-    List<HeatmapVO> findRecentLogs(Map<String, Object> params);
+    List<HeatMapVO> findRecentLogs(Map<String, Object> params);
 
 }
