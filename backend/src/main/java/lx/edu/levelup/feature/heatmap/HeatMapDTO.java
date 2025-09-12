@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class HeatMapDTO {
     private double lat;
     private double lng;
+    
 }
