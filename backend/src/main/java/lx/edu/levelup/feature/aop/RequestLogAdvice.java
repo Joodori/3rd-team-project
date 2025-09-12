@@ -37,7 +37,7 @@ public class RequestLogAdvice {
 	    log.setReqMethod(methodName);
 	    log.setReqTime(str);
 	    
-	    dao.insertLogDB(log);
+//	    dao.insertLogDB(log);
 
 	}
 	
