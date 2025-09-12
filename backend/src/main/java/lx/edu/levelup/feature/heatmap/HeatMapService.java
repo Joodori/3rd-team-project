@@ -37,6 +37,6 @@ public class HeatMapService {
         // Lombok의 @AllArgsConstructor 덕분에 new HeatmapDTO(...)가 가능합니다.
         return logs.stream()
                 .map(log -> new HeatMapDTO(log.getLatitude(), log.getLongitude()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());  
     }
 }

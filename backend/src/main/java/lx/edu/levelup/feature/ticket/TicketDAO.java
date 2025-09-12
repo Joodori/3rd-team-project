@@ -7,7 +7,4 @@ import lx.edu.levelup.feature.ticket.domain.TicketVO;
 
 public class TicketDAO {
 	
-	void insertTicket(TicketVO ticket) {
-		Ticket selectTicket(Long ticket_no);
-	}
 }
