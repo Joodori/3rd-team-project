@@ -1,4 +1,4 @@
-package lx.edu.levelup.feature.user.domain;
+package lx.edu.levelup.feature.user;
 
 
 import lombok.AllArgsConstructor;
