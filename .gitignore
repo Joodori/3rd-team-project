@@ -1,5 +1,8 @@
-# Created by https://www.toptal.com/developers/gitignore/api/eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node
+# Created by https://www.toptal.com/developers/gitignore/api/eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node,tomcat,metronic
+# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node,tomcat,metronic
+###Tomcat###
+Servers/*
+
 
 ###Metronic###
 levelup\frontend\public\assets/*
@@ -422,4 +425,4 @@ dist-ssr
 
 
 
-# End of https://www.toptal.com/developers/gitignore/api/eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node
+# End of https://www.toptal.com/developers/gitignore/api/eclipse,intellij,java,maven,visualstudiocode,vue,vuejs,node,tomcat,metronic
