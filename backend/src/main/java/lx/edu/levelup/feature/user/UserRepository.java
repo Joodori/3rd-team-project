@@ -1,5 +1,7 @@
 package lx.edu.levelup.feature.user;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,9 +24,8 @@ public class UserRepository {
 	}
 
 	// 아이디 중복확인 or 로그인 (동적 sql 활용함)
-	public UserVO findUser(UserVO vo) {
-		System.out.println(vo.getUserId());
-		return session.selectOne("mapper-user.findUser", vo);
+	public List<UserVO> findUser(UserVO vo) {
+		return session.selectList("mapper-user.findUser", vo);
 	}
 
 	// 아이디 찾기
