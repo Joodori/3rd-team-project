@@ -101,7 +101,7 @@
 
 0. **Project Clone**
  # Repository 클론
-    git clone [your-repository-url]
+    git clone https://github.com/Joodori/3rd-team-project.git
 
 1.  **Backend**
     ```bash
