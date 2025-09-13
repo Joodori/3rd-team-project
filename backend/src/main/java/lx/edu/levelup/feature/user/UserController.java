@@ -22,7 +22,7 @@ public class UserController {
 	@Autowired
 	UserRepository repo;
 
-	@Autowired
+	//@Autowired
 	// TicketRepository ticketRepo; // 티켓 관련 db 접근 (마이페이지-티켓내역 조회시 사용)
 
 	/// ================= 회원가입 =================
