@@ -6,11 +6,12 @@
     <div class ="d-flex flex-column justify-content-between w-50 h-100 me-2 gap-5" ><!-- a -->
       
       <div class="w-100 h-100 d-grid gap-3"><!--한번더위에 이등분-->
-        <button class="btn btn-primary w-100 h-100 ">놀이동산 예약</button>
+        <button @click="ticket_reservation()" class="btn btn-primary w-100 h-100 ">티켓예메</button>
       </div>
 
       <div class="w-100 h-50 d-grid gap-3"><!--한번더위에 이등분-->
-        <button @click="ticket_reservation()" class="btn btn-primary w-100  h-100 mt-3">어트렉션 예약</button>
+        <button @click="book_confirm(); console.log(`어트렉션 정보로 이동합니다`);" class="btn btn-primary w-100  h-100 mt-3">어트렉션 예약</button>
+        
       </div>
       
     </div>
@@ -18,15 +19,15 @@
     <div class="d-flex flex-column w-50 h-100 justify-content-between align-items-center gap-5"><!-- b -->
       
       <div class="h-25 w-100">
-       <button class="btn btn-primary w-100">놀이기구 및 시설안내</button>
+       <button @click="ride_faclityinfo(); console.log(`놀이기구와 시설정보 페이지로 이동합니다`);" class="btn btn-primary w-100">놀이기구 및 시설안내</button><!--구글맵api 연동해놓기-->
       </div>
 
          <div class="h-25 w-100">
-       <button class="btn btn-primary w-100">입장</button>
+       <button @click="event(); console.log(`이벤트 조회하기`);"class="btn btn-primary w-100">이벤트조회하기</button>
       </div>
 
          <div class="h-25 w-100">
-       <button @click="book_confirm()" class="btn btn-primary w-100">티켓예메</button>
+       <button class="btn btn-primary w-100">티켓예메</button>
       </div>
 
 
@@ -66,13 +67,21 @@
 // 뷰라우터 사용하고
 import { useRouter } from 'vue-router'
 const router = useRouter()
-//그 날짜마 놀이기구 예약이 가능한 놀이기구 예약 시스탬
+//그 날짜만 놀이기구 예약이 가능한 놀이기구 예약 시스탬
 const book_confirm =() =>{
   router.push('/attraction_reservation')
 }
 //티켓 예약 페이지로 이동하는 메소드 
 const ticket_reservation =() =>{
   router.push('/ticket_purchase')
+}
+//놀이기구 및 시설안내로 이동하는  버튼 매소드
+const ride_faclityinfo =() =>{
+  router.push('/ride_faclity_map.vue')
+}
+//인구밀도 히트맵 조회하기 
+const event =() => {
+  router.push('/event.vue')
 }
 
 // 스토어 (공통저장소에 있는 것 사용하기)

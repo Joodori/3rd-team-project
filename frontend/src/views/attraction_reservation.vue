@@ -1,186 +1,155 @@
-<!--매직패스 당일 예약-->
-<!-- src/views/Reservation.vue-->
 <template>
-  <v-form @submit.prevent="submitReservation" ref="formRef">
-    <v-container>
-      <!-- 날짜 선택 -->
-      <v-row dense class="py-1">
-        <v-col cols="12">
-          <v-text-field
-            label="예약 날짜"
-            v-model="form.date"
-            type="date"
-            :rules="[rules.required, rules.notPast]"
-            required
-            dense
-          />
-        </v-col>
-      </v-row>
+  <div class="container d-flex flex-column w-100 h-100">
+    <div class="container d-flex flex-column w-100 h-25">
 
-      <!-- 시간 선택 영역 -->
-      <v-row>
-        <v-col cols="12">
-          <v-label class="mb-2 font-weight-bold">시간 선택</v-label>
-          <v-input
-            :rules="[rules.required]"
-            v-model="form.timeSlots"
-            class="py-1"
-          >
-            <template #default>
-              <v-checkbox
-                v-for="slot in allTimeSlots"
-                :key="slot"
-                v-model="form.timeSlots"
-                :label="slot"
-                :value="slot"
-                color="primary"
-                hide-details
-              />
-            </template>
-          </v-input>
-        </v-col>
-      </v-row>
+    <label>날짜선택</label><!--날자선택-->
+  <div class="calendar-container"><!--외부 install 외부 라이브러리 넣어야됨 -->
+    <Calendar  
+      view="weekly" 
+      :attributes="attributes" 
+      :initial-page="startPage" 
+      locale="ko-KR"
+      is-expanded 
+    />
+  </div><!--25퍼 세로로-->
+  <div class="container d-flex flex-column w-100 h-25"> <!--라디오버든 1개만 선택-->
+    <div class="card"> <!--카드로 감싸기-->
+    <nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">놀이기구 검색</a>
+    <form class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+  <div class="container d-flex flex-column w-100 h-50">
 
-      <!-- 메모 -->
-      <v-row dense class="py-1">
-        <v-col cols="12">
-          <v-textarea
-            label="메모"
-            v-model="form.memo"
-            auto-grow
-            clearable
-            rows="2"
-            class="text-caption"
-          />
-        </v-col>
-      </v-row>
+  </div>
+</nav>
+  
+  </div>
+  
 
-      <!-- 버튼 -->
-      <v-row dense class="py-1">
-        <v-col cols="12">
-          <v-btn type="submit" color="primary" block>예약하기</v-btn>
-        </v-col>
-      </v-row>
+  <div class=" d-flex flex-column w-100 h-25">
+    <div class="container">
+    <label>인원수</label>
+    <div class="card p-4 w-100 h-"><div class="counter-item"><!--띄어쓰기-->
+        <button type="button" class="count-btn" @click="decrementChildren">
+        <i class="bi bi-dash-square"></i>
+      </button>
 
-      <!-- 예약 성공 모달 -->
-    <v-dialog v-model="dialog" max-width="400" @click:outside="closeDialog" @keydown.esc="closeDialog">
-        <v-card v-if="reservationResult">
-          <v-card-title class="headline">예약 완료</v-card-title>
-          <v-card-text>
-            <v-table>
-              <tbody>
-                <tr>
-                  <th class="text-left">예약 ID</th>
-                  <td>{{ reservationResult.id }}</td>
-                </tr>
-                <tr>
-                  <th class="text-left">예약 날짜</th>
-                  <td>{{ reservationResult.date }}</td>
-                </tr>
-                <tr>
-                  <th class="text-left">시간</th>
-                  <td>{{ reservationResult.timeSlots?.join(', ') || '' }}</td>
-                </tr>
-                <tr>
-                  <th class="text-left">메모</th>
-                  <td>{{ reservationResult.memo || '없음' }}</td>
-                </tr>
-                <tr>
-                  <th class="text-left">상태</th>
-                  <td>{{ reservationResult.status }}</td>
-                </tr>
-                <tr>
-                  <th class="text-left">생성 시간</th>
-                  <td>{{ formatDateTime(reservationResult.createdAt) }}</td>
-                </tr>
-              </tbody>
-            </v-table>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="closeDialog">확인</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-container>
-  </v-form>
+       <span class="label">어린이{{ childCount}}</span>
+      <button type="button" class="count-btn" @click="incrementChildren">
+       <i class="bi bi-plus-square"></i>  
+      </button>
+      
+
+    </div>
+    
+    </div>
+    </div>
+    <div class=" d-flex flex-column w-100 h-25">
+    <div class="container">
+    <div class="card p-4 w-100 h-"><div class="counter-item"><!--띄어쓰기-->
+        <button type="button" class="count-btn" @click="decrementAdults">
+        <i class="bi bi-dash-square"></i>
+      </button>
+
+       <span class="label">어른{{ adultCount}}</span>
+      <button type="button" class="count-btn" @click="incrementAdults">
+       <i class="bi bi-plus-square"></i>  
+      </button>
+      
+
+    </div>
+    
+    </div>
+    </div>
+    </div><!--75퍼까지 3개 차지-->
+
+     </div>
+     
+  </div>
+  
+
+     
+  
+  </div><!--두번째-->
+
+ 
+     
+  </div><!--전체-->
 </template>
 
+<script setup lang="ts">
+import Pagination from '@/components/Pagination.vue'
+import { usePagination } from '@/util/pagination.js'
+import { ref } from 'vue';
+import { Calendar } from 'v-calendar';
+import 'v-calendar/style.css';
+import{Modal} from 'bootstrap';
+//페이지 네이션 메서드
+const { makePagination } = usePagination()
+const pagination1 = ref({})
+// 오늘 날짜를 기준으로 초기 페이지를 설정합니다.
+const startPage = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1, // month는 1부터 시작
+  day: new Date().getDate()
+};
 
-<script setup>
-import { ref } from 'vue'
-import { useReservationStore } from '@/stores/reservationStore'
+// 달력에 표시할 데이터를 정의하는 부분입니다. (핵심!)
+// ref를 사용해 반응형 데이터로 만듭니다.
+const attributes = ref([
+  // 1. 오늘 날짜를 강조 표시 (highlight)
+  {
+    key: 'today',
+    highlight: {
+      color: 'purple', // 하이라이트 색상
+      fillMode: 'solid',
+    },
+    dates: new Date(), // 오늘 날짜
+  },
+  // 2. 특정 날짜에 이벤트 점(dot) 표시
+  {
+    key: 'events',
+    dot: 'blue', // 점 색상
+    dates: [
+      new Date(2025, 8, 15), // 2025년 9월 15일 (JS에서 월은 0부터 시작)
+      new Date(2025, 8, 19), // 2025년 9월 19일
+    ],
+  },
+]);
+const adultCount = ref(0); //어른 반응형 함수 
+const childCount = ref(0); //어린이 반응형 함수
 
-const reservationStore = useReservationStore()
-const formRef = ref()
-
-const form = ref({
-  date: '',
-  timeSlots: [],
-  memo: '',
-})
-
-const allTimeSlots = [
-  '09:00~10:00',
-  '10:00~11:00',
-  '11:00~12:00',
-  '13:00~14:00',
-  '14:00~15:00',
-]
-
-const rules = {
-  required: v => (Array.isArray(v) ? v.length > 0 : !!v) || '필수 입력 항목입니다',
-  notPast: v => {
-    if (!v) return true
-    const selectedDate = new Date(v)
-    const today = new Date()
-    today.setHours(0, 0, 0, 0) // 오늘 00:00으로 초기화
-    return selectedDate >= today || '오늘 이전 날짜는 선택할 수 없습니다'
-  }
+const incrementAdults = () => {
+  adultCount.value++;
+  console.log(`인원수증가`);
 }
-
-// 모달 열림 상태
-const dialog = ref(false)
-
-// 예약 결과 저장용
-const reservationResult = ref(null)
-
-const submitReservation = async () => {
-  const { valid } = await formRef.value.validate()
-  if (!valid) return
-
-  try {
-    const res = await reservationStore.submitReservation(form.value)
-    reservationResult.value = res // 결과 저장
-    dialog.value = true           // 모달 열기
-  } catch (err) {
-    alert('예약 실패: ' + (err.response?.data?.message || err.message))
-  }
+const decrementAdults =() =>{
+  if(adultCount.value>0)
+  adultCount.value--;
+console.log(`인원수감소`);
 }
-
-const closeDialog = () => {
-  dialog.value = false
-  reservationResult.value = null
-  // 필요하면 폼 초기화
-  form.value = { date: '', timeSlots: [], memo: '' }
+const incrementChildren = () =>{
+  childCount.value++;
+  console.log(`인원수증가`);
 }
+const decrementChildren =() =>{
+  if(childCount.value > 0)
+  childCount.value--;
+console.log(`인원수감소`);
 
-const formatDateTime = (value) => {
-  const date = new Date(value)
-  return date.toLocaleString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
 }
 </script>
 
 <style scoped>
-/* 테이블 셀에 여백 주기 */
-.v-simple-table th,
-.v-simple-table td {
-  padding: 12px 16px;
+.calendar-container {
+  max-width: 800px; /* 달력의 최대 너비 지정 */
+  margin: 20px auto; /* 페이지 중앙에 위치 */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 </style>

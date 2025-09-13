@@ -25,7 +25,7 @@ const router = createRouter({
       component: () => import('../views/user_info.vue'),
     },
     {
-      path: '/attraction-reservation',
+      path: '/attraction_reservation',
       name: 'attraction_reservation',
       component: () => import('../views/attraction_reservation.vue'),
     },
@@ -43,6 +43,11 @@ const router = createRouter({
       path: '/admin_reservation', //관리자 예약 하는거 뷰화면 만들기 
       name: 'admin_reservation',
       component: () => import('../views/admin_reservation.vue'),
+    },
+    {
+      path: '/event', //인구 밀도 히트맵 
+      name: 'event',
+      component: () => import('../views/event.vue'),
     },
 
   ],
