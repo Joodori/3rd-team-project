@@ -131,18 +131,44 @@
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '@/stores/user'
 import { ref, onMounted } from 'vue'
-import { useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const userStore = useUserInfo()
-const { user, user_info, ticket, ride } = storeToRefs(userStore)
+const { user, user_info, ticket, ride, config, loginStatus } = storeToRefs(userStore)
 
 const no_reserve = ref(true)
 
 onMounted(() => {
+    console.log(user_info.value)
+    console.log(loginStatus.value)
+    console.log(`config : ${config.value}`)
+    console.log(`userName : ${user_info.user_name}`)
     console.log(`user_info 호출됨`)
-    configUserInfo()
+    checkLogin()
+    // configUserInfo()
 })
+
+function checkLogin() {
+    if (loginStatus.value != true) {
+        alert(`로그인 후 이용가능합니다.`)
+        router.push('/login')
+    }
+}
+
+function logout() {
+    alert(`로그아웃 되었습니다.`)
+    user_info.vlaue = {
+        user_id: '',
+        user_name: '',
+        user_birth_date: '',
+        user_age: '',
+        user_address: '',
+        user_mobile: ''
+    }
+    loginStatus.value = false
+    router.push('/')
+}
 
 async function configUserInfo() {
 

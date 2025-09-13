@@ -9,7 +9,7 @@ export const useUserInfo = defineStore('user', () => {
 
     const config = ref('')
 
-    const login = ref(false)
+    const loginStatus = ref(false)
 
     const user_info = ref({
         user_id : '',
@@ -32,7 +32,7 @@ export const useUserInfo = defineStore('user', () => {
 
 
     return{
-        user, no_reserve, config, login, user_info, ticket, ride
+        user, no_reserve, config, loginStatus, user_info, ticket, ride
     }
 
 })
