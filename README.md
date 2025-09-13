@@ -1,3 +1,7 @@
+## 백  :스프링 6.2.10+Mybatis 3.5.19 + mysql +lombok +java21 + tomcat 10.1
+## 프론트 : Vue3 + Pinia + (v-calendar), axios
+
+
 ## 프로젝트 내에서 사용할 단어선택
 
 ## css/ui 프레임워크 >  bootstrap 사용
