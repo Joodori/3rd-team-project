@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import lx.edu.levelup.feature.user.domain.UserVO;
 
+/*
+ * DB 접근 담당
+ */
+
 @Repository
 public class UserRepository {
 
