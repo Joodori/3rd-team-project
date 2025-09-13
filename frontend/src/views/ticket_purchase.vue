@@ -16,33 +16,29 @@
     <label>입장권 종류</label>
     <div class="card"> <!--카드로 감싸기-->
     <div class="form-check">     
-      <input class="form-check-input" type="checkbox" value="ticket" id="ticketchose">
+      <input class="form-check-input" type="checkbox" value="ticket" id="ticketchose"/>
     <label class="from-check-label" for="tiketchose">
       자유이용권
     </label>
-    </input>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="ticket" id="ticketchose">
+      <input class="form-check-input" type="checkbox" value="ticket" id="ticketchose"/>
     <label class="from-check-label" for="tiketchose"><!--라디오 선택 항목-->
       오후권
     </label>
-    </input>           
     </div>
     
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="ticket" id="ticketchose">
+      <input class="form-check-input" type="checkbox" value="ticket" id="ticketchose"/>
     <label class="from-check-label" for="tiketchose">
       vip이용권
     </label>
-    </input>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="ticket" id="ticketchose">
+      <input class="form-check-input" type="checkbox" value="ticket" id="ticketchose"/>
     <label class="from-check-label" for="tiketchose">
       vvip이용권
     </label>
-    </input>
     </div>
   </div>
   
@@ -52,7 +48,7 @@
     <label>인원수</label>
     <div class="card p-4 w-100 h-"><div class="counter-item"><!--띄어쓰기-->
         <button type="button" class="count-btn" @click="decrementChildren">
-        <i class="bi bi-dash-square"></i>
+        <i class="bi bi-dash-square"></i>
       </button>
 
        <span class="label">어린이{{ childCount}}</span>
@@ -69,7 +65,7 @@
     <div class="container">
     <div class="card p-4 w-100 h-"><div class="counter-item"><!--띄어쓰기-->
         <button type="button" class="count-btn" @click="decrementAdults">
-        <i class="bi bi-dash-square"></i>
+        <i class="bi bi-dash-square"></i>
       </button>
 
        <span class="label">어른{{ adultCount}}</span>
