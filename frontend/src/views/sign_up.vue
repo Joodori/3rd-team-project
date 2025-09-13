@@ -35,7 +35,7 @@
       </div>
 
       <!-- 생일 입력 -->
-       <div class="d-flex flex-column align-self-start mb-3 w-100">
+      <div class="d-flex flex-column align-self-start mb-3 w-100">
         <label class="form-label fw-bold">생년월일</label>
         <input type="date" v-mode="user_birth_date" class="form-control"></input>
       </div>
@@ -144,18 +144,18 @@ async function signup() {
         user_name: user_name.value,
         user_birth_date: user_birth_date.value,
         user_age: user_age.value,
-        user_address : user_address.value,
+        user_address: user_address.value,
         user_mobile: user_mobile.value
       }
 
       const response = await axios({
         method: 'post',
         // 이 부분 POSTMAN에서 어떤 URL쓸지 수정해야함
-//=========================================================================        
-baseURL: 'http://localhost:8001',
-url: 'market/v1/signup',
-//========================================================================= 
-data: params,
+        //=========================================================================        
+        baseURL: 'http://localhost',
+        url: 'user/insert',
+        //========================================================================= 
+        data: params,
         timeout: 5000,
         responseType: 'json'
       })
@@ -203,26 +203,35 @@ async function searchSameID() {
   console.log(`searchSameID 호출됨`)
   try {
 
-    const params = {
-      user_id: id.value
+    console.log(`id = ${id.value}`)
+    /**
+     * 
+     const params = {
+      userId: id.value
     }
     const response = await axios({
-      method: 'post',
-        // 이 부분 POSTMAN에서 어떤 URL쓸지 수정해야함
-//=========================================================================        
-baseURL: 'http://localhost:8001',
-url: 'market/v1/signup',
-//========================================================================= 
+      method: 'post',    
       data: params,
+      baseURL: 'http://localhost',
+      url: 'user/check-id',
       timeout: 5000,
       responseType: 'json'
     })
+    */
+    const params = new URLSearchParams();
+    params.append('userId', id.value);
 
+    const response = await axios.post('http://localhost/user/check-id', params, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    console.log(`응답 -> ${JSON.stringify(response.data)}`)
     // ==========================================
     // 이 부분이 아이디를 DB에서 검색했을 때 만족하는 아이디가 없으므로 사용가능한 아이디
     // checked.value를 true로 만들어서 버튼이 사라지게 만들었음
-    if (response.data.data.data.length === 0) {
-      alert(`중복되는 아이디가 없습니다`)
+    if (response.data.status == "success") {
+      alert(`일치하는 아이디가 없습니다.`)
       checked.value = true;
     }
     // ==========================================
