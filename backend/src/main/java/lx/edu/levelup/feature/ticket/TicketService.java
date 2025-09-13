@@ -17,16 +17,16 @@ public class TicketService {
 	public boolean buyTicket(TicketRequestDTO ticketRequestDTO) {
 		
 		// 티켓 수량 = 0이면 구매 불가능 구현
-		if(ticketRequestDTO.getTicket_amount() == 0) {
+		if(ticketRequestDTO.getTicketAmount() == 0) {
 			return false;
 		}
 		
 		// DTO -> VO 변환
 		TicketVO vo = new TicketVO();
-		vo.setTicketName(ticketRequestDTO.getTicket_name());
-		vo.setUserNo(ticketRequestDTO.getUser_no());
-		vo.setTicketAmount(ticketRequestDTO.getTicket_amount());
-		vo.setTicketMoneyStatus(ticketRequestDTO.getTicket_money_status());
+		vo.setTicketName(ticketRequestDTO.getTicketName());
+		vo.setUserNo(ticketRequestDTO.getUserNo());
+		vo.setTicketAmount(ticketRequestDTO.getTicketAmount());
+		vo.setTicketMoneyStatus(ticketRequestDTO.getTicketMoneyStatus());
 		
 		ticketMapper.insertDB(vo);
 		return true;
