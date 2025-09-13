@@ -1,11 +1,8 @@
 package lx.edu.levelup.feature.user;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,30 +77,16 @@ public class UserController {
 		String userPw = repo.findUserPw(vo);
 		return userPw;
 	}
+	
+	/*
+	 * 회원 - 마이페이지 입장권 내역
+	 */
+	
+	/*
+	 * 회원 - 마이페이지 놀이기구 예약 내역
+	 */
 
-//	// ================= 관리자 및 회원 : 마이페이지에 놀이기구 예약 내역 출력하는 메서드 =================
-//	@GetMapping
-//	public Map<String, Object> myPage(HttpSession session) {
-//		String role = (String) session.getAttribute("role");
-//		String userId = (String) session.getAttribute("userId"); // 세션에 저장해둔 로그인 사용자 id 꺼내오기
-//		if (userId == null) {
-//			return response("fail", "로그인 필요");
-//		}
-//		// 관리자일 경우 전체 예약 내역 최신순 조회 -- 구현 예정
-//		// 회원일 경우 본인 예약 내역 조회 -- 구현 예정
-//		return null;
-//	}
-//
-//	// ================= 관리자 및 회원 : 마이페이지에 놀이기구 예약 내역 출력하는 메서드 =================
-//
-//	// 관리자
-//
-//	// ================= 중복코드 메서드 =================
-//	private Map<String, Object> response(String status, String message) {
-//		Map<String, Object> res = new HashMap<>();
-//		res.put("status", status); // 성공, 실패 여부
-//		res.put("message", message); // 사용자에게 보여줄 메세지
-//		return res;
-//	}
-
+	/*
+	 * 관리자 - 마이페이지 입금내역
+	 */
 }
