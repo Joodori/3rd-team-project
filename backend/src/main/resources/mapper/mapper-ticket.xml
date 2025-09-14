@@ -13,10 +13,11 @@
 		where user_no = #{user_no}
 	</select>
 	
+
 	<!-- 사용자가 입금하기를 눌렀을때 -->
 	<update id="updateMoneyStatusUser" parameterType="int">
 		update ticket
-		set ticket_money_status='입금완료'
+		set ticket_money_status="입금완료"
 		where ticket_no = #{ticket_no}
 	</update>
 	

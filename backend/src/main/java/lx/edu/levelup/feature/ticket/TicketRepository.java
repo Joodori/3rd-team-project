@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /*
@@ -15,10 +16,11 @@ public interface TicketRepository {
 	
 		void insertDB(TicketVO vo);
 		
-		List<TicketResponseDTO> getTicketList(@Param("user_no") int user_no);
-		
+		List<TicketResponseDTO> getTicketList(@RequestParam("user_no") int user_no);
+
 		int updateMoneyStatusUser(@Param("ticket_no") int ticket_no);
 		
 		int updateMoneyStatusManager(@Param("ticket_no") int ticket_no);
+
 	
 }
