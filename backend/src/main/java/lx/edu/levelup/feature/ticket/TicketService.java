@@ -15,7 +15,7 @@ import lx.edu.levelup.feature.ticket.domain.TicketVO;
 @Transactional
 public class TicketService {
 	
-	private final TicketMapper ticketMapper;
+	private final TicketRepository ticketMapper;
 	
 	public boolean buyTicket(TicketRequestDTO ticketRequestDTO) {
 		

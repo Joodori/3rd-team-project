@@ -12,7 +12,7 @@ import lx.edu.levelup.feature.ticket.domain.TicketVO;
  * DB 접근 전담, mapperInterface 역할
  */
 @Mapper
-public interface TicketMapper {
+public interface TicketRepository {
 
 	
 		void insertDB(TicketVO vo);
