@@ -142,7 +142,7 @@ onMounted(() => {
     console.log(user_info.value)
     console.log(loginStatus.value)
     console.log(`config : ${config.value}`)
-    console.log(`userName : ${user_info.user_name}`)
+    console.log(`userName : ${user_info.value.user_name}`)
     console.log(`user_info 호출됨`)
     checkLogin()
     configUserInfo()
@@ -194,31 +194,26 @@ async function configUserInfo() {
         console.error(`물품목록::에러발생 -> ${err}`)
     }
 }
-/*
-const API = {
-    ticket : http://localhost/getticket?user_no=${user_info.value.user_no}
-
-}
-*/
 
 async function send_money(ticket_no) {
     console.log(`send_money 호출됨`)
     if (confirm(`XX은행 1002-757-04-8585 에 입금하셨습니까?`)) {
         try {
             const params = {
-                "ticket_no": ticket_no,
+                "ticketNo":ticket_no,
             }
 
-            const response = await axios.post('http://localhost/updateTicket', params, {
+            const response = await axios.patch('http://localhost/updateMoneyStatus', params, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
 
+            console.log(`응답 -> ${JSON.stringify(response.date)}`)
+
             // 만약 update에 실패했다면
             if (response.data == "") {
-                실패
-                return    
+                alert(`응답이없으,,ㅁ`)
             }
             configUserInfo()
             

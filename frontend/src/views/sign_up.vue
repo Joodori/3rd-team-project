@@ -198,20 +198,6 @@ async function searchSameID() {
   try {
 
     console.log(`id = ${id.value}`)
-    /**
-     * 
-     const params = {
-      userId: id.value
-    }
-    const response = await axios({
-      method: 'post',    
-      data: params,
-      baseURL: 'http://localhost',
-      url: 'user/check-id',
-      timeout: 5000,
-      responseType: 'json'
-    })
-    */
     const params = {
       "userId": id.value,
     }

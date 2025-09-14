@@ -35,14 +35,14 @@ public class TicketService {
 		
 	}
 	
-	public List<TicketResponseDTO> getTicket(int user_no) {
+	public List<TicketResponseDTO> getTicketList(int user_no) {
 		List<TicketResponseDTO> ticketList = ticketMapper.getTicketList(user_no);
 		return ticketList;
 	}
 	
 	public boolean updateMoneystatus(int ticket_no) {
 		System.out.println("넘어온 :" + ticket_no);
-		int result = ticketMapper.updateMoneyStatus(ticket_no);
+		int result = ticketMapper.updateTicketMoneyStatus(ticket_no);
 		return result > 0 ;
 		
 	}
