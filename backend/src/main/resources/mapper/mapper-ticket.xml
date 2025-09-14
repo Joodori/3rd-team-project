@@ -13,10 +13,18 @@
 		where user_no = #{user_no}
 	</select>
 	
-	<!-- 관리자 마이페이지에서 입금 수락 눌렀을 때 -->
-	<update id="updateTicketMoneyStatus" parameterType="int">
+
+	<!-- 사용자가 입금하기를 눌렀을때 -->
+	<update id="updateMoneyStatusUser" parameterType="int">
 		update ticket
 		set ticket_money_status="입금완료"
+		where ticket_no = #{ticket_no}
+	</update>
+	
+	<!-- 관리자가 입장권 입금 확인하기 눌렀을때 -->
+	<update id="updateMoneyStatusManager" parameterType="int">
+		update ticket
+		set ticket_money_status='예약확정'
 		where ticket_no = #{ticket_no}
 	</update>
 

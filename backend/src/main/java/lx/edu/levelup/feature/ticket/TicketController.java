@@ -33,9 +33,16 @@ public class TicketController {
 		return ticketList;
 	}
 	
-	@PatchMapping("/updateMoneyStatus")
-	public boolean updateMoneyStatus(@RequestBody TicketRequestDTO dto) {
-		boolean result = ticketService.updateMoneystatus(dto.getTicketNo());
+	@PatchMapping("/updateMoneyStatusUser")
+	public boolean updateMoneyStatusUser(@RequestBody TicketRequestDTO dto) {
+		boolean result = ticketService.updateMoneystatusUser(dto.getTicketNo());
+		return result;
+	}
+	
+
+	@PatchMapping("/updateMoneyStatusManager")
+	public boolean updateMoneyStatusManager(@RequestBody TicketRequestDTO dto) {
+		boolean result = ticketService.updateMoneystatusManager(dto.getTicketNo());
 		return result;
 	}
 }

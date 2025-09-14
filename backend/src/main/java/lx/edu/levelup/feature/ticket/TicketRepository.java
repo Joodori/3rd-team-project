@@ -17,7 +17,10 @@ public interface TicketRepository {
 		void insertDB(TicketVO vo);
 		
 		List<TicketResponseDTO> getTicketList(@RequestParam("user_no") int user_no);
+
+		int updateMoneyStatusUser(@Param("ticket_no") int ticket_no);
 		
-		int updateTicketMoneyStatus(@Param("ticket_no") int ticket_no);
+		int updateMoneyStatusManager(@Param("ticket_no") int ticket_no);
+
 	
 }
