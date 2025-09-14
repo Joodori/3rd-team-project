@@ -29,7 +29,13 @@ public class TicketController {
 	
 	@GetMapping("/getticket")
 	public List<TicketResponseDTO> getTicketList(@RequestParam("user_no") int user_no) {
-		List<TicketResponseDTO> ticketList = ticketService.getTicketList(user_no);
+		List<TicketResponseDTO> ticketList1 = ticketService.getTicketList(user_no);
+		return ticketList1;
+	}
+
+	@GetMapping("/getticketAdmin")
+	public List<TicketResponseDTO> getTicketListAdmin() {
+		List<TicketResponseDTO> ticketList = ticketService.getTicketListAdmin();
 		return ticketList;
 	}
 	

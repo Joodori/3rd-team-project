@@ -39,6 +39,11 @@ public class TicketService {
 		List<TicketResponseDTO> ticketList = ticketMapper.getTicketList(user_no);
 		return ticketList;
 	}
+
+	public List<TicketResponseDTO> getTicketListAdmin() {
+		List<TicketResponseDTO> ticketList = ticketMapper.getTicketListAdmin();
+		return ticketList;
+	}
 	
 	public boolean updateMoneystatusUser(int ticket_no) {
 		System.out.println("넘어온 :" + ticket_no);

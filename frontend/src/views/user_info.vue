@@ -5,7 +5,7 @@
 
         <!--begin::기본정보-->
         <!-- v-if="user === true" 일때는 일반 유저일때 정보 -->
-        <div v-if="user === true" class="d-flex flex-column justify-content-center align-items-center py-5  ">
+        <div v-if="config === 'user'" class="d-flex flex-column justify-content-center align-items-center py-5  ">
             <div class="bg-white rounded p-4 w-100">
                 <h2 class="mb-4 text-center fw-bold">로그인 유저의 정보</h2>
                 <div class="fs-2 fw-bold mb-3">
@@ -34,9 +34,9 @@
 
         </div>
 
-        <div v-if="user === false" class="d-flex flex-column justify-content-center align-items-center py-5">
+        <div v-if="config === 'admin'" class="d-flex flex-column justify-content-center align-items-center py-5">
             <div class="bg-white rounded p-4 w-100">
-                <h2 class="mb-4 text-center fw-bold">로그인 유저의 정보</h2>
+                <h2 class="mb-4 text-center fw-bold">이용자들의 입금내역 확인하는 관리자 페이지입니다</h2>
                 <div class="fs-2 fw-bold mb-3">
                     <span>ID :</span> <span>{{ user_info.user_id }}</span>
                 </div>
@@ -61,7 +61,7 @@
         <!--end::기본정보-->
 
 
-        <div v-if="user === true" class="  w-100">
+        <div v-if="config === 'user'" class="  w-100">
             <!-- 입장권 내역 -->
             <div v-for="(ticket, index) in ticket" :key="ticket.ticketNo">
                 <div class="d-flex flex-row m-5 p-5 gap-3  ">
@@ -115,7 +115,7 @@
             </div>
         </div>
 
-        <div v-if="user === false">
+        <div v-if="config === 'admin'">
             <!-- 관리자가 보는 입장권 입금확인부분 -->
             <div>
 
@@ -171,27 +171,53 @@ function logout() {
 
 async function configUserInfo() {
 
-    try {
+    if (config.value === 'user') {
 
-        const response = await axios.get(`http://localhost/getticket?user_no=${user_info.value.user_no}`, {
-            headers: {
-                'Content-Type': 'application/json'
+
+        try {
+
+            const response = await axios.get(`http://localhost/getticket?user_no=${user_info.value.user_no}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log(`응답 -> ${JSON.stringify(response.data)}`)
+            // 여기서 response.data는 list형태로 나옴
+            // ticket이라는 store변수는 ref([]) 배열형태로 만들어놓았기 때문에
+            // 들어온거(배열_response.data) => 넣음을 당하는거(배열_ticket이라는 stroe변수)
+            ticket.value = response.data
+            if (ticket.value.length == 0) {
+                alert(`없어요`)
             }
-        });
 
-        console.log(`응답 -> ${JSON.stringify(response.data)}`)
-        // 여기서 response.data는 list형태로 나옴
-        // ticket이라는 store변수는 ref([]) 배열형태로 만들어놓았기 때문에
-        // 들어온거(배열_response.data) => 넣음을 당하는거(배열_ticket이라는 stroe변수)
-        ticket.value = response.data
-        if (ticket.value.length == 0) {
-            alert(`없어요`)
+
+
+        } catch (err) {
+            console.error(`물품목록::에러발생 -> ${err}`)
+        }
+    }
+    else {
+        try {
+    
+            const response = await axios.get(`http://localhost/getticketAdmin`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            console.log(`응답 -> ${JSON.stringify(response.data)}`)
+            ticket.value = response.data
+            if (ticket.value.length == 0) {
+                alert(`없어요`)
+            }
+    
+    
+    
+        } catch (err) {
+            console.error(`물품목록::에러발생 -> ${err}`)
         }
 
-
-
-    } catch (err) {
-        console.error(`물품목록::에러발생 -> ${err}`)
     }
 }
 
@@ -200,10 +226,10 @@ async function send_money(ticket_no) {
     if (confirm(`XX은행 1002-757-04-8585 에 입금하셨습니까?`)) {
         try {
             const params = {
-                "ticketNo":ticket_no,
+                "ticketNo": ticket_no,
             }
 
-            const response = await axios.patch('http://localhost/updateMoneyStatus', params, {
+            const response = await axios.patch('http://localhost/updateMoneyStatusUser', params, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -216,7 +242,7 @@ async function send_money(ticket_no) {
                 alert(`응답이없으,,ㅁ`)
             }
             configUserInfo()
-            
+
         } catch (error) {
 
         }
