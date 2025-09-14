@@ -33,8 +33,8 @@ public class TicketService {
 		
 	}
 	
-	public List<TicketVO> getTicket(int user_no) {
-		List<TicketVO> ticketList = ticketMapper.getTicketList(user_no);
+	public List<TicketResponseDTO> getTicket(int user_no) {
+		List<TicketResponseDTO> ticketList = ticketMapper.getTicketList(user_no);
 		return ticketList;
 	}
 
