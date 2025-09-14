@@ -17,6 +17,8 @@ public interface TicketRepository {
 		
 		List<TicketResponseDTO> getTicketList(@Param("user_no") int user_no);
 		
-		int updateMoneyStatus(@Param("ticket_no") int ticket_no);
+		int updateMoneyStatusUser(@Param("ticket_no") int ticket_no);
+		
+		int updateMoneyStatusManager(@Param("ticket_no") int ticket_no);
 	
 }

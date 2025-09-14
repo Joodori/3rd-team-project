@@ -40,9 +40,16 @@ public class TicketService {
 		return ticketList;
 	}
 	
-	public boolean updateMoneystatus(int ticket_no) {
+	public boolean updateMoneystatusUser(int ticket_no) {
 		System.out.println("넘어온 :" + ticket_no);
-		int result = ticketMapper.updateMoneyStatus(ticket_no);
+		int result = ticketMapper.updateMoneyStatusUser(ticket_no);
+		return result > 0 ;
+		
+	}
+	
+	public boolean updateMoneystatusManager(int ticket_no) {
+		System.out.println("넘어온 :" + ticket_no);
+		int result = ticketMapper.updateMoneyStatusManager(ticket_no);
 		return result > 0 ;
 		
 	}
