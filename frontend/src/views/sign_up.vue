@@ -150,7 +150,7 @@ async function signup() {
       }
     const response = await axios.post('http://localhost/user/insert', params, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json' 
       }
     });
 

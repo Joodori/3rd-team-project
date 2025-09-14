@@ -35,9 +35,9 @@ const router = createRouter({
       component: () => import('../views/ticket_purchase.vue'),
     },
     {
-      path: '/facility-map',
-      name: 'facility_map',
-      component: () => import('../views/facility_map.vue'),
+      path: '/ride_faclity_map.vue',
+      name: 'ride_faclity_map',
+      component: () => import('../views/ride_faclity_map.vue'),
     },
     {
       path: '/admin_reservation', //관리자 예약 하는거 뷰화면 만들기 

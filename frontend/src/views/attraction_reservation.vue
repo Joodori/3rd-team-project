@@ -33,21 +33,8 @@
   <div class=" d-flex flex-column w-100 h-25">
     <div class="container">
     <label>인원수</label>
-    <div class="card p-4 w-100 h-"><div class="counter-item"><!--띄어쓰기-->
-        <button type="button" class="count-btn" @click="decrementChildren">
-        <i class="bi bi-dash-square"></i>
-      </button>
-
-       <span class="label">어린이{{ childCount}}</span>
-      <button type="button" class="count-btn" @click="incrementChildren">
-       <i class="bi bi-plus-square"></i>  
-      </button>
-      
-
-    </div>
+  
     
-    </div>
-    </div>
     <div class=" d-flex flex-column w-100 h-25">
     <div class="container">
     <div class="card p-4 w-100 h-"><div class="counter-item"><!--띄어쓰기-->
@@ -65,8 +52,9 @@
     
     </div>
     </div>
+    </div>
     </div><!--75퍼까지 3개 차지-->
-
+      
      </div>
      
   </div>
