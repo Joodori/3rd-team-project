@@ -28,6 +28,7 @@ public class TicketService {
 		vo.setTicketName(ticketRequestDTO.getTicketName());
 		vo.setUserNo(ticketRequestDTO.getUserNo());
 		vo.setTicketAmount(ticketRequestDTO.getTicketAmount());
+		vo.setTicketReserveDate(ticketRequestDTO.getTicketReserveDate());
 		vo.setTicketMoneyStatus(ticketRequestDTO.getTicketMoneyStatus());
 		
 		ticketMapper.insertDB(vo);
