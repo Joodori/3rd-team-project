@@ -12,21 +12,15 @@ export const useUserInfo = defineStore('user', () => {
     const loginStatus = ref(false)
 
     const user_info = ref({
+        user_no: '',
         user_id : '',
         user_name : '',
         user_birth_date: '',
-        user_age : '',
         user_address : '',
         user_mobile : ''
     })
 
-    const ticket = ref({
-        ticket_no : '',
-        ticket_name : '',
-        ticket_reserve_date : '',
-        ticket_amount : '',
-        ticket_money_status : ''
-    })
+    const ticket = ref([])
 
     const ride = ref([])
 

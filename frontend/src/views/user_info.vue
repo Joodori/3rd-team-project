@@ -18,10 +18,7 @@
                     <span>생일 :</span> <span>{{ user_info.user_birth_date }}</span>
                 </div>
                 <div class="fs-2 fw-bold mb-3">
-                    <span>나이 :</span> <span>{{ user_info.user_age }}</span>
-                </div>
-                <div class="fs-2 fw-bold mb-3">
-                    <span>주소 :</span> <span>{{ user_info.user_address }}</span>
+                    <span>메일주소 :</span> <span>{{ user_info.user_address }}</span>
                 </div>
                 <div class="fs-2 fw-bold mb-4">
                     <span>전화번호 :</span> <span>{{ user_info.user_mobile }}</span>
@@ -66,20 +63,22 @@
 
         <div v-if="user === true" class="  w-100">
             <!-- 입장권 내역 -->
-            <div class="d-flex flex-row m-5 p-5 gap-3  ">
-                <div class="d-flex align-items-center  " style="width: 30%;">
-                    <h1>귀여운 이미지</h1> <!-- 티켓같이 귀여운거 넣쟈-->
-                    <img src="" />
-                </div>
-                <div class="d-flex flex-column  " style="width: 50%;">
-                    <h1>{{ ticket.ticket_name }}</h1>
-                    <h1>{{ ticket.ticket_reserve_date }}</h1>
-                    <h1>{{ ticket_ticket_amount }}</h1>
-                </div>
-                <div class="d-flex flex-column  " style="width: 20%;">
-                    <h1>{{ ticket.ticket_status }}</h1>
-                    <button class="btn btn-info" @click="send_money()"
-                        style="height: 30px; font-size: 8px;">입금하기</button>
+            <div v-for="(ticket, index) in ticket" :key="ticket.ticketNo">
+                <div class="d-flex flex-row m-5 p-5 gap-3  ">
+                    <div class="d-flex align-items-center  " style="width: 30%;">
+                        <h1>귀여운 이미지</h1> <!-- 티켓같이 귀여운거 넣쟈-->
+                        <img src="" />
+                    </div>
+                    <div class="d-flex flex-column  " style="width: 50%;">
+                        <h1>{{ ticket.ticketName }}</h1>
+                        <h1>{{ ticket.ticketReserveDate }}</h1>
+                        <h1>{{ ticketTicketAmount }}</h1>
+                    </div>
+                    <div class="d-flex flex-column  " style="width: 20%;">
+                        <h1>{{ ticket.ticketMoneyStatus }}</h1>
+                        <button class="btn btn-info" @click="send_money(ticket.ticketNo)"
+                            style="height: 30px; font-size: 8px;">입금하기</button>
+                    </div>
                 </div>
             </div>
 
@@ -146,7 +145,7 @@ onMounted(() => {
     console.log(`userName : ${user_info.user_name}`)
     console.log(`user_info 호출됨`)
     checkLogin()
-    // configUserInfo()
+    configUserInfo()
 })
 
 function checkLogin() {
@@ -172,43 +171,54 @@ function logout() {
 
 async function configUserInfo() {
 
-    if (true) {
-
-    }
-
     try {
 
-        const response = await axios({
-            method: 'post',
-            //==============================================================
-            baseURL: 'http://localhost',
-            url: 'user/check-id',
-            data: {
-                userId: user.value.user_id
-                //==============================================================
-            },
-            timeout: 5000,
-            responseType: 'json'
-        })
+        const response = await axios.get(`http://localhost/getticket?user_no=${user_info.value.user_no}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
         console.log(`응답 -> ${JSON.stringify(response.data)}`)
-        //==============================================================
-        const rideList = response.data.data.data
-        userStore.ride = rideList
-        //==============================================================
-        if (response.data.data.data.length === 0) {
-            user.value = false;
+        // 여기서 response.data는 list형태로 나옴
+        // ticket이라는 store변수는 ref([]) 배열형태로 만들어놓았기 때문에
+        // 들어온거(배열_response.data) => 넣음을 당하는거(배열_ticket이라는 stroe변수)
+        ticket.value = response.data
+        if (ticket.value.length == 0) {
+            alert(`없어요`)
         }
+
+
 
     } catch (err) {
         console.error(`물품목록::에러발생 -> ${err}`)
     }
 }
 
-function send_money() {
+async function send_money(ticket_no) {
     console.log(`send_money 호출됨`)
     if (confirm(`XX은행 1002-757-04-8585 에 입금하셨습니까?`)) {
-        ticket.ticket_status = "입금완료"
+        try {
+            const params = {
+                "ticket_no": ticket_no,
+            }
+
+            const response = await axios.post('http://localhost/user/update-ticket', params, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            // 만약 update에 실패했다면
+            if (response.data == "") {
+                실패
+                return    
+            }
+            configUserInfo()
+            
+        } catch (error) {
+
+        }
     }
 
 }

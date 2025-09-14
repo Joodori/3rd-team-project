@@ -3,18 +3,23 @@
 <template>
   <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
 
-    <div>
-      <h1>아이디 입력</h1>
-      <input type="text" placeholder="아이디를 입력하세요" v-model="id"></input>
-      <h1>패스워드 입력</h1>
-      <input type="password" placeholder="비밀번호를 입력하세요" v-model="password"></input>
-      <br />
-      <button type="button" class="btn btn-primary" @click="login()"> 로그인 </button>
-      <div class="d-flex m-3 p-3 gap-5">
-        <button class="btn btn-outline-info find-id-pw">아이디 찾기</button>
-        <button class="btn btn-outline-info find-id-pw">비밀번호 찾기</button>
+  <div>
+    <h1>아이디 입력</h1>
+    <input type="text" placeholder="아이디를 입력하세요" v-model="id"></input>
+    <h1>패스워드 입력</h1>
+    <input type="password" placeholder="비밀번호를 입력하세요" v-model="password"></input>
+    <br />
+    <div class="d-flex gap-3">
+      <div class="d-flex gap-3">
+        <button type="button" class="btn btn-primary" @click="login()"> 로그인 </button>
+        <button class="btn btn-primary" @click="signup()">회원가입</button>
+      </div>
+      <div class="d-flex">
+        <button class="btn btn-outline-info" @click="findId()">아이디 찾기</button>
+        <button class="btn btn-outline-info" @click="findPw()">비밀번호 찾기</button>
       </div>
     </div>
+  </div>
 
 
 
@@ -42,9 +47,6 @@
   </div>
 
 
-  <div>
-    <button class="btn btn-primary" @click="signup()">회원가입</button>
-  </div>
 
   <!-- sign in with google, facebook, istagram-->
 
@@ -61,7 +63,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const userStore = useUserInfo()
-const { user_info, config , loginStatus} = storeToRefs(userStore)
+const { user_info, config, loginStatus } = storeToRefs(userStore)
 
 import { ref } from 'vue'
 import axios from 'axios'
@@ -126,35 +128,36 @@ async function login() {
       }
     }
 
-     if (userProfile.length != 0) {
+    if (userProfile.length != 0) {
 
 
       // isadmin이라는 컬럼의 값이 null인경우 = 일반사용자
       // isadmin이라는 컬럼의 값이 있을 경우 = 관리자
-          user_info.value.user_id = userProfile.userId
-          user_info.value.user_name = userProfile.userName
-          user_info.value.user_birth_date = userProfile.userBirthDate
-          user_info.value.user_age = userProfile.userAge
-          user_info.value.user_address = userProfile.userAddress
-          user_info.value.user_mobile = userProfile.userMobile
-          config.value = user_info ? 'admin' : 'user'
+      user_info.value.user_no = userProfile.userNo
+      user_info.value.user_id = userProfile.userId
+      user_info.value.user_name = userProfile.userName
+      user_info.value.user_birth_date = userProfile.userBirthDate
+      user_info.value.user_age = userProfile.userAge
+      user_info.value.user_address = userProfile.userAddress
+      user_info.value.user_mobile = userProfile.userMobile
+      config.value = user_info.value.user_id == "admin" ? 'admin' : 'user'
 
-          // test
-          console.log("user_info userId : " + user_info.value.user_id)
-          console.log("user_info userName : " + user_info.value.user_name)
-          console.log("user_info userBirthDate : " + user_info.value.user_birth_date)
-          console.log("userProfile ID : " + userProfile.user_id)
-        
-        // store 변수 저장 이후 메인페이지 이동
-        console.log(user_info.value)
-        console.log(`before loginStatus ${loginStatus.value}`)
-        loginStatus.value = true
-        console.log(`After loginStatus ${loginStatus.value}`)
+      // test
+      console.log("user_info userNO : " + user_info.value.user_no)
+      console.log("user_info userId : " + user_info.value.user_id)
+      console.log("user_info userName : " + user_info.value.user_name)
+      console.log("user_info userBirthDate : " + user_info.value.user_birth_date)
 
-        router.push('/')
-        
-      } else {
-        alert(`일치하는 정보가 없습니다.`)
+      // store 변수 저장 이후 메인페이지 이동
+      console.log(user_info.value)
+      console.log(`before loginStatus ${loginStatus.value}`)
+      loginStatus.value = true
+      console.log(`After loginStatus ${loginStatus.value}`)
+
+      router.push('/')
+
+    } else {
+      alert(`일치하는 정보가 없습니다.`)
       return
     }
 
@@ -167,15 +170,16 @@ function signup() {
   router.push('sign-up')
 }
 
+function findId() {
+  router.push('/find-id')
+}
+
+function findPw() {
+  router.push('/find-pw')
+}
+
 </script>
 
 <style scoped>
-/** 아래 부분은 Test용
-   */
-.find-id-pw {
-  color: #000000 !important;
-  background-color: #ffffff;
-  border-color: #ffffff !important;
-  box-shadow: none !important;
-}
+
 </style>
