@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lx.edu.levelup.feature.ticket.TicketMapper">
+<mapper namespace="lx.edu.levelup.feature.ticket.TicketRepository">
 
 	<insert id="insertDB" parameterType="TicketVO">
 		insert into ticket(user_no, ticket_name, ticket_amount, ticket_money_status, ticket_reserve_date)
@@ -13,10 +13,18 @@
 		where user_no = #{user_no}
 	</select>
 	
-	<!-- 관리자 마이페이지에서 입금 수락 눌렀을 때 -->
-	<update id="updateTicketMoneyStatus" parameterType="String">
+
+	<!-- 사용자가 입금하기를 눌렀을때 -->
+	<update id="updateMoneyStatusUser" parameterType="int">
 		update ticket
 		set ticket_money_status="입금완료"
+		where ticket_no = #{ticket_no}
+	</update>
+	
+	<!-- 관리자가 입장권 입금 확인하기 눌렀을때 -->
+	<update id="updateMoneyStatusManager" parameterType="int">
+		update ticket
+		set ticket_money_status='예약확정'
 		where ticket_no = #{ticket_no}
 	</update>
 
