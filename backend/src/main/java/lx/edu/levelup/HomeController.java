@@ -30,6 +30,7 @@ public class HomeController {
         //logger.info("======= Logback 테스트 성공! =======");
         //logger.warn("======= 경고(WARN) 레벨 테스트 =======");
         //logger.error("======= 에러(ERROR) 레벨 테스트 =======");
+
     Date date = new Date();
     DateFormat dateFormat =
         DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);

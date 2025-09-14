@@ -11,7 +11,7 @@ public class TicketResponseDTO {
 	private int ticketAmount;  	
 	private String ticketMoneyStatus;  	
 	
-	public static TicketResponseDTO fromEntity(lx.edu.levelup.feature.ticket.domain.TicketVO ticket) {
+	public static TicketResponseDTO fromEntity(TicketVO ticket) {
 		TicketResponseDTO dto = new TicketResponseDTO();
 		dto.ticketNo = ticket.getTicketNo();
 		dto.ticketName = ticket.getTicketName();

@@ -40,17 +40,13 @@ public class SpringConfig {
         // mapperLocations 경로를 properties 파일에서 읽어오도록 수정
         factory.setMapperLocations(context.getResources(env.getProperty("mybatis.mapper-locations")));
 
-        // VO 클래스들이 있는 패키지를 지정하면, MyBatis가 자동으로 alias를 만들어줍니다.
-        factory.setTypeAliasesPackage("lx.edu.levelup.feature");
-
         // properties 파일의 type-aliases-package 값을 설정에 추가
         factory.setTypeAliasesPackage(env.getProperty("mybatis.type-aliases-package"));
+
 
         // 나머지 추가 설정 (mapUnderscoreToCamelCase 등)
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setMapUnderscoreToCamelCase(Boolean.parseBoolean(env.getProperty("mybatis.map-underscore-to-camel-case")));
-        // 필요하다면 다른 설정도 추가...
-        // configuration.setDefaultFetchSize(Integer.parseInt(env.getProperty("mybatis.default-fetch-size")));
 
         factory.setConfiguration(configuration);
         return factory;

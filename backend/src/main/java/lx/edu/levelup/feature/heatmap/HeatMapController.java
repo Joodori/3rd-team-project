@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/heatmap")
+@RequestMapping("/heatmap")
 public class HeatMapController {
 
     @Autowired
     private HeatMapService heatmapService;
 
     // 클래스 상단에 Logger 객체를 생성합니다.
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(HeatMapController.class);
 
     /**
      * 최근 히트맵 데이터를 JSON 형태로 제공하는 API

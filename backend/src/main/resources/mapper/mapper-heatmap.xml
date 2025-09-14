@@ -3,13 +3,9 @@
 <mapper namespace="lx.edu.levelup.feature.heatmap.HeatMapRepository">
 
     <select id="findRecentLogs" parameterType="java.util.Map" resultType="HeatMapVO">
-        SELECT
-            latitude,
-            longitude
-        FROM
-            crowd_log
-        WHERE
-            log_time BETWEEN #{startTime} AND #{endTime}
+        SELECT latitude, longitude
+        FROM crowd_log
+        WHERE log_time BETWEEN #{startTime} AND #{endTime}
     </select>
 
 
