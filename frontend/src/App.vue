@@ -13,13 +13,19 @@
 
       <span class="fs-2 fw-bold">제목</span>
 
-      <button class="btn btn-icon btn-light-primary" @click="goToLogin()">
+      <button v-if="loginStatus == false" class="btn btn-icon btn-light-primary" @click="goToLogin()">
         <i class="ki-duotone ki-setting-2 fs-2x text-primary">
           <span class="path1"></span>
           <span class="path2"></span>
         </i>
       </button>
-
+      <button v-if="loginStatus == true" class="btn btn-icon btn-light-primary" @click="goToProfile()">
+        <i class="ki-duotone ki-setting-2 fs-2x text-primary">
+          <span class="path1"></span>
+          <span class="path2"></span>
+        </i>
+      </button>
+      
     </div>
 
     <!-- 메인 영역, flex-grow-1 : 남아있는 여유공간을 모두 차지함, overflow-auto : 내용물이 영역을 넘어가는 경우 스크롤이 자동으로 생김-->
@@ -147,6 +153,12 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter();
 
+import { storeToRefs } from 'pinia';
+import { useUserInfo } from '@/stores/user'
+const userStore = useUserInfo()
+const { loginStatus } = storeToRefs(userStore)
+
+
 let drawer;
 
 const activeTab = ref('home');
@@ -208,6 +220,10 @@ function goToSearch() {
   router.push('/search')
 }
 
+function goToProfile() {
+  router.push('/user-info')
+}
+
 function goToDoc() {
   router.push('/document')
 }
@@ -217,8 +233,6 @@ function goToMore() {
 }
 
 function goToLogin() {
-
-  fullScreen.value = true;
 
   router.push('/login');
 }

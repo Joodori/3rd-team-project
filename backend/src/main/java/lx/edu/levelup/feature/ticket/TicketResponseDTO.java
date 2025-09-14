@@ -8,9 +8,9 @@ public class TicketResponseDTO {
 	private Long ticketNo;
 	private String ticketName;
 	private String ticketReserveDate;
-	private int ticketAmount;
-	private String ticketMoneyStatus;
-
+	private int ticketAmount;  	
+	private String ticketMoneyStatus;  	
+	
 	public static TicketResponseDTO fromEntity(lx.edu.levelup.feature.ticket.domain.TicketVO ticket) {
 		TicketResponseDTO dto = new TicketResponseDTO();
 		dto.ticketNo = ticket.getTicketNo();
