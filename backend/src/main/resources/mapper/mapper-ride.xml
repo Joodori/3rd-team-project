@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lx.edu.levelup.feature.ride.RideRepository">
-	<select id="getRideBookList" parameterType="int" resultType="RideVO">
+	<select id="getRideBookList" parameterType="int" resultType="RideResponseDTO">
 		
 		select f.facility_name, i.ride_book_info_time, c.ride_book_person_amount
 		
