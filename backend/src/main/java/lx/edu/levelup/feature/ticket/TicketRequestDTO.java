@@ -10,6 +10,7 @@ public class TicketRequestDTO {
 	private int ticketNo;
 	private String ticketName;
 	private int userNo;
+	private String ticketReserveDate;
 	private int ticketAmount;
 	private String ticketMoneyStatus;
 
