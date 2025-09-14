@@ -6,7 +6,7 @@
 		insert into ticket(user_no, ticket_name, ticket_amount, ticket_money_status, ticket_reserve_date)
 		values(#{userNo}, #{ticketName}, #{ticketAmount}, #{ticketMoneyStatus}, now())
 	</insert>
-	
+
 	<select id="getTicketList" parameterType="int" resultType="TicketResponseDTO">
 		select *
 		from ticket

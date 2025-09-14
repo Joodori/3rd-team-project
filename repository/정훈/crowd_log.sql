@@ -39,7 +39,7 @@ begin
     declare v_time_range int default v_end_unix - v_start_unix;
 
     -- i가 100이 될 때까지 반복
-    while i <= 100 do
+    while i <= 2000 do
         insert into `crowd_log` (latitude, longitude, log_time)
         values (
             -- 최소 위도 + (랜덤값 * (최대 위도 - 최소 위도))

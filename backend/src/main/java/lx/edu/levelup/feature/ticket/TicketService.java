@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import lx.edu.levelup.feature.ticket.domain.TicketVO;
 
 @Service
 @RequiredArgsConstructor

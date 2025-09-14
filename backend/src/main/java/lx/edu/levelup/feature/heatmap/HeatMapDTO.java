@@ -16,5 +16,5 @@ import java.math.BigDecimal;
 public class HeatMapDTO {
     private BigDecimal lat;
     private BigDecimal lng;
-    
+
 }

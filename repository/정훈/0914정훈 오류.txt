@@ -1,0 +1,5 @@
+충격과 진실 오류
+
+1. json을 못 찾는 오류 
+2025-09-14 20:07:38 [WARN ] [http-nio-80-exec-10] o.s.web.servlet.PageNotFound - No endpoint GET /.well-known/appspecific/com.chrome.devtools.json.
+시발 지금 시간이  8시라서 9~18시 사이 데이터를 조회 해야하는데 없는거임 ㅋㅋㅋ 

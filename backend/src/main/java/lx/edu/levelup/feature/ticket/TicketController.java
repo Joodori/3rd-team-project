@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import lx.edu.levelup.feature.ticket.domain.TicketVO;
 
 /*
  * 요청/응답 처리, API 엔드포인트

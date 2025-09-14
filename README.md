@@ -1,10 +1,10 @@
-# 🚕 [프로젝트 이름]
+# 🚕 [놀이동산 LX_Land]
 
-> 프로젝트에 대한 한 줄 소개를 작성합니다. (예: 택시 동승 및 실시간 위치 공유 서비스)
+> 놀이동산 티켓 예약 및 위치공유 서비스 
 
 ## 📝 개요
 
-이 프로젝트는 OO을 목표로 하는 웹 애플리케이션입니다. Spring Framework와 Vue.js를 기반으로 개발되었으며, 주요 기능으로는 실시간 위치 공유, 택시 호출, 히트맵 기반 정보 제공 등이 있습니다.
+이 프로젝트는 놀이동산의 편리성을 목표로 하는 웹 애플리케이션입니다. Spring Framework와 Vue.js를 기반으로 개발되었으며, 주요 기능으로는 실시간 위치 공유, 택시 호출, 히트맵 기반 정보 제공 등이 있습니다.
 
 ---
 
@@ -101,7 +101,7 @@
 
 0. **Project Clone**
  # Repository 클론
-    git clone [your-repository-url]
+    git clone https://github.com/Joodori/3rd-team-project.git
 
 1.  **Backend**
     ```bash

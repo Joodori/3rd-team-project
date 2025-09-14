@@ -37,7 +37,7 @@
       <!-- 생일 입력 -->
       <div class="d-flex flex-column align-self-start mb-3 w-100">
         <label class="form-label fw-bold">생년월일</label>
-        <input type="date" v-mode="user_birth_date" class="form-control"></input>
+        <input type="date" v-model="user_birth_date" class="form-control"></input>
       </div>
 
       <!-- 나이 입력 -->
@@ -97,11 +97,11 @@ const ageInput = ref(null)
 const passwordCheck = ref(null)
 
 function goToMain() {
-  router.push('/market_main')
+  router.push('/')
 }
 
 function goToLogin() {
-  router.push('/market_login')
+  router.push('/login')
 }
 
 // ============회원가입 클릭시===============
@@ -110,7 +110,7 @@ async function signup() {
 
   // =======================================
   // 회원가입 시 특정조건을 만족했는지 확인
-  if (checked.value == false) {
+  if (checked.value != true) {
     alert(`아이디 중복확인을 진행해주세요`)
     return
   }
@@ -135,32 +135,26 @@ async function signup() {
   // ==========================================
   // 제대로 입력이 되었으면 그 부분에서 쿼리문 출발
   if (id.value && password.value && user_name.value && user_age.value && user_mobile.value) {
+    console.log(user_birth_date.value)
     console.log(`입력값이 모두 입력됨`);
 
     try {
       const params = {
-        user_id: id.value,
-        user_password: password.value,
-        user_name: user_name.value,
-        user_birth_date: user_birth_date.value,
-        user_age: user_age.value,
-        user_address: user_address.value,
-        user_mobile: user_mobile.value
+        "userId" : id.value,
+        "userPassword" : password.value,
+        "userName": user_name.value,
+        "userBirthDate": user_birth_date.value,
+        "userAge": user_age.value,
+        "userAddress": user_address.value,
+        "userMobile": user_mobile.value
       }
+    const response = await axios.post('http://localhost/user/insert', params, {
+      headers: {
+        'Content-Type': 'application/json' 
+      }
+    });
 
-      const response = await axios({
-        method: 'post',
-        // 이 부분 POSTMAN에서 어떤 URL쓸지 수정해야함
-        //=========================================================================        
-        baseURL: 'http://localhost',
-        url: 'user/insert',
-        //========================================================================= 
-        data: params,
-        timeout: 5000,
-        responseType: 'json'
-      })
-
-      if (response.data.code != 200) {
+      if (response.data.length == 0) {
         alert(`회원가입 중 오류가 발생했습니다.`)
       }
 
@@ -218,19 +212,19 @@ async function searchSameID() {
       responseType: 'json'
     })
     */
-    const params = new URLSearchParams();
-    params.append('userId', id.value);
-
+    const params = {
+      "userId": id.value,
+    }
     const response = await axios.post('http://localhost/user/check-id', params, {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
       }
     });
     console.log(`응답 -> ${JSON.stringify(response.data)}`)
     // ==========================================
     // 이 부분이 아이디를 DB에서 검색했을 때 만족하는 아이디가 없으므로 사용가능한 아이디
     // checked.value를 true로 만들어서 버튼이 사라지게 만들었음
-    if (response.data.status == "success") {
+    if (response.data.length == 0) {
       alert(`일치하는 아이디가 없습니다.`)
       checked.value = true;
     }
