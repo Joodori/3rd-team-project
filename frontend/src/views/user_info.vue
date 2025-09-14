@@ -194,6 +194,12 @@ async function configUserInfo() {
         console.error(`물품목록::에러발생 -> ${err}`)
     }
 }
+/*
+const API = {
+    ticket : http://localhost/getticket?user_no=${user_info.value.user_no}
+
+}
+*/
 
 async function send_money(ticket_no) {
     console.log(`send_money 호출됨`)
@@ -203,7 +209,7 @@ async function send_money(ticket_no) {
                 "ticket_no": ticket_no,
             }
 
-            const response = await axios.post('http://localhost/user/update-ticket', params, {
+            const response = await axios.post('http://localhost/updateTicket', params, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
