@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class TicketRequestDTO {
 	
+	private int ticketNo;
 	private String ticketName;
 	private int userNo;
 	private int ticketAmount;

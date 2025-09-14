@@ -19,6 +19,6 @@ public interface TicketMapper {
 		
 		List<TicketResponseDTO> getTicketList(@Param("user_no") int user_no);
 		
-
+		int updateMoneyStatus(@Param("ticket_no") int ticket_no);
 	
 }

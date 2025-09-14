@@ -3,6 +3,7 @@ package lx.edu.levelup.feature.ticket;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,5 +32,11 @@ public class TicketController {
 	public List<TicketResponseDTO> getTicketList(@RequestParam("user_no") int user_no) {
 		List<TicketResponseDTO> ticketList = ticketService.getTicket(user_no);
 		return ticketList;
+	}
+	
+	@PatchMapping("/updateMoneyStatus")
+	public boolean updateMoneyStatus(@RequestBody TicketRequestDTO dto) {
+		boolean result = ticketService.updateMoneystatus(dto.getTicketNo());
+		return result;
 	}
 }
