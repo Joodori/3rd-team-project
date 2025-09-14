@@ -41,19 +41,19 @@
   <div class="carousel-inner">
     <!-- 첫 슬라이드만 active -->
     <div class="carousel-item active">
-      <img src="/assets/hesung.jpg" class="d-block w-100 h-100" alt="hesung">
+      <img src="/assets/imageshompage/hesung.jpg" class="d-block w-100 h-100" alt="hesung">
     </div>
     <div class="carousel-item">
-      <img src="/assets/baiking.jpg" class="d-block w-100 h-100" alt="baiking">
+      <img src="/assets/imageshompage/baiking.jpg" class="d-block w-100 h-100" alt="baiking">
     </div>
     <div class="carousel-item">
-      <img src="/assets/holombride.jpg" class="d-block w-100 h-100" alt="holombride">
+      <img src="/assets/imageshompage/holombride.jpg" class="d-block w-100 h-100" alt="holombride">
     </div>
     <div class="carousel-item">
-      <img src="/assets/jailoswing.jpg" class="d-block w-100 h-100" alt="jailoswing">
+      <img src="/assets/imageshompage/jailoswing.jpg" class="d-block w-100 h-100" alt="jailoswing">
     </div>
     <div class="carousel-item">
-      <img src="/assets/jailoompdroop.jpg" class="d-block w-100 h-100" alt="jailoompdroop">
+      <img src="/assets/imageshompage/jailoompdroop.jpg" class="d-block w-100 h-100" alt="jailoompdroop">
     </div>
   </div>
   </div>
