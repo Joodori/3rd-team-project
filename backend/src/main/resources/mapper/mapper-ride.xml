@@ -4,7 +4,7 @@
 	<select id="getRideBookList" parameterType="int" resultType="RideVO">
 		
 		select f.facility_name, i.ride_book_info_time, c.ride_book_person_amount
-		
+
 		from facility f 
 		join ride r
 			on f.facility_no = r.facility_no
@@ -12,7 +12,7 @@
 			on r.facility_no = i.facility_no
 		join ride_book_confirm c
 			on i.ride_book_info_no = c.ride_book_no
-		
+
 		where c.user_no = 1;
 
 	</select>
