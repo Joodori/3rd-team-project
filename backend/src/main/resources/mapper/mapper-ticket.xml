@@ -4,7 +4,7 @@
 
 	<insert id="insertDB" parameterType="lx.edu.levelup.feature.ticket.domain.TicketVO">
 		insert into ticket(user_no, ticket_name, ticket_amount, ticket_money_status, ticket_reserve_date)
-		values(#{user_no}, #{ticket_name}, #{ticket_amount}, #{ticket_money_status}, noew())
+		values(#{user_no}, #{ticket_name}, #{ticket_amount}, #{ticket_money_status}, now())
 	</insert>
 	
 	<select id="getTicketList" parameterType="int" resultType="lx.edu.levelup.feature.ticket.domain.TicketVO">
