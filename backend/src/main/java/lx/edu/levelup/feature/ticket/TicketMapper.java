@@ -17,7 +17,7 @@ public interface TicketMapper {
 	
 		void insertDB(TicketVO vo);
 		
-		List<TicketVO> getTicketList(@Param("user_no") int user_no);
+		List<TicketResponseDTO> getTicketList(@Param("user_no") int user_no);
 		
 
 	
