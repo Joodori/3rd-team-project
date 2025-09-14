@@ -12,6 +12,12 @@
 		from ticket
 		where user_no = #{user_no}
 	</select>
-
+	
+	<!-- 관리자 마이페이지에서 입금 수락 눌렀을 때 -->
+	<update id="updateTicketMoneyStatus" parameterType="String">
+		update ticket
+		set ticket_money_status="입금완료"
+		where ticket_no = #{ticket_no}
+	</update>
 
 </mapper>
