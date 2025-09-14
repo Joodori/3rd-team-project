@@ -1,18 +1,24 @@
 package lx.edu.levelup.feature.ticket.domain;
 
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
 
-@Data// @Getter @Setter @ToString@EqualsAndHashCode, @RequiredArgsConstructor
-@NoArgsConstructor // 파라미터가 없는 기본 생성자 생성
-@AllArgsConstructor // 모든 필드를 파라미터로 받는 생성자 생성
+@Data
 public class TicketVO {
-
+	
 	private Long ticketNo;
     private int userNo;
     private String ticketName;
     private String ticketReserveDate;
-    private int ticketAmount;
-    private String ticketMoneyStatus;;
+    private int ticketAmount;  	
+    private String ticketMoneyStatus;;  	
+	
+	
+	
 
 
 }

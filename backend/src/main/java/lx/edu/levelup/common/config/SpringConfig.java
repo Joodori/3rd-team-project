@@ -36,9 +36,12 @@ public class SpringConfig {
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 
         factory.setDataSource(dataSource); // 파라미터로 받은 dataSource를 사용하는 것이 더 좋습니다.
-        
-        // 안쓰면 mapper-user.insertDB 등 호출이 인식이 안됨.
+
+        // mapperLocations 경로를 properties 파일에서 읽어오도록 수정 (더 유연함)
         factory.setMapperLocations(context.getResources(env.getProperty("mybatis.mapper-locations")));
+
+        // properties 파일의 type-aliases-package 값을 설정에 추가
+        factory.setTypeAliasesPackage(env.getProperty("mybatis.type-aliases-package"));
 
         // 나머지 추가 설정 (mapUnderscoreToCamelCase 등)
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
