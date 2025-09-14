@@ -10,13 +10,13 @@ import org.apache.ibatis.annotations.Param;
  * DB 접근 전담, mapperInterface 역할
  */
 @Mapper
-public interface TicketMapper {
+public interface TicketRepository {
 
 	
 		void insertDB(TicketVO vo);
 		
 		List<TicketResponseDTO> getTicketList(@Param("user_no") int user_no);
 		
-
+		int updateMoneyStatus(@Param("ticket_no") int ticket_no);
 	
 }

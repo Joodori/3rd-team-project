@@ -2,15 +2,19 @@ package lx.edu.levelup.feature.ticket;
 
 import java.util.List;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TicketService {
 	
-	private final TicketMapper ticketMapper;
+	private final TicketRepository ticketMapper;
 	
 	public boolean buyTicket(TicketRequestDTO ticketRequestDTO) {
 		
@@ -34,6 +38,13 @@ public class TicketService {
 	public List<TicketResponseDTO> getTicket(int user_no) {
 		List<TicketResponseDTO> ticketList = ticketMapper.getTicketList(user_no);
 		return ticketList;
+	}
+	
+	public boolean updateMoneystatus(int ticket_no) {
+		System.out.println("넘어온 :" + ticket_no);
+		int result = ticketMapper.updateMoneyStatus(ticket_no);
+		return result > 0 ;
+		
 	}
 
 }
