@@ -6,8 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import lx.edu.levelup.feature.user.domain.UserVO;
-
 /*
  * DB 접근 담당
  */
