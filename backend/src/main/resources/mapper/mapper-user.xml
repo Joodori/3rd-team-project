@@ -9,7 +9,7 @@
 		user_password)
 		values
 		(#{userName}, #{userBirthDate}, #{userMobile},
-		#{userAddress}, #{userId}, #{userPassword} )
+		#{userAddress}, #{userId}, #{userPassword})
 	</insert>
 
 	<!-- 회원가입 아이디 중복확인 & 로그인 -->

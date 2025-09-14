@@ -1,7 +1,0 @@
-
-
-@RequestBody
-model model
-
-
-controller에 return을 list나 객체로 해야 json으로 변경해서 url로 가져가는거지?
