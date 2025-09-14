@@ -5,11 +5,9 @@
 	<!-- 회원가입 -->
 	<insert id="insertDB" parameterType="lx.edu.levelup.feature.user.UserVO"> <!-- alias 안됨 -->
 		insert into `user` <!-- user는 예약어라 백틱사용 -->
-		(user_name, user_birth_date, user_mobile, user_address, user_id,
-		user_password)
+		(user_name, user_birth_date, user_mobile, user_address, user_id, user_password)
 		values
-		(#{userName}, #{userBirthDate}, #{userMobile},
-		#{userAddress}, #{userId}, #{userPassword} )
+		(#{userName}, #{userBirthDate}, #{userMobile}, #{userAddress}, #{userId}, #{userPassword} )
 	</insert>
 
 	<!-- 회원가입 아이디 중복확인 & 로그인 -->

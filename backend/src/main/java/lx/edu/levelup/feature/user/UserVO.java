@@ -18,4 +18,7 @@ public class UserVO {
 	String userId;
 	String userPassword;
 	
+	String userPasswordCipher;
+	String userPasswordIv;
+	
 }
