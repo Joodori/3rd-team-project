@@ -1,7 +1,6 @@
 <template>
   <div class="container d-flex flex-column w-100 h-100">
     <div class="container d-flex flex-column w-100 h-25">
-
       <lable>날짜선택</lable><!--날자선택-->
       <div class="calendar-container"><!--외부 install 외부 라이브러리 넣어야됨 -->
         <Calendar view="weekly" :attributes="attributes" :initial-page="startPage" locale="ko-KR" is-panded
@@ -18,7 +17,6 @@
             </label>
             <span>{{ option.value }}원</span>
           </div>
-
         </div>
 
         <div class=" d-flex flex-column w-100 h-25">
@@ -29,28 +27,16 @@
                 <button type="button" class="count-btn" @click="decrementPerson">
                   <i class="bi bi-dash-square"></i>
                 </button>
-
                 <span class="label">인원수{{ personCount }}</span>
                 <button type="button" class="count-btn" @click="incrementPerson">
                   <i class="bi bi-plus-square"></i>
                 </button>
-
               </div>
             </div>
-
           </div><!--75퍼까지 3개 차지-->
-
-
         </div>
       </div><!--전체 100 100-->
-
-
-
-
     </div><!--두번째-->
-
-
-
   </div><!--전체-->
   <div class="d-flex flex-column align-items-end w-25 h-25">
     <button @click="handleReservation()">예약</button>
@@ -142,6 +128,7 @@ const getFormattedDate = (dateObj) => {
   return `${year}-${month}-${day}`;
 };
 
+
 /**
  * [B] 예약 버튼을 클릭하면 실행될 함수
  */
@@ -151,6 +138,7 @@ const handleReservation = async () => {
 
   // 2. 유효성 검사
   if (!formattedDate) {
+    console.log(`날짜 : ${selectedDate.value}`)
     alert("날짜를 선택하세요.");
     return;
   }
