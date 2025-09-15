@@ -16,15 +16,15 @@ public class RideController {
 	
 	private final RideService rideService;
 	
-	@GetMapping("/getRideBookList")
-	public List<RideResponseDTO> getRideBookList(@RequestParam("user_no") int user_no){
-		return rideService.getRideBookList(user_no);
-	}
-	
 	@PostMapping(value= "/reserveRide", produces = "text/plain; charset=UTF-8")
 	public String reserveRide(@RequestBody RideRequestDTO dto) {
 		boolean result = rideService.reserveRide(dto);
 		return result ? "예약 완료" : "예약 실패";
 	}
-	 
+	
+	@GetMapping("/getRideBookList")
+	public List<RideResponseDTO> getRideBookList(@RequestParam("user_no") int user_no){
+		return rideService.getRideBookList(user_no);
+	}
+	
 }
