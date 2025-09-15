@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public class RideResponseDTO {
 	
+	private long rideBookConfirmNo;
 	private String facilityName;
-	private String rideBookInfoTime;
+    private String rideBookTime;
 	private int rideBookPersonAmount;
 }

@@ -7,8 +7,8 @@ public class RideVO {
 
 	private int userNo;
 	private String facilityName;
-	private String rideBookInfoTime; //탑승시각
+    private String rideBookTime;
 	private int rideBookPersonAmount; // 예약인원
-	private int rideBookNo; // 예약 가능 리스트 고유번호
+	private long rideBookNo; // 예약 가능 리스트 고유번호
 	
 }

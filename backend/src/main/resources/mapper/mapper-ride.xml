@@ -3,7 +3,7 @@
 <mapper namespace="lx.edu.levelup.feature.ride.RideRepository">
 	<select id="getRideBookList" parameterType="int" resultType="RideResponseDTO">
 		
-		select f.facility_name, i.ride_book_info_time, c.ride_book_person_amount
+		select c.ride_book_confirm_no, f.facility_name, i.ride_book_time, c.ride_book_person_amount
 		
 		from facility f 
 		join ride r
