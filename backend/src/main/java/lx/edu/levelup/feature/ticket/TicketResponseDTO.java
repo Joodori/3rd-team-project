@@ -6,6 +6,7 @@ import lombok.Getter;
 public class TicketResponseDTO {
 	
 	private Long ticketNo;
+	private int userNo;
 	private String ticketName;
 	private String ticketReserveDate;
 	private int ticketAmount;  	
@@ -14,6 +15,7 @@ public class TicketResponseDTO {
 	public static TicketResponseDTO fromEntity(TicketVO ticket) {
 		TicketResponseDTO dto = new TicketResponseDTO();
 		dto.ticketNo = ticket.getTicketNo();
+		dto.userNo = ticket.getUserNo();
 		dto.ticketName = ticket.getTicketName();
 		dto.ticketReserveDate = ticket.getTicketReserveDate();
 		dto.ticketAmount = ticket.getTicketAmount();
