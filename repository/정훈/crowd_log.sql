@@ -1,66 +1,80 @@
 -- =================================================================
--- 놀이공원 좌표 및 랜덤 시간 로그 생성 (저장 프로시저 버전)
+-- 놀이공원 자연스러운 군집 형태의 좌표 및 랜덤 시간 로그 생성
 -- =================================================================
 
--- 1. 테이블 생성
+use  land;
+-- 1. 테이블 생성 (기존과 동일)
 -- -----------------------------------------------------------------
-drop table if exists `crowd_log`;
+DROP TABLE IF EXISTS `crowd_log`;
 
-create table `crowd_log` (
-    `id`          bigint          not null auto_increment comment '좌표 고유 id',
-    `latitude`    decimal(15, 12) not null comment '위도',
-    `longitude`   decimal(16, 12) not null comment '경도',
-    `log_time`    timestamp       not null default current_timestamp comment '좌표가 찍힌 시간',
-    primary key (`id`)
-) engine=innodb comment='사용자 위치 좌표 정보';
+CREATE TABLE `crowd_log` (
+    `id`        BIGINT        NOT NULL AUTO_INCREMENT COMMENT '좌표 고유 id',
+    `latitude`  DECIMAL(15, 12) NOT NULL COMMENT '위도',
+    `longitude` DECIMAL(16, 12) NOT NULL COMMENT '경도',
+    `log_time`  TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '좌표가 찍힌 시간',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB COMMENT='사용자 위치 좌표 정보';
 
 
--- 2. 데이터 삽입용 저장 프로시저 생성
+-- 2. 개선된 데이터 삽입용 저장 프로시저 생성
 -- -----------------------------------------------------------------
-drop procedure if exists InsertRandomCoordinates;
+DROP PROCEDURE IF EXISTS InsertNaturalCoordinates;
 
--- delimiter: 명령어의 끝을 ; 대신 $$로 임시 변경
-delimiter $$
+DELIMITER $$
 
-create procedure InsertRandomCoordinates()
-begin
-    -- 반복을 위한 변수 선언
-    declare i int default 1;
+CREATE PROCEDURE InsertNaturalCoordinates()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE total_points INT DEFAULT 2000; -- 생성할 총 포인트 수
+    
+    -- 랜덤 시간 생성을 위한 변수 (기존과 동일)
+    DECLARE v_start_time DATETIME DEFAULT '2025-09-14 09:00:00';
+    DECLARE v_end_time   DATETIME DEFAULT '2025-09-14 18:00:00';
+    DECLARE v_start_unix INT DEFAULT UNIX_TIMESTAMP(v_start_time);
+    DECLARE v_end_unix   INT DEFAULT UNIX_TIMESTAMP(v_end_time);
+    DECLARE v_time_range INT DEFAULT v_end_unix - v_start_unix;
 
-    -- 랜덤 시간 범위를 설정하기 위한 변수 선언
-    declare v_start_time datetime default '2025-09-14 09:00:00'; -- 시작 시간
-    declare v_end_time   datetime default '2025-09-14 18:00:00'; -- 종료 시간
+    -- 핫스팟 주변 좌표 생성을 위한 변수
+    DECLARE hotspot_index INT;
+    DECLARE base_lat DECIMAL(15, 12);
+    DECLARE base_lng DECIMAL(16, 12);
+    DECLARE spread DECIMAL(10, 8) DEFAULT 0.0005; -- 좌표가 흩어지는 범위 (이 값을 조절하여 군집 크기 변경)
 
-    -- 시작 시간과 종료 시간을 초 단위(unix 타임스탬프)로 변환
-    declare v_start_unix int default unix_timestamp(v_start_time);
-    declare v_end_unix   int default unix_timestamp(v_end_time);
+    WHILE i <= total_points DO
+        -- 1. 4개의 핫스팟 중 하나를 랜덤으로 선택
+        SET hotspot_index = FLOOR(1 + RAND() * 3);
 
-    -- 시간 범위의 총 초(second)를 계산
-    declare v_time_range int default v_end_unix - v_start_unix;
+        -- 2. 선택된 핫스팟의 기본 좌표를 설정 (CASE 문 사용)
+        CASE hotspot_index
+            WHEN 1 THEN -- 롤러코스터
+                SET base_lat = 37.495421;
+                SET base_lng = 126.887801;
+            WHEN 2 THEN -- 회전목마
+                SET base_lat = 37.494664;
+                SET base_lng = 126.888772;
+            WHEN 3 THEN -- 먹거리존
+                SET base_lat = 37.494294;
+                SET base_lng = 126.887646;
+        END CASE;
 
-    -- i가 100이 될 때까지 반복
-    while i <= 2000 do
-        insert into `crowd_log` (latitude, longitude, log_time)
-        values (
-            -- 최소 위도 + (랜덤값 * (최대 위도 - 최소 위도))
-            37.493611 + (rand() * (37.495912 - 37.493611)),
-            -- 최소 경도 + (랜덤값 * (최대 경도 - 최소 경도))
-            126.886075 + (rand() * (126.889436 - 126.886075)),
-            -- 시작 시간(초) + (랜덤값 * 시간 범위(초))를 다시 datetime으로 변환
-            from_unixtime(v_start_unix + floor(rand() * v_time_range))
+        -- 3. 선택된 핫스팟 주변에 랜덤 좌표 생성하여 삽입
+        INSERT INTO `crowd_log` (latitude, longitude, log_time)
+        VALUES (
+            -- 기본 위도 ± 랜덤 오프셋
+            base_lat + (RAND() * 2 - 1) * spread,
+            -- 기본 경도 ± 랜덤 오프셋
+            base_lng + (RAND() * 2 - 1) * spread,
+            -- 랜덤 시간 (기존과 동일)
+            FROM_UNIXTIME(v_start_unix + FLOOR(RAND() * v_time_range))
         );
-        set i = i + 1;
-    end while;
-end$$
 
--- delimiter: 명령어의 끝을 다시 ;로 원복
-delimiter ;
+        SET i = i + 1;
+    END WHILE;
+END$$
 
+DELIMITER ;
 
 -- 3. 프로시저 실행 및 결과 확인
 -- -----------------------------------------------------------------
--- 위에서 생성한 프로시저를 호출하여 데이터를 삽입
-call InsertRandomCoordinates();
-
--- 생성된 데이터 확인 (log_time이 랜덤하게 들어갔는지 확인)
-select * from `crowd_log` order by log_time asc limit 100;
+CALL InsertNaturalCoordinates();
+SELECT * FROM `crowd_log` LIMIT 100;

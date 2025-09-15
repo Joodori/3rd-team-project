@@ -39,20 +39,41 @@ const CENTER_COORD = { lat: 37.494665, lng: 126.887733 };
 const UPDATE_INTERVAL = 60000;
 
 // --- 반응형 상태 (Reactivity State) ---
-// (개선 제안) 초기값을 설정하여 사용자 경험을 향상시킬 수 있습니다.
 const now = new Date();
 const tenMinutesAgo = new Date(now.getTime() - 10 * 60000);
-
-// ISO 8601 형식에서 초와 밀리초를 제거하여 datetime-local input에 맞게 포맷합니다.
 const formatForInput = (date) => date.toISOString().slice(0, 16);
-
 const startTime = ref(formatForInput(tenMinutesAgo));
 const endTime = ref(formatForInput(now));
+
+/**
+ * 1. 놀이기구 데이터 정의
+ */
+const ridesData = [
+  { name: '롤러코스터', position: { lat: 37.495421, lng: 126.887801 } },
+  { name: '회전목마', position: { lat: 37.494664, lng: 126.888772 } },
+  { name: '먹거리존', position: { lat: 37.494294, lng: 126.887646 } }
+];
+
+/**
+ * 2. 폴리곤의 좌표를 먼저 정의
+ * 구로구청 인근 7점 좌표
+ */
+const parkBoundaryCoords  = [
+  { lat: 37.495939, lng: 126.888231 },
+  { lat: 37.495863, lng: 126.888080 },
+  { lat: 37.495831, lng: 126.887776 },
+  { lat: 37.494964, lng: 126.886074 },
+  { lat: 37.493623, lng: 126.887278 },
+  { lat: 37.493893, lng: 126.888692 },
+  { lat: 37.494364, lng: 126.889432 },
+
+];
 
 /**
  * API 서버에서 좌표 데이터를 가져와 히트맵을 업데이트하는 함수.
  */
 const fetchDataAndUpdateHeatmap = async () => {
+  console.log(`fetchDataAndUpdateHeatmap::호출됨 (히트맵 표시)`);
   try {
     if (!startTime.value || !endTime.value) {
       console.log('시작 시간 또는 종료 시간이 설정되지 않았습니다.');
@@ -82,49 +103,83 @@ const fetchDataAndUpdateHeatmap = async () => {
 };
 
 /**
+ * 놀이기구 데이터를 받아 지도에 마커와 정보창을 생성하는 함수
+ * @param {google.maps.Map} map - 마커를 추가할 지도 객체
+ * @param {Array} ridesData - 마커를 생성할 데이터 배열
+ */
+function createRideMarkers(map, ridesData) {
+  console.log(`createRideMarkers::호출됨 (놀이기구 위치 마커표시)`);
+
+  // ✨ InfoWindow 객체를 반복문 밖에서 한 번만 생성
+  const infowindow = new google.maps.InfoWindow();
+  const markers = [];
+
+  ridesData.forEach(ride => {
+    const marker = new google.maps.Marker({
+      position: ride.position,
+      map: map,
+      title: ride.name,
+    });
+
+    // ✨ 클릭했을 때만 정보창의 내용을 설정하고 열도록 변경
+    marker.addListener("click", () => {
+      infowindow.setContent(`<h3>${ride.name}</h3>`);
+      infowindow.open(map, marker);
+    });
+
+    markers.push(marker);
+  });
+  return markers;
+}
+
+/**
+ * 좌표 데이터를 받아 지도에 경계선 폴리곤을 생성하고 반환하는 함수
+ * @param {google.maps.Map} map - 폴리곤을 추가할 지도 객체
+ * @param {Array} coords - 폴리곤을 구성할 좌표 배열
+ * @returns {google.maps.Polygon} 생성된 폴리곤 객체
+ */
+function createParkBoundaryPolygon(map, coords) {
+  console.log(`createParkBoundaryPolygon:: 폴리곤 생성함수 호출됨`)
+  const parkBoundary = new google.maps.Polygon({
+    paths: coords,
+    strokeColor: "#4A00E0",
+    strokeOpacity: 1,
+    strokeWeight: 5,
+    fillOpacity: 0.6,
+    fillColor: "#FFFFFF",
+    zIndex: -1
+  });
+
+  parkBoundary.setMap(map);
+
+  // 나중에 제어할 수 있도록 생성된 폴리곤 객체를 반환합니다.
+  return parkBoundary;
+}
+
+
+/**
  * Google 지도를 생성하고 초기화하는 함수.
  */
 const initMap = () => {
+  // 1. 지도 생성
   map = new google.maps.Map(document.getElementById('map'), {
     center: CENTER_COORD,
     zoom: 18,
   });
 
+  // 2. 마커 생성 함수 호출
+  createRideMarkers(map, ridesData);
+
+  // 3. 폴리곤 생성 함수 호출
+  createParkBoundaryPolygon(map, parkBoundaryCoords);
+
+  // 4. 히트맵 뿌리기 함수 호출
   heatmapLayer = new google.maps.visualization.HeatmapLayer({
     data: [],
     map: map,
     radius: 20,
     opacity: 0.7
   });
-
-  // ✨ --- START: 수정된 부분 --- ✨
-  // 폴리곤의 좌표를 먼저 정의합니다.
-  // 이 좌표는 예시이며, 원하시는 지역의 좌표로 변경하시면 됩니다.
-  const triangleCoords = [
-    { lat: 37.495939, lng: 126.888231 },
-    { lat: 37.495863, lng: 126.888080 },
-    { lat: 37.495831, lng: 126.887776 },
-    { lat: 37.494964, lng: 126.886074 },
-    { lat: 37.493623, lng: 126.887278 },
-    { lat: 37.493893, lng: 126.888692 },
-    { lat: 37.494364, lng: 126.889432 },
-
-  ];
-
-  // 폴리곤을 생성합니다.
-  const bermudaTriangle = new google.maps.Polygon({
-    paths: triangleCoords, // 이제 이 변수는 정의되었습니다.
-    strokeColor: "#FFFFFF",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: "#FFFFFF",
-    fillOpacity: 1,
-  });
-
-  // 지도에 폴리곤을 추가합니다.
-  bermudaTriangle.setMap(map);
-  // ✨ --- END: 수정된 부분 --- ✨
-
   fetchDataAndUpdateHeatmap();
   setInterval(fetchDataAndUpdateHeatmap, UPDATE_INTERVAL);
 };
