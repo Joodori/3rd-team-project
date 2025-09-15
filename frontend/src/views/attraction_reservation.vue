@@ -14,7 +14,7 @@
         <option disabled value="">하나를 선택하세요</option>
         <option v-for="facility in facilityList"
         :key="facility.FAICLITY_NO"
-        :value="facility.FAICLITY_NO">
+        :value="facility.FACILITY_NO">
         {{ facility.FACILITY_NAME }}
       </option>
         </select>
@@ -97,7 +97,7 @@ console.log(`인원수감소`);
 //시설 목록을 데이터 베이스에서 불러옴
 const loadFacilities = async () =>{
   try {
-    const response = await axios.get('http://localhost:8080/api/facilities');
+    const response = await axios.get('http://localhost:8080/reserveRide'); //원격 데이터 베이스에서 가져와야ㅐ됨
     facilityList.value = response.data;
     console.log('시설 목록 로드 완료:', facilityList.value);
   }catch(err){
@@ -118,7 +118,7 @@ const handleSubmit = async () =>{
       facilityNo: selected.value,
       personCount: personCount.value
     };
-    const response =await axios.post('http://localhost:8080/api/attraction_reservation',params, {
+    const response =await axios.post('http://localhost:8080/getRideBookList',params, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -126,8 +126,12 @@ const handleSubmit = async () =>{
     console.log('예약 응답:',response.data);
   }catch(error){
     console.error('예약 실패', error);
+    //에러처리
   }
 }
+onMounted(async () =>{
+  await loadFacilities(); //초기로딩에 시설목록 불러오기
+})
   
 </script>
 
