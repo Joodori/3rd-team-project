@@ -108,7 +108,6 @@ const fetchDataAndUpdateHeatmap = async () => {
   }
 };
 
-
 /**
  * Google 지도를 생성하고 초기화하는 함수.
  */
