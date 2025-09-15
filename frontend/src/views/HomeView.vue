@@ -77,7 +77,7 @@ const ticket_reservation =() =>{
 }
 //놀이기구 및 시설안내로 이동하는  버튼 매소드
 const ride_faclityinfo =() =>{
-  router.push('/ride_faclity_map.vue')
+  router.push('/ride_faclity_map')
 }
 //인구밀도 히트맵 조회하기 
 const event =() => {

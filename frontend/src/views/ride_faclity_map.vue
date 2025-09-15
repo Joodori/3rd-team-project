@@ -48,7 +48,7 @@ let heatmapLayer = null;
 // API 기본 URL (파라미터 제외)
 const BASE_API_URL = 'http://localhost/api/heatmap/points';
 // 지도 중심 좌표
-const CENTER_COORD = { lat: 37.494665, lng: 126.887733 };
+const CENTER_COORD = { lat: 37.494665, lng: 126.887733 };//구로구청
 // 데이터 자동 갱신 주기 (밀리초 단위, 예: 60000ms = 1분)
 const UPDATE_INTERVAL = 60000;
 

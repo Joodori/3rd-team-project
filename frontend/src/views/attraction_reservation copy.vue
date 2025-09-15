@@ -24,7 +24,7 @@
        :value="35000" id="ticketFree"
       name="ticketType"
       v-model="selectedTicketPrice"/>
-    <label class="form-check-label" for="ticketFree">
+    <label class="form-check-label" for="tiketFree">
       자유이용권 35000원
     </label>
     </div>
@@ -32,7 +32,7 @@
       <input class="form-check-input" type="radio" 
       :value="20000" id="ticketAfternoon" name="ticketType" 
       v-model="selectedTicketPrice"/>
-    <label class="form-check-label" for="ticketAfternoon"><!--라디오 선택 항목-->
+    <label class="form-check-label" for="tiketAfternoon"><!--라디오 선택 항목-->
       오후권 20000원
     </label>
     </div>
@@ -40,14 +40,14 @@
     <div class="form-check">
       <input class="form-check-input" type="radio" :value="40000" id="ticketVip" 
       v-model="selectedTicketPrice"/>
-    <label class="form-check-label" for="ticketVip">
+    <label class="form-check-label" for="tiketType">
       vip이용권 40000원
     </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="radio" :value="50000" id="ticketVvip"
       v-model="selectedTicketPrice"/>
-    <label class="form-check-label" for="ticketVvip">
+    <label class="form-check-label" for="tiketType">
       vvip이용권 50000원
     </label>
     </div>
@@ -99,7 +99,7 @@
   
   </div><!--전체-->
      <div class="d-flex flex-column align-items-end w-25 h-25">
-      <button @click="handleReservation">예약</button>
+      <button @click="handleReservation" console.log(`버튼 눌림;`)>예약</button>
      </div>
 </template>
 
@@ -182,7 +182,6 @@ const getTicketName =(price) =>{
     case 20000: return "오후권";
     case 40000: return "vip이용권";
     case 50000: return "vvip이용권";
-    default: return "";
   }
 }
 
@@ -190,8 +189,6 @@ const getTicketName =(price) =>{
  * [B] 예약 버튼을 클릭하면 실행될 함수
  */
 const handleReservation = async () => {
-  console.log("버튼 눌림");
-  
   // 1. 위에서 만든 함수를 호출하여 형변환 수행
   const formattedDate = getFormattedDate(selectedDate.value); // 예: '2025-09-15'
 
@@ -212,26 +209,25 @@ const handleReservation = async () => {
   // 3. DTO 에 맞는 객체 데이터로 객체 수정
   const reservationData = {
      ticketName: getTicketName(selectedTicketPrice.value), // 선택한 티켓 이름
-     userNo: 1, // 실제 사용자 번호로 변경 필요
-     ticketAmount: personCount.value, // 티켓 수량 (인원수)
-     ticketMoneyStatus: "결제완료", // 결제 상태
+    ticketAmount: personCount.value, // 티켓 수량 (인원수)
+    ticketMoneyStatus: "결제완료", // 결제 상태
+    ticketReserveDate: formattedDate // 예약 날짜 (필요시 추가)
   };
-  
   console.log("전송할 예약 데이터:", reservationData);
-  
-  try {
-    const response = await axios.post('http://localhost:8080/api/reservations', reservationData, {
+     
+    const response = await axios.post('http://localhost/api/reservations', reservationData, {
       headers: {
         'Content-Type': 'application/json'
       }
     });
     console.log("서버응답:", response.data);
-    alert(`예약이 완료되었습니다!\n날짜: ${formattedDate}\n티켓: ${getTicketName(selectedTicketPrice.value)}\n인원: ${personCount.value}명\n총 금액: ${totalCostFormatted.value}원`);
-  } catch (error) {
+     alert(`예약이 완료되었습니다!\n날짜: ${formattedDate}\n티켓: ${getTicketName(selectedTicketPrice.value)}
+     \n인원: ${personCount.value}명\n총 금액: ${totalCostFormatted.value}원`);
+  }, catch (error) {
     console.error("예약 실패:", error);
     alert("예약에 실패했습니다. 다시 시도해주세요.");
   }
-};
+
 
 </script>
 
