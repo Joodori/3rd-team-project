@@ -12,7 +12,10 @@ public interface RideRepository {
 	
 	List<RideResponseDTO> getRideBookList(@RequestParam("user_no") int user_no);
 	
+	List<RideResponseDTO> getRideReserveList();
+
 	int updateRideBookInfoAmount(RideVO vo);
 	
 	int deleteRideBookConfirm(@RequestParam("ride_book_confirm_no") int ride_book_confirm_no);
+	
 }

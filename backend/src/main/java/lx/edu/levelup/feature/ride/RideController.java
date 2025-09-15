@@ -23,6 +23,11 @@ public class RideController {
 		return result ? "예약 완료" : "예약 실패";
 	}
 	
+	@PostMapping("/getRideReserveList")
+	public List<RideResponseDTO> getRideReserveList(){
+		return rideService.getRideReserveList();
+	}
+
 	@GetMapping("/getRideBookList")
 	public List<RideResponseDTO> getRideBookList(@RequestParam("user_no") int user_no){
 		return rideService.getRideBookList(user_no);

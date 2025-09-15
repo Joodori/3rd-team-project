@@ -364,13 +364,14 @@ async function send_money(ticket_no, moneyStatus) {
 }
 
 // 놀이기구 예약 취소 함수
-async function cancelReservation(facility_name , reserve_no) {
+async function cancelReservation(reserve_no,facility_name) {
+    console.log(typeof(reserve_no))
     try {
         const params = {
-            "rideBookConfirmNo" : reserve_no
+            rideBookConfirmNo : reserve_no
         }
 
-        const response = await axios.patch('http://localhost/cancelReservation', params, {
+        const response = await axios.delete('http://localhost/cancelReservation', params, {
             headers: {
                 'Content-Type': 'application/json'
             }
