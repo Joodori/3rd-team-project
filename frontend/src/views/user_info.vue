@@ -34,6 +34,7 @@
 
         </div>
 
+        <!-- 관리자 기본정보 -->
         <div v-if="config === 'admin'" class="d-flex flex-column justify-content-center align-items-center py-5">
             <div class="bg-white rounded p-4 w-100">
                 <h2 class="mb-4 text-center fw-bold">이용자들의 입금내역 확인하는 관리자 페이지입니다</h2>
@@ -117,8 +118,24 @@
 
         <div v-if="config === 'admin'">
             <!-- 관리자가 보는 입장권 입금확인부분 -->
-            <div>
-
+            <div v-for="(ticket, index) in ticket" :key="ticket.ticketNo">
+                <div class="d-flex flex-row m-5 p-5 gap-3  ">
+                    <div class="d-flex align-items-center  " style="width: 30%;">
+                        <h1>귀여운 이미지</h1> <!-- 티켓같이 귀여운거 넣쟈-->
+                        <img src="" />
+                    </div>
+                    <div class="d-flex flex-column  " style="width: 50%;">
+                        <h1>USER NO : {{ ticket.userNo }}</h1>
+                        <h1>TICKET NAME : {{ ticket.ticketName }}</h1>
+                        <h1>RESERVED DATE : {{ ticket.ticketReserveDate }}</h1>
+                        <h1>TICKET AMOUNT : {{ ticketTicketAmount }}</h1>
+                    </div>
+                    <div class="d-flex flex-column  " style="width: 20%;">
+                        <h1>입금 상태 : {{ ticket.ticketMoneyStatus }}</h1>
+                        <button class="btn btn-info" @click="send_money(ticket.ticketNo)"
+                            style="height: 30px; font-size: 8px;">확인하기</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -134,7 +151,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const userStore = useUserInfo()
-const { user, user_info, ticket, ride, config, loginStatus } = storeToRefs(userStore)
+const { user_info, ticket, ride, config, loginStatus } = storeToRefs(userStore)
 
 const no_reserve = ref(true)
 
@@ -145,7 +162,8 @@ onMounted(() => {
     console.log(`userName : ${user_info.value.user_name}`)
     console.log(`user_info 호출됨`)
     checkLogin()
-    configUserInfo()
+    readTickets()
+    readRideBooks()
 })
 
 function checkLogin() {
@@ -169,11 +187,9 @@ function logout() {
     router.push('/')
 }
 
-async function configUserInfo() {
-
+async function readTickets() {
+    // 일반 사용자일때 사용자No로 입장권 내역 가져옴
     if (config.value === 'user') {
-
-
         try {
 
             const response = await axios.get(`http://localhost/getticket?user_no=${user_info.value.user_no}`, {
@@ -197,23 +213,25 @@ async function configUserInfo() {
             console.error(`물품목록::에러발생 -> ${err}`)
         }
     }
+
+    // 관리자일때는 모든 사용자의 입장권구매내역이 나옴
     else {
         try {
-    
+
             const response = await axios.get(`http://localhost/getticketAdmin`, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             console.log(`응답 -> ${JSON.stringify(response.data)}`)
             ticket.value = response.data
             if (ticket.value.length == 0) {
                 alert(`없어요`)
             }
-    
-    
-    
+
+
+
         } catch (err) {
             console.error(`물품목록::에러발생 -> ${err}`)
         }
@@ -221,30 +239,89 @@ async function configUserInfo() {
     }
 }
 
+async function readRideBooks() {
+    // 관리자가 로그인 한 경우에는 return시킴
+    if (config.value === 'admin') {
+        return
+    }
+
+    try {
+
+        const response = await axios.get(`http://localhost/getRideBookList?user_no=${user_info.value.user_no}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        console.log(`응답 -> ${JSON.stringify(response.data)}`)
+        ride.value = response.data
+        if (ride.value.length == 0) {
+            alert(`없어요`)
+        }
+
+
+
+    } catch (err) {
+        console.error(`물품목록::에러발생 -> ${err}`)
+    }
+}
+
 async function send_money(ticket_no) {
     console.log(`send_money 호출됨`)
-    if (confirm(`XX은행 1002-757-04-8585 에 입금하셨습니까?`)) {
-        try {
-            const params = {
-                "ticketNo": ticket_no,
-            }
 
-            const response = await axios.patch('http://localhost/updateMoneyStatusUser', params, {
-                headers: {
-                    'Content-Type': 'application/json'
+    // 일반 사용자일때 입금대기 -> 입금완료로 바뀌게 만듦
+    if (config.value === "user") {
+
+        if (confirm(`XX은행 1002-757-04-8585 에 입금하셨습니까?`)) {
+
+            try {
+                const params = {
+                    "ticketNo": ticket_no,
                 }
-            });
 
-            console.log(`응답 -> ${JSON.stringify(response.date)}`)
+                const response = await axios.patch('http://localhost/updateMoneyStatusUser', params, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-            // 만약 update에 실패했다면
-            if (response.data == "") {
-                alert(`응답이없으,,ㅁ`)
+                console.log(`응답 -> ${JSON.stringify(response.date)}`)
+
+                // 만약 update에 실패했다면
+                if (response.data == "") {
+                    alert(`응답이없으,,ㅁ`)
+                }
+                readTickets()
+
+            } catch (error) {
+
             }
-            configUserInfo()
+        }
+    } else {
+        if (confirm(`입급확인 처리하시겠습니까?`)) {
 
-        } catch (error) {
+            try {
+                const params = {
+                    "ticketNo": ticket_no,
+                }
 
+                const response = await axios.patch('http://localhost/updateMoneyStatusUser', params, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log(`응답 -> ${JSON.stringify(response.date)}`)
+
+                // 만약 update에 실패했다면
+                if (response.data == "") {
+                    alert(`서버측에 문의해주세요`)
+                }
+                readTickets()
+
+            } catch (error) {
+
+            }
         }
     }
 

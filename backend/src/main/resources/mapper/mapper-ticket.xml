@@ -4,7 +4,7 @@
 
 	<insert id="insertDB" parameterType="TicketVO">
 		insert into ticket(user_no, ticket_name, ticket_amount, ticket_money_status, ticket_reserve_date)
-		values(#{userNo}, #{ticketName}, #{ticketAmount}, #{ticketMoneyStatus}, now())
+		values(#{userNo}, #{ticketName}, #{ticketAmount}, "입금대기", now())
 	</insert>
 
 	<!-- 유저페이지에서 뜨는 입장권 리스트 -->
