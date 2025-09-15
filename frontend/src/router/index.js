@@ -48,12 +48,6 @@ const router = createRouter({
     },
     /*
     {
-      path: '/event', //인구 밀도 히트맵 
-      name: 'event',
-      component: () => import('../views/event.vue'),
-    },
-    
-    {
       path: '/ride_faclity_map', //인구 밀도 히트맵
       name: 'ride_faclity_map',
       component: () => import('../views/ride_faclity_map.vue'),

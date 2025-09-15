@@ -2,7 +2,6 @@ package lx.edu.levelup.feature.ticket;
 
 import java.util.List;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
