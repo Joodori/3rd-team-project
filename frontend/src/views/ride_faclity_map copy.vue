@@ -1,6 +1,6 @@
 <template>
   <!-- position-relative와 vh-100 클래스로 컨테이너를 화면 전체에 맞게 설정 -->
-  <div class="position-absolute top-0 bottom-0 start-0 end-0"><!--크기너무큼 좀 줄여랴 할듯 부모영역 기준으로-->
+  <div class="position-absolute top-0 bottom-0 start-0 end-0"><!--크기너무큼 좀 줄여랴 할듯-->
     <!-- 지도가 표시될 DOM 요소 -->
     <div id="map" class="w-100 h-100"></div>
 
