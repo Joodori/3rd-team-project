@@ -35,5 +35,13 @@ public class UserRepository {
 	public String findUserPw(UserVO vo) {
 		return session.selectOne("mapper-user.findUserPw", vo);
 	}
+	
+	// 회원 탈퇴
+	public int deleteAccount(UserVO vo) {
+		int ret1 = session.delete("deleteTicketByUserNo", vo);
+		int ret2 = session.delete("deleteRideByUserNo", vo);
+		int ret3 = session.delete("deleteUserByUserNo", vo);
+		return ret1 + ret2 + ret3;
+	}
 
 }
