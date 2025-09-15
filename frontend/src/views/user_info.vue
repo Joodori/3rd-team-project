@@ -92,23 +92,31 @@
                 </div>
 
                 <div v-if="!no_reserve">
-                    <div class="d-flex flex-row justify-content-around  ">
-                        <tr>
-                            <th>놀이기구 이름</th>
-                            <th>놀이기구 예약시간</th>
-                            <th>놀이기구 예약인원</th>
-                            <th>취소하기</th>
-                        </tr>
-                    </div>
-
-                    <div v-for="(item, index) in ride" :key="ride.ride_book_confirm_no">
-                        <tr>
-                            <td>{{ item.ride_book_confirm_no }}</td> <!-- 이건 그냥 깡통 auto-increament-->
-                            <td>{{ item.facility_name }}</td>
-                            <td>{{ item.ride_book_info_time }}</td>
-                            <td>{{ item.ride_book_person_amount }}</td>
-                        </tr>
-                    </div>
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>예약 번호</th>
+                                <th>놀이기구 이름</th>
+                                <th>예약 시간</th>
+                                <th>예약 인원</th>
+                                <th>취소하기</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in ride" :key="item.rideBookConfirmNo">
+                                <td>{{ item.rideBookConfirmNo }}</td>
+                                <td>{{ item.facilityName }}</td>
+                                <td>{{ item.rideBookInfoTime ?? '예약시간 없음' }}</td>
+                                <td>{{ item.rideBookPersonAmount }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger"
+                                        @click="cancelReservation(item.rideBookConfirmNo)">
+                                        취소
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -243,7 +251,6 @@ async function readRideBooks() {
     }
 
     try {
-
         const response = await axios.get(`http://localhost/getRideBookList?user_no=${user_info.value.user_no}`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -251,11 +258,14 @@ async function readRideBooks() {
         })
 
         console.log(`응답 -> ${JSON.stringify(response.data)}`)
+        console.log(`time data type : ${typeof (response.data[0].rideBookTime)}`)
         ride.value = response.data
-        if (ride.value.length == 0) {
+
+        if (ride.value.length != 0) {
+            no_reserve.value = false
+        } else {
             console.log(`놀이기구 예약내역 없음`)
         }
-
     } catch (err) {
         console.error(`물품목록::에러발생 -> ${err}`)
     }
