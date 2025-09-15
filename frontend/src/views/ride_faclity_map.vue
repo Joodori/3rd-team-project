@@ -4,34 +4,24 @@
     <!-- 지도가 표시될 DOM 요소 -->
     <div id="map" class="w-100 h-100"></div>
 
-    <!-- 시간 선택 버튼 UI: Metronic/Bootstrap 스타일 적용 -->
-    <!-- position-absolute, p-5, z-index-1 클래스로 위치와 레이어 순서 지정 -->
-    <div class="position-absolute top-0 start-0 p-5 z-index-1">
-      <!-- .btn-group과 .shadow-sm으로 버튼들을 그룹화하고 그림자 효과 추가 -->
-      <div class="btn-group shadow-sm">
-        <button
-            type="button"
-            class="btn"
-            :class="selectedMinutes === 10 ? 'btn-primary' : 'btn-light'"
-            @click="updateTimeRange(10)">
-          최근 10분
-        </button>
-        <button
-            type="button"
-            class="btn"
-            :class="selectedMinutes === 30 ? 'btn-primary' : 'btn-light'"
-            @click="updateTimeRange(30)">
-          최근 30분
-        </button>
-        <button
-            type="button"
-            class="btn"
-            :class="selectedMinutes === 60 ? 'btn-primary' : 'btn-light'"
-            @click="updateTimeRange(60)">
-          최근 1시간
-        </button>
+    <div class="position-absolute top-0 end-0 p-5 z-index-1 bg-white rounded shadow-sm">
+      <!-- 시작 시간 -->
+      <div class="mb-3">
+        <label for="start-time" class="form-label"><b>시작 시간</b></label>
+        <input type="datetime-local" class="form-control" v-model="startTime">
       </div>
+      <!-- 종료 시간 -->
+      <div class="mb-3">
+        <label for="end-time" class="form-label"><b>종료 시간</b></label>
+        <input type="datetime-local" class="form-control" v-model="endTime">
+      </div>
+
+      <!-- 히트맵 조회 버튼 -->
+      <button type="button" class="btn btn-success w-100" @click="fetchDataAndUpdateHeatmap">
+        히트맵 조회
+      </button>
     </div>
+
   </div>
 </template>
 
@@ -62,7 +52,8 @@ const UPDATE_INTERVAL = 60000;
 // --- 반응형 상태 (Reactivity State) ---
 // 사용자가 선택한 시간(분)을 저장하는 반응형 변수입니다. 기본값은 10분입니다.
 // 이 값이 바뀌면 <template> 부분의 버튼 스타일이 자동으로 변경됩니다.
-const selectedMinutes = ref(10);
+const startTime = ref();
+const endTime = ref();
 
 /**
  * API 서버에서 좌표 데이터를 가져와 히트맵을 업데이트하는 함수.
@@ -71,8 +62,8 @@ const selectedMinutes = ref(10);
 const fetchDataAndUpdateHeatmap = async () => {
   // try-catch 문으로 API 요청 중 발생할 수 있는 오류를 처리합니다.
   try {
-    // selectedMinutes의 현재 값을 이용해 전체 API URL을 동적으로 만듭니다. (예: .../points?minutes=10)
-    const apiUrl = `${BASE_API_URL}?minutes=${selectedMinutes.value}`;
+    // startTime와 endTime 현재 값을 이용해 전체 API URL을 동적으로 만듭니다. (예: .../points?startTime=?endTime=)
+    const apiUrl = `${BASE_API_URL}?startTime=${startTime.value}&endTime=${endTime.value}`;
 
     // 개발자 도구 콘솔에 현재 진행 상황을 로그로 남깁니다.
     console.log(`데이터를 가져오는 중... (URL: ${apiUrl})`);
@@ -115,19 +106,6 @@ const fetchDataAndUpdateHeatmap = async () => {
     // 에러 발생 시 히트맵 데이터를 비워서 지도에서 사라지게 합니다.
     heatmapLayer.setData([]);
   }
-};
-
-/**
- * 시간 선택 버튼을 클릭했을 때 호출되는 함수.
- * @param {number} minutes - 새로 선택된 시간(분) (10, 30, 60)
- */
-const updateTimeRange = (minutes) => {
-  // 콘솔에 변경된 시간 값을 로그로 남깁니다.
-  console.log(`시간 범위를 ${minutes}분으로 변경합니다.`);
-  // 반응형 변수인 selectedMinutes의 값을 클릭된 버튼의 시간으로 변경합니다. (.value로 접근)
-  selectedMinutes.value = minutes;
-  // 시간 범위가 바뀌었으므로, 즉시 새 설정으로 데이터를 다시 가져와 히트맵을 업데이트합니다.
-  fetchDataAndUpdateHeatmap();
 };
 
 
