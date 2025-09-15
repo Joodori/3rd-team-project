@@ -3,6 +3,9 @@ package lx.edu.levelup.common.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+//주형수정
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+//주형수정
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -42,5 +45,15 @@ public class WebMVCConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
+	// 주형 수정
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+	    registry.addMapping("/**")  // 모든 경로에 대해
+	            .allowedOrigins("http://localhost:5173")  // localhost:5173 출처를 허용
+	            .allowedMethods("*")  // 모든 HTTP 메서드 허용 (GET, POST 등)
+	            .allowedHeaders("*")  // 모든 헤더 허용
+	            .allowCredentials(true);  // 쿠키 인증 허용 시 필요
+	}
+	// 주형수정
 }
 
