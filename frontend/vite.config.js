@@ -10,6 +10,10 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+    server: {
+        // 이 부분을 추가해주세요!
+        allowedHosts: ['lxlevelup.ngrok.io'],
+    },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

@@ -83,28 +83,6 @@ async function login() {
   }
 
   try {
-    /**
-     * 
-     const params = {
-      userId : id.value,
-      userPassword : password.value
-    }
-    
-    const response = await axios({
-          method: 'post',
-          // id, password로 user테이블에서 select하는 쿼리문 들어있는 url
-          //=========================================================================        
-          baseURL: 'http://localhost',
-          url: 'user/login',
-          //========================================================================= 
-          data: params,
-          timeout: 5000,
-          responseType: 'json'
-        })
-        
-        console.log(`응답 -> ${JSON.stringify(response.data)}`)
-        */
-
     const params = {
       "userId": id.value,
       "userPassword": password.value
