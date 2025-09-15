@@ -33,5 +33,16 @@
 		where user_id = #{userId}
 		and user_name = #{userName} and user_address = #{userAddress} and user_id = #{userId}
 	</select>
+	
+	<!-- 회원 탈퇴 (티켓, 놀이기구 예약, 회원정보 -->
+	<delete id="deleteTicketByUserNo" parameterType="lx.edu.levelup.feature.user.UserVO">
+		delete from ticket where user_no = #{userNo}
+	</delete>
+	<delete id="deleteRideByUserNo" parameterType="lx.edu.levelup.feature.user.UserVO">
+		delete from ride_book_confirm where user_no = #{userNo}
+	</delete>
+	<delete id="deleteUserByUserNo" parameterType="lx.edu.levelup.feature.user.UserVO">
+		delete from `user` where user_no = #{userNo}
+	</delete>
 
 </mapper>

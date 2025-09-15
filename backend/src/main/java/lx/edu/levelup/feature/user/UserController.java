@@ -70,5 +70,14 @@ public class UserController {
 		String userPw = repo.findUserPw(vo);
 		return userPw;
 	}
+	
+	/*
+	 * 회원 탈퇴
+	 */
+	@PostMapping("/delete-account")
+	public int deleteAccount(@RequestBody UserVO vo) {
+		int result = repo.deleteAccount(vo);
+		return result;
+	}
 
 }
