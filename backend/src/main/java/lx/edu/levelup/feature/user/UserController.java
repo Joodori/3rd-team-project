@@ -17,11 +17,8 @@ public class UserController {
 	@Autowired
 	UserRepository repo;
 
-	//@Autowired
-	// TicketRepository ticketRepo; // 티켓 관련 db 접근 (마이페이지-티켓내역 조회시 사용)
-
 	/*
-	 * 회원가입 -> postman 확인함
+	 * 회원가입
 	 * 행 개수 반환 (성공시 1 반환), 근데 null 값 있어도 1 반환 하니까 프론트에서 입력값 없으면 입력하라고 해야됨.
 	 */
 	@PostMapping("/insert")
@@ -42,16 +39,13 @@ public class UserController {
 
 	/*
 	 * 로그인
-	 * id, pw 조회 후 해당 i 가진 사람의 정보 반환, 없으면 빈 배열 반환
+	 * id, pw 조회 후 해당 id 가진 사람의 정보 반환, 없으면 빈 배열 반환
 	 * 이 반환값을 프론트에서 받아서 마이페이지에 적용
 	 * 세션 사용 안하니까 프론트에서 관리자 아이디 구분해서 관리해야됨. userNo도
 	 */
 	@PostMapping("/login")
 	public List<UserVO> login(@RequestBody UserVO vo, HttpSession session) {
 		List<UserVO> result = repo.findUser(vo);
-		if (result.isEmpty()) {
-			return result;
-		}
 		return result;
 	}
 
@@ -78,14 +72,12 @@ public class UserController {
 	}
 	
 	/*
-	 * 회원 - 마이페이지 입장권 내역
+	 * 회원 탈퇴
 	 */
-	
-	/*
-	 * 회원 - 마이페이지 놀이기구 예약 내역
-	 */
+	@PostMapping("/delete-account")
+	public int deleteAccount(@RequestBody UserVO vo) {
+		int result = repo.deleteAccount(vo);
+		return result;
+	}
 
-	/*
-	 * 관리자 - 마이페이지 입금내역
-	 */
 }

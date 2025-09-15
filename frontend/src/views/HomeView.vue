@@ -30,10 +30,7 @@
        <button class="btn btn-primary w-100">티켓예메</button>
       </div>
 
-
     </div>
-    
-    
   </div>
   </div>
   
@@ -57,9 +54,6 @@
     </div>
   </div>
   </div>
-  
-
-
 
 </template>
 
@@ -79,9 +73,10 @@ const ticket_reservation =() =>{
 const ride_faclityinfo =() =>{
   router.push('/ride_faclity_map')
 }
-//인구밀도 히트맵 조회하기 
+//인구밀도 히트맵 조회하기 W
 const event =() => {
   router.push('/event.vue')
+
 }
 
 // 스토어 (공통저장소에 있는 것 사용하기)
@@ -107,12 +102,6 @@ import axios from 'axios'
 import { Modal } from 'bootstrap'
 
 //예메 페이지로 이동 
-
-
-
-
-
-
 
 </script>
 <style scoped>

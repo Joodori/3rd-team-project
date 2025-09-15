@@ -10,10 +10,6 @@ public class TicketVO {
     private String ticketName;
     private String ticketReserveDate;
     private int ticketAmount;  	
-    private String ticketMoneyStatus;;  	
-	
-	
-	
-
+    private String ticketMoneyStatus;
 
 }

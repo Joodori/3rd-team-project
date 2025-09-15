@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lx.edu.levelup.feature.ride.RideRepository">
-	<select id="getRideBookList" parameterType="int" resultType="RideVO">
+	<select id="getRideBookList" parameterType="int" resultType="RideResponseDTO">
 		
 		select f.facility_name, i.ride_book_info_time, c.ride_book_person_amount
-
+		
 		from facility f 
 		join ride r
 			on f.facility_no = r.facility_no
@@ -12,13 +12,20 @@
 			on r.facility_no = i.facility_no
 		join ride_book_confirm c
 			on i.ride_book_info_no = c.ride_book_no
-
-		where c.user_no = 1;
+		
+		where c.user_no = #{user_no};
 
 	</select>
 	
-	<insert id="insertRideBookConfirm" parameterType="RideRequestVO">
+	<insert id="insertRideBookConfirm" parameterType="RideVO">
 		insert into ride_book_confirm(user_no, ride_book_no, ride_book_person_amount)
 			values(#{userNo}, #{rideBookNo}, #{rideBookPersonAmount})
 	</insert>
+
+	<update id="updateRideBookInfoAmount" parameterType="RideVO">
+		update ride_book_infos
+		set ride_book_info_amount = ride_book_info_amount - #{rideBookPersonAmount}
+		where ride_book_info_no = #{rideBookNo}
+			and ride_book_info_amount >= #{rideBookPersonAmount}
+	</update>
 </mapper>

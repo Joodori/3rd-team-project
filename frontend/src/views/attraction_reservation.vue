@@ -8,15 +8,15 @@
     <div class="card"> <!--카드로 감싸기-->
     <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand">예약 가능 어트렉션 조회{{ selectedRideName }}</a>
+    <a class="navbar-brand">예약 가능 어트렉션 조회</a>
     <form class="d-flex">
       <select v-model="selected">
         <option disabled value="">하나를 선택하세요</option>
-        <option v-for="r in rides" :key="r.rideBookNo" value="r.rideBookNo">
-          <select>
-            {{  }}
-          </select>
-        </option>
+        <option v-for="facility in facilityList"
+        :key="facility.FAICLITY_NO"
+        :value="facility.FAICLITY_NO">
+        {{ facility.FACILITY_NAME }}
+      </option>
         </select>
       <button class="btn btn-outline-success" type="submit">예약</button><!--검색 버튼 생성-->
     </form>
@@ -68,10 +68,9 @@
   </div><!--전체-->
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { usePagination } from '@/util/pagination.js'
-import { onMounted ,ref } from 'vue'; // 페이지 실행되고 바로실행
-import { Calendar } from 'v-calendar';
+import { onMounted ,ref,computed } from 'vue'; // 페이지 실행되고 바로실행
 import 'v-calendar/style.css';
 import{Modal} from 'bootstrap';
 import dayjs from "dayjs";
@@ -80,13 +79,12 @@ import axios from 'axios'; //api 호출을 위한 추가
 
 // 달력에 표시할 데이터를 정의하는 부분입니다. (핵심!)
 // ref를 사용해 반응형 데이터로 만듭니다.
-const selected = ref()
-const personCount = ref(0); //어른 반응형 함수 
+const facilityList = ref([]) //facilty 테이브 데이터
+const selectedFacilityNo = ref('');//선택된 시설번호
+const selected = ref('')
+const personCount = ref(0); //인원수 함수 
 const defaultDay = dayjs();
 const currentTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
-
-const selectedRideNo = ref(''); //선택한 어트렉션 번호
-const userNo = ref(1);
 const incrementPerson = () => {
   personCount.value++;
   console.log(`인원수증가`);
@@ -96,13 +94,41 @@ const decrementAdults =() =>{
   personCount.value--;
 console.log(`인원수감소`);
 }
-onMounted(()=>{
-
-})
-const rides: {
-  
+//시설 목록을 데이터 베이스에서 불러옴
+const loadFacilities = async () =>{
+  try {
+    const response = await axios.get('http://localhost:8080/api/facilities');
+    facilityList.value = response.data;
+    console.log('시설 목록 로드 완료:', facilityList.value);
+  }catch(err){
+    console.error('시설 목록 로드 실패:', error);
+  }
 }
-
+const handleSubmit = async () =>{
+  if(!selected.value){
+    alert('시설을 선택해주세요.');
+    return;
+  }
+  if(personCount.value <0){
+    alert(`인원수를 입력하세요`);
+    return;
+  }
+  try{
+    const params ={
+      facilityNo: selected.value,
+      personCount: personCount.value
+    };
+    const response =await axios.post('http://localhost:8080/api/attraction_reservation',params, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log('예약 응답:',response.data);
+  }catch(error){
+    console.error('예약 실패', error);
+  }
+}
+  
 </script>
 
 <style scoped>
