@@ -1,184 +1,156 @@
 <template>
-<div class="theme-park-home-v2">
-  <!-- Top Navigation -->
-  <nav class="top-nav">
+<div class="magic-park-grid">
+  <!-- Header Strip -->
+  <header class="park-header">
     <div class="container-fluid">
-      <div class="d-flex justify-content-between align-items-center py-3">
-        <h1 class="park-logo">🎢 매직랜드 🎠</h1>
-        <div class="nav-buttons">
-          <button @click="goToLogin()" class="nav-btn login-btn">로그인</button>
-          <button @click="goToSignup()" class="nav-btn signup-btn">회원가입</button>
+      <div class="header-content">
+        <div class="park-brand">
+          <span class="brand-icon">🎡</span>
+          <span class="brand-name">MAGIC LAND</span>
+        </div>
+        <div class="header-actions">
+          <button @click="goToLogin()" class="header-btn">LOGIN</button>
+          <button @click="goToSignup()" class="header-btn signup">JOIN</button>
         </div>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- Main Welcome Section -->
-  <div class="welcome-banner">
-    <div class="container-fluid">
-      <div class="text-center py-4">
-        <h2 class="welcome-title">환상의 놀이공원에 오신 것을 환영합니다! 🎪</h2>
-        <p class="welcome-subtitle">즐거운 하루를 보내세요!</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Content Area -->
-  <div class="container-fluid px-4 py-4">
-    <div class="row">
+  <!-- Main Grid Layout -->
+  <main class="grid-container">
+    <div class="container-fluid p-4">
       
-      <!-- Left Column - Main Actions -->
-      <div class="col-lg-8 mb-4">
-        
-        <!-- Primary Action - Ticket Booking -->
-        <div class="action-section mb-4">
-          <button @click="ticket_reservation()" class="primary-btn ticket-btn w-100">
-            <div class="btn-content">
-              <div class="btn-icon">🎫</div>
-              <div class="btn-text">
-                <h3 class="btn-title">입장권 예매</h3>
-                <p class="btn-desc">온라인 할인가로 미리 예매하세요</p>
-                <span class="discount-tag">최대 30% 할인</span>
-              </div>
-              <div class="btn-arrow">▶</div>
-            </div>
-          </button>
-        </div>
-
-        <!-- Secondary Actions -->
-        <div class="row g-3">
-          <div class="col-md-6">
-            <button @click="book_confirm()" class="secondary-btn attraction-btn w-100">
-              <div class="secondary-content">
-                <div class="secondary-icon">🎠</div>
-                <div class="secondary-text">
-                  <h4>어트랙션 예약</h4>
-                  <p>인기 놀이기구 미리 예약</p>
-                </div>
-              </div>
-            </button>
-          </div>
-          <div class="col-md-6">
-            <button @click="ride_faclityinfo()" class="secondary-btn facility-btn w-100">
-              <div class="secondary-content">
-                <div class="secondary-icon">🗺️</div>
-                <div class="secondary-text">
-                  <h4>시설 안내</h4>
-                  <p>놀이기구 위치와 정보</p>
-                </div>
-              </div>
-            </button>
-          </div>
-        </div>
-
+      <!-- Welcome Message -->
+      <div class="welcome-strip">
+        <h1 class="welcome-text">🎪 환상의 세계로 떠나보세요! 🎢</h1>
       </div>
 
-      <!-- Right Column - Info Panel -->
-      <div class="col-lg-4">
-        <div class="info-panel">
-          <h4 class="panel-title">🌟 놀이공원 정보</h4>
+      <!-- Main Grid -->
+      <div class="park-grid">
+        
+        <!-- Large Ticket Tile -->
+        <div class="grid-item ticket-tile large-tile" @click="ticket_reservation()">
+          <div class="tile-background">
+            <div class="tile-pattern"></div>
+          </div>
+          <div class="tile-content">
+            <div class="tile-icon">🎫</div>
+            <h2 class="tile-title">입장권<br>예매</h2>
+            <p class="tile-subtitle">온라인 특가</p>
+            <div class="price-circle">30%<br>OFF</div>
+          </div>
+        </div>
+
+        <!-- Medium Attraction Tile -->
+        <div class="grid-item attraction-tile medium-tile" @click="book_confirm()">
+          <div class="tile-content">
+            <div class="tile-icon">🎠</div>
+            <h3 class="tile-title">어트랙션<br>예약</h3>
+            <p class="tile-subtitle">대기없이 바로!</p>
+          </div>
+        </div>
+
+        <!-- Medium Facility Tile -->
+        <div class="grid-item facility-tile medium-tile" @click="ride_faclityinfo()">
+          <div class="tile-content">
+            <div class="tile-icon">🗺️</div>
+            <h3 class="tile-title">시설<br>안내</h3>
+            <p class="tile-subtitle">위치 & 정보</p>
+          </div>
+        </div>
+
+        <!-- Small Info Tiles -->
+        <div class="grid-item event-tile small-tile" @click="event()">
+          <div class="tile-content">
+            <div class="tile-icon">🎉</div>
+            <span class="small-title">이벤트</span>
+            <div class="notification-dot"></div>
+          </div>
+        </div>
+
+        <div class="grid-item weather-tile small-tile">
+          <div class="tile-content">
+            <div class="tile-icon">☀️</div>
+            <span class="small-title">날씨</span>
+            <span class="weather-temp">25°</span>
+          </div>
+        </div>
+
+        <div class="grid-item hours-tile small-tile">
+          <div class="tile-content">
+            <div class="tile-icon">🕐</div>
+            <span class="small-title">운영중</span>
+            <span class="status-indicator">OPEN</span>
+          </div>
+        </div>
+
+        <!-- Wide Carousel Tile -->
+        <div class="grid-item carousel-tile wide-tile">
+          <div class="carousel-header">
+            <h3>🎪 인기 어트랙션</h3>
+          </div>
           
-          <div class="info-item event-item" @click="event()">
-            <span class="info-emoji">🎉</span>
-            <div class="info-details">
-              <strong>특별 이벤트</strong>
-              <small>할인 혜택 확인하기</small>
-            </div>
-            <span class="new-badge">NEW</span>
-          </div>
-
-          <div class="info-item weather-item">
-            <span class="info-emoji">☀️</span>
-            <div class="info-details">
-              <strong>오늘의 날씨</strong>
-              <small>맑음, 25°C - 완벽한 날씨!</small>
-            </div>
-          </div>
-
-          <div class="info-item hours-item">
-            <span class="info-emoji">🕐</span>
-            <div class="info-details">
-              <strong>운영시간</strong>
-              <small>오전 10:00 ~ 오후 10:00</small>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Attraction Gallery -->
-    <div class="attraction-gallery mt-5">
-      <h3 class="gallery-title">🎪 인기 어트랙션 갤러리</h3>
-      
-      <div id="attractionCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-interval="3500">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#attractionCarousel" data-bs-slide-to="0" class="active"></button>
-          <button type="button" data-bs-target="#attractionCarousel" data-bs-slide-to="1"></button>
-          <button type="button" data-bs-target="#attractionCarousel" data-bs-slide-to="2"></button>
-          <button type="button" data-bs-target="#attractionCarousel" data-bs-slide-to="3"></button>
-          <button type="button" data-bs-target="#attractionCarousel" data-bs-slide-to="4"></button>
-        </div>
-        
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="attraction-slide">
-              <img src="/assets/imageshompage/hesung.jpg" class="attraction-img" alt="혜성">
-              <div class="slide-caption">
-                <h4>🚀 혜성 롤러코스터</h4>
-                <p>스릴 만점의 초고속 체험!</p>
+          <div id="gridCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="attraction-card">
+                  <img src="/assets/imageshompage/hesung.jpg" class="attraction-thumb" alt="혜성">
+                  <div class="attraction-info">
+                    <h4>🚀 혜성 롤러코스터</h4>
+                    <span class="thrill-level">스릴 ★★★★★</span>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="attraction-card">
+                  <img src="/assets/imageshompage/baiking.jpg" class="attraction-thumb" alt="바이킹">
+                  <div class="attraction-info">
+                    <h4>⚓ 바이킹</h4>
+                    <span class="thrill-level">스릴 ★★★★☆</span>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="attraction-card">
+                  <img src="/assets/imageshompage/holombride.jpg" class="attraction-thumb" alt="홀로브라이드">
+                  <div class="attraction-info">
+                    <h4>👻 홀로브라이드</h4>
+                    <span class="thrill-level">공포 ★★★★★</span>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="attraction-card">
+                  <img src="/assets/imageshompage/jailoswing.jpg" class="attraction-thumb" alt="자이로스윙">
+                  <div class="attraction-info">
+                    <h4>🎪 자이로스윙</h4>
+                    <span class="thrill-level">스릴 ★★★★★</span>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="attraction-card">
+                  <img src="/assets/imageshompage/jailoompdroop.jpg" class="attraction-thumb" alt="자이로드롭">
+                  <div class="attraction-info">
+                    <h4>🎢 자이로드롭</h4>
+                    <span class="thrill-level">스릴 ★★★★★</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="carousel-item">
-            <div class="attraction-slide">
-              <img src="/assets/imageshompage/baiking.jpg" class="attraction-img" alt="바이킹">
-              <div class="slide-caption">
-                <h4>⚓ 바이킹</h4>
-                <p>좌우로 흔들리는 스릴!</p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="attraction-slide">
-              <img src="/assets/imageshompage/holombride.jpg" class="attraction-img" alt="홀로브라이드">
-              <div class="slide-caption">
-                <h4>👻 홀로브라이드</h4>
-                <p>오싹한 공포 체험!</p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="attraction-slide">
-              <img src="/assets/imageshompage/jailoswing.jpg" class="attraction-img" alt="자이로스윙">
-              <div class="slide-caption">
-                <h4>🎪 자이로스윙</h4>
-                <p>360도 회전의 짜릿함!</p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="attraction-slide">
-              <img src="/assets/imageshompage/jailoompdroop.jpg" class="attraction-img" alt="자이로드롭">
-              <div class="slide-caption">
-                <h4>🎢 자이로드롭</h4>
-                <p>하늘에서 떨어지는 스릴!</p>
-              </div>
-            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#gridCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#gridCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
           </div>
         </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#attractionCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#attractionCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
       </div>
     </div>
-
-  </div>
+  </main>
 </div>
 </template>
 
@@ -196,11 +168,6 @@ const ticket_reservation = () => {
 
 const ride_faclityinfo = () => {
   router.push('/ride_faclity_map')
-}
-//인구밀도 히트맵 조회하기 W
-const event =() => {
-  router.push('/event.vue')
-
 }
 
 const event = () => {
@@ -220,380 +187,427 @@ import { Modal } from 'bootstrap'
 </script>
 
 <style scoped>
-/* 새로운 놀이공원 테마 */
-.theme-park-home-v2 {
+/* Modern Tile Design - Smaller Fixed Width */
+.magic-park-grid {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   font-family: 'Inter', sans-serif;
 }
 
-/* Top Navigation */
-.top-nav {
-  background: rgba(255,255,255,0.95);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+/* Header */
+.park-header {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.park-logo {
-  color: #2d3748;
-  font-size: 1.8rem;
-  font-weight: 800;
-  margin: 0;
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  max-width: 700px; /* 700px로 축소 */
+  margin: 0 auto;
 }
 
-.nav-btn {
-  padding: 8px 20px;
+.park-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+}
+
+.brand-icon {
+  font-size: 1.8rem; /* 조금 축소 */
+}
+
+.brand-name {
+  font-size: 1.3rem; /* 조금 축소 */
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.header-btn {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 6px 16px; /* 조금 축소 */
+  margin-left: 8px;
   border-radius: 20px;
-  border: none;
   font-weight: 600;
-  margin-left: 10px;
+  font-size: 0.9rem; /* 조금 축소 */
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
-.login-btn {
-  background: #e2e8f0;
-  color: #4a5568;
-}
-
-.login-btn:hover {
-  background: #cbd5e0;
+.header-btn:hover {
+  background: rgba(255,255,255,0.3);
   transform: translateY(-2px);
 }
 
-.signup-btn {
-  background: #ed8936;
-  color: white;
+.header-btn.signup {
+  background: rgba(255,255,255,0.9);
+  color: #667eea;
 }
 
-.signup-btn:hover {
-  background: #dd6b20;
-  transform: translateY(-2px);
+.header-btn.signup:hover {
+  background: white;
 }
 
-/* Welcome Banner */
-.welcome-banner {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  color: white;
-}
-
-.welcome-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.welcome-subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin: 0;
-}
-
-/* Primary Button - Ticket */
-.primary-btn {
-  background: #ffffff;
-  border: 3px solid #e2e8f0;
-  border-radius: 15px;
-  padding: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  height: 140px;
-}
-
-.primary-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  border-color: #ed8936;
-}
-
-.ticket-btn:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
-}
-
-.btn-content {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  height: 100%;
-}
-
-.btn-icon {
-  font-size: 3.5rem;
-  flex-shrink: 0;
-}
-
-.btn-title {
-  color: #2d3748;
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.btn-desc {
-  color: #4a5568;
-  font-size: 1rem;
-  margin-bottom: 8px;
-}
-
-.discount-tag {
-  background: #ed8936;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 15px;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.btn-arrow {
-  font-size: 1.5rem;
-  color: #ed8936;
-  margin-left: auto;
-  transition: transform 0.3s ease;
-}
-
-.primary-btn:hover .btn-arrow {
-  transform: translateX(8px);
-}
-
-/* Secondary Buttons */
-.secondary-btn {
-  background: #ffffff;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-  height: 120px;
-}
-
-.secondary-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-}
-
-.attraction-btn {
-  border-left: 4px solid #9f7aea;
-}
-
-.attraction-btn:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
-  border-left-color: #805ad5;
-}
-
-.facility-btn {
-  border-left: 4px solid #38b2ac;
-}
-
-.facility-btn:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
-  border-left-color: #319795;
-}
-
-.secondary-content {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  height: 100%;
-}
-
-.secondary-icon {
-  font-size: 2.5rem;
-  flex-shrink: 0;
-}
-
-.secondary-text h4 {
-  color: #2d3748;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.secondary-text p {
-  color: #4a5568;
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-/* Info Panel */
-.info-panel {
-  background: #ffffff;
-  border: 2px solid #e2e8f0;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  height: fit-content;
-}
-
-.panel-title {
-  color: #2d3748;
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 20px;
+/* Welcome Strip */
+.welcome-strip {
   text-align: center;
+  padding: 1.5rem 0; /* 조금 축소 */
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+.welcome-text {
+  color: white;
+  font-size: 1.8rem; /* 조금 축소 */
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  margin: 0;
+}
+
+/* Grid Layout - 더 작은 고정 크기 */
+.park-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 110px); /* 110px로 축소 */
+  grid-template-rows: repeat(4, 110px); /* 110px로 축소 */
+  gap: 15px; /* gap도 축소 */
+  width: 700px; /* 700px로 축소 */
+  margin: 0 auto;
+  justify-content: center;
+}
+
+/* Grid Item Base */
+.grid-item {
+  border-radius: 16px; /* 조금 축소 */
   cursor: pointer;
+  transition: all 0.4s ease;
+  overflow: hidden;
   position: relative;
-  background: #f8fafc;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2); /* 조금 축소 */
 }
 
-.info-item:hover {
-  background: #edf2f7;
-  transform: translateX(5px);
+.grid-item:hover {
+  transform: translateY(-4px) scale(1.02); /* 조금 축소 */
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
 }
 
-.event-item:hover {
-  background: #fef5e7;
+/* Tile Sizes - 축소된 크기 */
+.large-tile {
+  grid-column: span 3; /* 330px 너비 */
+  grid-row: span 2; /* 220px 높이 */
 }
 
-.weather-item:hover {
-  background: #f0fff4;
+.medium-tile {
+  grid-column: span 2; /* 220px 너비 */
+  grid-row: span 2; /* 220px 높이 */
 }
 
-.hours-item:hover {
-  background: #ebf8ff;
+.small-tile {
+  grid-column: span 1; /* 110px 너비 */
+  grid-row: span 1; /* 110px 높이 */
 }
 
-.info-emoji {
-  font-size: 1.8rem;
-  flex-shrink: 0;
+.wide-tile {
+  grid-column: span 6; /* 700px 너비 */
+  grid-row: span 2; /* 220px 높이 */
 }
 
-.info-details strong {
-  color: #2d3748;
-  font-size: 0.95rem;
-  display: block;
-}
-
-.info-details small {
-  color: #718096;
-  font-size: 0.8rem;
-}
-
-.new-badge {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #ed8936;
+/* Ticket Tile - Primary */
+.ticket-tile {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
   color: white;
-  padding: 2px 8px;
-  border-radius: 8px;
-  font-size: 0.7rem;
-  font-weight: 600;
 }
 
-/* Attraction Gallery */
-.attraction-gallery {
-  background: #ffffff;
-  border: 2px solid #e2e8f0;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+.tile-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
 }
 
-.gallery-title {
-  color: #2d3748;
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: center;
+.tile-pattern {
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 25%, white 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, white 2px, transparent 2px);
+  background-size: 25px 25px; /* 조금 축소 */
+}
+
+.tile-content {
+  position: relative;
+  z-index: 2;
+  padding: 18px; /* 축소 */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.large-tile .tile-icon {
+  font-size: 3rem; /* 축소 */
+  margin-bottom: 8px;
+}
+
+.large-tile .tile-title {
+  font-size: 1.6rem; /* 축소 */
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.large-tile .tile-subtitle {
+  font-size: 0.9rem; /* 축소 */
+  opacity: 0.9;
   margin-bottom: 0;
 }
 
-.attraction-slide {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  height: 300px;
-}
-
-.attraction-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.slide-caption {
+.price-circle {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.7));
-  color: white;
-  padding: 25px;
-  text-align: center;
-}
-
-.slide-caption h4 {
-  font-size: 1.3rem;
+  top: 15px;
+  right: 15px;
+  width: 55px; /* 축소 */
+  height: 55px;
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem; /* 축소 */
   font-weight: 700;
-  margin-bottom: 5px;
+  text-align: center;
+  line-height: 1.1;
 }
 
-.slide-caption p {
-  font-size: 0.95rem;
+/* Attraction Tile */
+.attraction-tile {
+  background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+  color: white;
+}
+
+.medium-tile .tile-icon {
+  font-size: 2.4rem; /* 축소 */
+  margin-bottom: 12px;
+}
+
+.medium-tile .tile-title {
+  font-size: 1.1rem; /* 축소 */
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.medium-tile .tile-subtitle {
+  font-size: 0.8rem; /* 축소 */
+  opacity: 0.9;
+}
+
+/* Facility Tile */
+.facility-tile {
+  background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+  color: white;
+}
+
+/* Small Tiles */
+.small-tile .tile-content {
+  padding: 15px; /* 축소 */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.small-tile .tile-icon {
+  font-size: 1.6rem; /* 축소 */
+}
+
+.small-title {
+  font-size: 0.7rem; /* 축소 */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Event Tile */
+.event-tile {
+  background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+  color: white;
+  position: relative;
+}
+
+.notification-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 10px; /* 축소 */
+  height: 10px;
+  background: #ff3838;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Weather Tile */
+.weather-tile {
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  color: white;
+}
+
+.weather-temp {
+  font-size: 1rem; /* 축소 */
+  font-weight: 700;
+}
+
+/* Hours Tile */
+.hours-tile {
+  background: linear-gradient(135deg, #55a3ff 0%, #003d82 100%);
+  color: white;
+}
+
+.status-indicator {
+  font-size: 0.6rem; /* 축소 */
+  font-weight: 700;
+  color: #00ff88;
+  text-shadow: 0 0 8px #00ff88;
+}
+
+/* Carousel Tile */
+.carousel-tile {
+  background: rgba(255,255,255,0.95);
+  padding: 0;
+}
+
+.carousel-header {
+  padding: 15px 20px 12px 20px; /* 축소 */
+  border-bottom: 2px solid #f1f3f4;
+}
+
+.carousel-header h3 {
+  color: #2d3748;
+  font-size: 1.1rem; /* 축소 */
+  font-weight: 700;
   margin: 0;
 }
 
-/* Carousel Controls */
-.carousel-indicators button {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,0.5);
+.attraction-card {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px; /* 축소 */
+  gap: 15px;
 }
 
-.carousel-indicators .active {
-  background: #ed8936;
+.attraction-thumb {
+  width: 60px; /* 축소 */
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .park-logo {
+.attraction-info h4 {
+  color: #2d3748;
+  font-size: 0.95rem; /* 축소 */
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.thrill-level {
+  color: #e17055;
+  font-size: 0.75rem; /* 축소 */
+  font-weight: 600;
+}
+
+/* Container 고정 너비 설정 */
+.container-fluid {
+  max-width: 740px; /* 패딩 포함 고정 너비 */
+  margin: 0 auto;
+}
+
+/* 작은 화면에서의 최소 크기 보장 */
+@media (max-width: 780px) {
+  .magic-park-grid {
+    overflow-x: auto;
+    padding: 0 15px;
+  }
+  
+  .park-grid {
+    min-width: 700px;
+  }
+  
+  .header-content,
+  .welcome-strip,
+  .container-fluid {
+    min-width: 700px;
+  }
+}
+
+/* 매우 작은 화면 대응 */
+@media (max-width: 600px) {
+  .park-grid {
+    grid-template-columns: repeat(4, 90px); /* 더 작은 고정 크기 */
+    grid-template-rows: repeat(6, 90px);
+    width: 570px; /* 작은 고정 너비 */
+    gap: 12px;
+  }
+  
+  .large-tile {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  
+  .medium-tile {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  
+  .wide-tile {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+  
+  .header-content,
+  .welcome-strip,
+  .container-fluid {
+    min-width: 570px;
+  }
+  
+  .welcome-text {
     font-size: 1.4rem;
   }
   
-  .welcome-title {
-    font-size: 1.4rem;
+  .brand-name {
+    font-size: 1.1rem;
   }
   
-  .btn-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
+  /* 텍스트 크기 추가 조정 */
+  .large-tile .tile-title {
+    font-size: 1.3rem;
   }
   
-  .primary-btn {
-    height: auto;
-    padding: 20px;
+  .medium-tile .tile-title {
+    font-size: 0.95rem;
   }
   
-  .secondary-btn {
-    height: auto;
-    padding: 15px;
-  }
-  
-  .secondary-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
-  
-  .attraction-slide {
-    height: 250px;
+  .tile-content {
+    padding: 12px;
   }
 }
 </style>

@@ -14,6 +14,8 @@ public interface RideRepository {
 	
 	List<RideResponseDTO> getRideReserveList();
 
+	List<RideResponseDTO> getRideReserveByNo(int facility_no);
+
 	int updateRideBookInfoAmount(RideVO vo);
 	
 	int deleteRideBookConfirm(@RequestParam("ride_book_confirm_no") int ride_book_confirm_no);

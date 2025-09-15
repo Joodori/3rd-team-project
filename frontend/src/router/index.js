@@ -40,6 +40,7 @@ const router = createRouter({
       name: 'admin_reservation',
       component: () => import('../views/admin_reservation.vue'),
     },
+    */
   ],
 })
 

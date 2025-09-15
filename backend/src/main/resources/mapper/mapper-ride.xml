@@ -24,6 +24,15 @@
 		INNER JOIN ride_book_infos i ON f.facility_no = i.facility_no;
 	</select>
 
+	<select id="getRideReserveByNo"
+		parameterType = "int"
+		resultType="lx.edu.levelup.feature.ride.RideResponseDTO">
+		SELECT f.facility_name, i.ride_book_time
+		FROM facility f
+		INNER JOIN ride_book_infos i ON f.facility_no = i.facility_no;
+		WHERE i.facility_no = #{facilityNo}
+	</select>
+
 	<insert id="insertRideBookConfirm"
 		parameterType="lx.edu.levelup.feature.ride.RideVO">
 		insert into ride_book_confirm(user_no, ride_book_no,
