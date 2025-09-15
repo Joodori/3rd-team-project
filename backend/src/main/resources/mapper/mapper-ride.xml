@@ -22,7 +22,7 @@
 			values(#{userNo}, #{rideBookNo}, #{rideBookPersonAmount})
 	</insert>
 
-	<update id="updateRideBookInfoAmount" parameterType="RideVO">
+	<update id="updateRideBookInfoAmount" parameterType="lx.edu.levelup.feature.ride.RideVO">
 		update ride_book_infos
 		set ride_book_info_amount = ride_book_info_amount - #{rideBookPersonAmount}
 		where ride_book_info_no = #{rideBookNo}
