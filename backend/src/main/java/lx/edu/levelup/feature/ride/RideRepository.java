@@ -11,4 +11,6 @@ public interface RideRepository {
 	void insertRideBookConfirm(RideVO vo);
 	
 	List<RideResponseDTO> getRideBookList(@RequestParam("user_no") int user_no);
+	
+	int updateRideBookInfoAmount(RideVO vo);
 }
