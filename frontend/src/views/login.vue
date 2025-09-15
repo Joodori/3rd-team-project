@@ -165,18 +165,23 @@ async function login() {
       }
     });
     const userProfile = response.data[0]
+    console.log(response.data.length)
     console.log(`응답 -> ${JSON.stringify(response)}`)
-    console.log(`userProfile : ${userProfile.userId}`)
-    console.log(`응답 -> ${JSON.stringify(response.status)}`)
-    console.log(`응답 -> ${JSON.stringify(response.data)}`)
-    console.log(`userID :  ${JSON.stringify(response.data.userName)}`)
-    console.log(`${response.data.length}`)
-
-    if (response.status == 400) {
+    if (response.data.length === 0) {
       if (confirm(`일치하는 정보가 없습니다. 회원가입으로 이동하시겠습니까?`)) {
         router.push('/sign-up')
       }
     }
+    console.log(`userProfile : ${userProfile.userId}`)
+    console.log(`응답 -> ${JSON.stringify(response.status)}`)
+    console.log(`응답 -> ${JSON.stringify(response.data)}`)
+    console.log(`userID :  ${JSON.stringify(response.data.userName)}`)
+
+
+    if (userProfile == []) {
+      console.log(`없음`)
+    }
+
 
     if (userProfile.length != 0) {
 
@@ -191,7 +196,7 @@ async function login() {
       user_info.value.user_address = userProfile.userAddress
       user_info.value.user_mobile = userProfile.userMobile
       config.value = user_info.value.user_id == "admin" ? 'admin' : 'user'
-
+      console.log(`!!!! config value : ${config.value}`)
       // test
       console.log("user_info userNO : " + user_info.value.user_no)
       console.log("user_info userId : " + user_info.value.user_id)
@@ -200,9 +205,9 @@ async function login() {
 
       // store 변수 저장 이후 메인페이지 이동
       console.log(user_info.value)
-      console.log(`before loginStatus ${loginStatus.value}`)
+      console.log(`before loginStatus : ${loginStatus.value}`)
       loginStatus.value = true
-      console.log(`After loginStatus ${loginStatus.value}`)
+      console.log(`After loginStatus : ${loginStatus.value}`)
 
       router.push('/')
 

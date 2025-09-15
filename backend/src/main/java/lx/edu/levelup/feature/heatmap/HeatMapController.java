@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -24,9 +25,9 @@ public class HeatMapController {
      * @return HeatmapDTO 리스트 (JSON 배열)
      */
     @GetMapping("/points")
-    public List<HeatMapDTO> getHeatmapPoints(@RequestParam("minutes") int minutes) {
+    public List<HeatMapDTO> getHeatmapPoints(@RequestParam("startTime") LocalDateTime startTime, @RequestParam("endTime") LocalDateTime endTime) {
         // 서비스 레이어를 호출하여 최근 30분간의 데이터를 조회합니다.
         logger.info("======= getHeatmapPoints 실행됨 =======");
-        return heatmapService.getRecentHeatmapPoints(minutes);
+        return heatmapService.getRecentHeatmapPoints(startTime,endTime);
     }
 }

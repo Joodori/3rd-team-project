@@ -21,11 +21,11 @@
 		insert into ride_book_confirm(user_no, ride_book_no, ride_book_person_amount)
 			values(#{userNo}, #{rideBookNo}, #{rideBookPersonAmount})
 	</insert>
-	
-	<update id="updateRideBookInfoAmount" parameterType="lx.edu.levelup.feature.ride.RideVO">
+
+	<update id="updateRideBookInfoAmount" parameterType="RideVO">
 		update ride_book_infos
 		set ride_book_info_amount = ride_book_info_amount - #{rideBookPersonAmount}
-		where ride_book_info_no = #{rideBookNo} 
-			and ride_book_info_amount >= #{rideBookPersonAmount}  
+		where ride_book_info_no = #{rideBookNo}
+			and ride_book_info_amount >= #{rideBookPersonAmount}
 	</update>
 </mapper>

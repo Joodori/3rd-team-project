@@ -44,9 +44,6 @@
                 <div class="fs-2 fw-bold mb-3">
                     <span>이름 :</span> <span>{{ user_info.user_name }}</span>
                 </div>
-                <div class="fs-2 fw-bold mb-3">
-                    <span>나이 :</span> <span>{{ user_info.user_age }}</span>
-                </div>
                 <div class="fs-2 fw-bold mb-4">
                     <span>전화번호 :</span> <span>{{ user_info.user_mobile }}</span>
                 </div>
@@ -128,11 +125,11 @@
                         <h1>USER NO : {{ ticket.userNo }}</h1>
                         <h1>TICKET NAME : {{ ticket.ticketName }}</h1>
                         <h1>RESERVED DATE : {{ ticket.ticketReserveDate }}</h1>
-                        <h1>TICKET AMOUNT : {{ ticketTicketAmount }}</h1>
+                        <h1>TICKET AMOUNT : {{ ticket.ticketAmount }}</h1>
                     </div>
                     <div class="d-flex flex-column  " style="width: 20%;">
                         <h1>입금 상태 : {{ ticket.ticketMoneyStatus }}</h1>
-                        <button class="btn btn-info" @click="send_money(ticket.ticketNo)"
+                        <button class="btn btn-info" @click="send_money(ticket.ticketNo, ticket.ticketMoneyStatus)"
                             style="height: 30px; font-size: 8px;">확인하기</button>
                     </div>
                 </div>
@@ -251,22 +248,20 @@ async function readRideBooks() {
             headers: {
                 'Content-Type': 'application/json'
             }
-        });
+        })
 
         console.log(`응답 -> ${JSON.stringify(response.data)}`)
         ride.value = response.data
         if (ride.value.length == 0) {
-            alert(`없어요`)
+            console.log(`놀이기구 예약내역 없음`)
         }
-
-
 
     } catch (err) {
         console.error(`물품목록::에러발생 -> ${err}`)
     }
 }
 
-async function send_money(ticket_no) {
+async function send_money(ticket_no, moneyStatus) {
     console.log(`send_money 호출됨`)
 
     // 일반 사용자일때 입금대기 -> 입금완료로 바뀌게 만듦
@@ -298,6 +293,18 @@ async function send_money(ticket_no) {
             }
         }
     } else {
+
+        if (moneyStatus === "입금대기") {
+            alert(`회원이 입금하기 전입니다.`)
+            return
+        }
+
+        if (moneyStatus === "예약확정") {
+            alert(`이미 처리되었습니다.`)
+            return
+        }
+
+
         if (confirm(`입급확인 처리하시겠습니까?`)) {
 
             try {
@@ -305,7 +312,7 @@ async function send_money(ticket_no) {
                     "ticketNo": ticket_no,
                 }
 
-                const response = await axios.patch('http://localhost/updateMoneyStatusUser', params, {
+                const response = await axios.patch('http://localhost/updateMoneyStatusManager', params, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
