@@ -24,26 +24,27 @@
 
 
   <!-- Sign in with 구글, 애플, 인스타 -->
-  <div class="sns-wrapper ">
-    <div class="col-md-6">
+  <div class="d-flex flex-column justify-content-center align-items-center sns-wrapper ">
+    <div class="col-md-6 w-100">
       <a href="#"
         class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
         <img alt="Logo" src="/assets/media/svg/brand-logos/google-icon.svg" class="h-15px me-3" />Sign in with
         Google</a>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 w-100">
       <a href="#"
         class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
         <img alt="Logo" src="/assets/media/svg/brand-logos/apple-black.svg" class="theme-light-show h-15px me-3" />
         <img alt="Logo" src="/assets/media/svg/brand-logos/apple-black-dark.svg"
           class="theme-dark-show h-15px me-3" />Sign in with Apple</a>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 w-100">
       <a href="#"
         class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
         <img alt="Logo" src="/assets/media/svg/brand-logos/instagram-2016.svg" class="h-15px me-3" />Sign in with
         Instagram</a>
     </div>
+    <button class="btn btn-light-danger mt-3 fw-bold" style="text-align: center; height: 40px; width:150px" @click="goToHome()">홈으로</button>
   </div>
 
   <!-- ===== begin::아이디 찾기 대화상자 ===== -->
@@ -303,6 +304,9 @@ async function findPw() {
   }
 }
 
+function goToHome() {
+  router.push('/')
+}
 </script>
 
 <style scoped>

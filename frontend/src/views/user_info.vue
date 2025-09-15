@@ -26,8 +26,8 @@
 
                 <div class="d-flex justify-content-center gap-3">
                     <button class="btn btn-primary px-4" @click="goToHome">돌아가기</button>
-                    <button class="btn btn-danger px-4" @click="goToModifyInfo()">수정하기</button>
                     <button class="btn btn-info px-4" @click="logout()">로그아웃하기</button>
+                    <button class="btn btn-danger px-4" @click="quit()">탈퇴하기</button>
                 </div>
 
             </div>
@@ -106,11 +106,11 @@
                             <tr v-for="item in ride" :key="item.rideBookConfirmNo">
                                 <td>{{ item.rideBookConfirmNo }}</td>
                                 <td>{{ item.facilityName }}</td>
-                                <td>{{ item.rideBookInfoTime ?? '예약시간 없음' }}</td>
+                                <td>{{ item.rideBookTime ?? '예약시간 없음' }}</td>
                                 <td>{{ item.rideBookPersonAmount }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-danger"
-                                        @click="cancelReservation(item.rideBookConfirmNo)">
+                                        @click="cancelReservation(item.rideBookConfirmNo, item.facilityName)">
                                         취소
                                     </button>
                                 </td>
@@ -178,6 +178,7 @@ function checkLogin() {
     }
 }
 
+// 로그아웃 함수
 function logout() {
     alert(`로그아웃 되었습니다.`)
     user_info.vlaue = {
@@ -192,6 +193,24 @@ function logout() {
     router.push('/')
 }
 
+// 회원탈퇴 함수
+async function quit() {
+    if (confirm(`회원탈퇴를 진행하시겠습니까?`)) {
+        const params = {
+            userNo: user_info.value.user_no
+        }
+        const response = await axios.post(`http://localhost/user/delete-account`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        // 로그인을 해야 뭘 할수있어서 이놈만 막으면 됨
+        loginStatus.value = false
+        router.push('/')
+    }
+}
+
+// 입장권 예매내역 함수
 async function readTickets() {
     // 일반 사용자일때 사용자No로 입장권 내역 가져옴
     if (config.value === 'user') {
@@ -209,10 +228,8 @@ async function readTickets() {
             // 들어온거(배열_response.data) => 넣음을 당하는거(배열_ticket이라는 stroe변수)
             ticket.value = response.data
             if (ticket.value.length == 0) {
-                alert(`없어요`)
+                console.log(`입장권 구매내역이 없어요`)
             }
-
-
 
         } catch (err) {
             console.error(`물품목록::에러발생 -> ${err}`)
@@ -232,10 +249,8 @@ async function readTickets() {
             console.log(`응답 -> ${JSON.stringify(response.data)}`)
             ticket.value = response.data
             if (ticket.value.length == 0) {
-                alert(`없어요`)
+                console.log(`입장권을 구매한 사용자가 없어요`)
             }
-
-
 
         } catch (err) {
             console.error(`물품목록::에러발생 -> ${err}`)
@@ -244,6 +259,7 @@ async function readTickets() {
     }
 }
 
+// 놀이기구예약 함수
 async function readRideBooks() {
     // 관리자가 로그인 한 경우에는 return시킴
     if (config.value === 'admin') {
@@ -271,9 +287,12 @@ async function readRideBooks() {
     }
 }
 
+// 입장권 입금 함수 + 관리자 입금확인 함수
 async function send_money(ticket_no, moneyStatus) {
     console.log(`send_money 호출됨`)
-
+    if (moneyStatus != "입금대기") {
+        return
+    }
     // 일반 사용자일때 입금대기 -> 입금완료로 바뀌게 만듦
     if (config.value === "user") {
 
@@ -281,7 +300,7 @@ async function send_money(ticket_no, moneyStatus) {
 
             try {
                 const params = {
-                    "ticketNo": ticket_no,
+                    "ticketNo": ticket_no
                 }
 
                 const response = await axios.patch('http://localhost/updateMoneyStatusUser', params, {
@@ -344,6 +363,36 @@ async function send_money(ticket_no, moneyStatus) {
 
 }
 
+// 놀이기구 예약 취소 함수
+async function cancelReservation(reserve_no,facility_name) {
+    console.log(typeof(reserve_no))
+    try {
+        const params = {
+            rideBookConfirmNo : reserve_no
+        }
+
+        const response = await axios.delete('http://localhost/cancelReservation', params, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        console.log(`응답 -> ${JSON.stringify(response.date)}`)
+
+        // 만약 update에 실패했다면
+        if (response.data == "") {
+            alert(`응답이없으,,ㅁ`)
+        } else {
+            alert(`놀이기구명 : ${facility_name} 예약이 취소되었습니다.`)
+        }
+        readRideBooks()
+
+    } catch (err) {
+        console.error(`취소 중 에러발생 -> ${err}`)
+    }
+}
+
+// 돌아가기 버튼 함수
 function goToHome() {
     router.push('/')
 }
