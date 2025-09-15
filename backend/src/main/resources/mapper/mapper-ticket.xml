@@ -4,15 +4,25 @@
 
 	<insert id="insertDB" parameterType="lx.edu.levelup.feature.ticket.TicketVO">
 		insert into ticket(user_no, ticket_name, ticket_amount, ticket_money_status, ticket_reserve_date)
-		values(#{userNo}, #{ticketName}, #{ticketAmount}, #{ticketMoneyStatus}, now())
+		values(#{userNo}, #{ticketName}, #{ticketAmount}, "입금대기", now())
 	</insert>
 
-	<select id="getTicketList" parameterType="int" resultType="lx.edu.levelup.feature.ticket.TicketResponseDTO">
+
+	<select id="getTicketList" parameterType="int" resultType="lx.edu.levelup.feature.ticket.TicketResponseDTO"></select>
+
+	<!-- 유저페이지에서 뜨는 입장권 리스트 -->
+	<select id="getTicketList" parameterType="int" resultType="TicketResponseDTO">
 		select *
 		from ticket
-		where user_no = #{user_no}
+		where user_no = #{user_no} and ticket_reserve_date >= CURDATE()
 	</select>
 	
+	<!-- 관리자페이지에서 뜨는 입장권 리스트 -->
+	<select id="getTicketListAdmin" parameterType="int" resultType="TicketResponseDTO">
+		select *
+		from ticket
+		where ticket_reserve_date >= CURDATE()
+	</select>
 
 	<!-- 사용자가 입금하기를 눌렀을때 -->
 	<update id="updateMoneyStatusUser" parameterType="int">

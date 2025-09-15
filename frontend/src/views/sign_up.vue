@@ -9,7 +9,7 @@
       <div class="d-flex flex-column align-self-start mb-3 w-100">
         <label class="form-label fw-bold">아이디 입력</label>
         <div class="d-flex gap-2">
-          <input type="text" placeholder="아이디를 입력하세요" v-model="id" class="form-control" />
+          <input type="text" placeholder="아이디를 입력하세요" v-model="id" class="form-control" :disabled="!check" />
           <div class="d-flex align-self-end">
             <button v-if="!checked" class="btn btn-light-danger" style="width:120px" @click="searchSameID">중복확인</button>
           </div>
@@ -95,6 +95,7 @@ const user_address = ref('')
 const user_mobile = ref('')
 const ageInput = ref(null)
 const passwordCheck = ref(null)
+const check = ref(true)
 
 function goToMain() {
   router.push('/')
@@ -211,8 +212,9 @@ async function searchSameID() {
     // 이 부분이 아이디를 DB에서 검색했을 때 만족하는 아이디가 없으므로 사용가능한 아이디
     // checked.value를 true로 만들어서 버튼이 사라지게 만들었음
     if (response.data.length == 0) {
-      alert(`일치하는 아이디가 없습니다.`)
-      checked.value = true;
+      alert(`사용가능한 아이디입니다.`)
+      checked.value = true
+      check.value = false
     }
     // ==========================================
     // 만약 쿼리문에서 응답(res.d.d.d 에 만족하는 값)이 있다면 id값을 없애고 다시 보냄)
