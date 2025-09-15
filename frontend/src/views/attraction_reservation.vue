@@ -9,7 +9,7 @@
           <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
               <a class="navbar-brand">예약 가능 어트렉션 조회</a>
-              <form class="d-flex">
+              <form class="d-flex" @submit.prevent="onSearch">
                 <select v-model="selected">
                   <option disabled value="">하나를 선택하세요</option>
                   <option v-for="facility in facilityList" :key="facility.facilityNo">
@@ -29,7 +29,7 @@
         <!-- 이 부분이 검색하면 나타나게 수정 -->
         <!-- v-for를 이용해서 검색한 facilityName으로만 특정 놀이기구예약가능리스트가 뜨게 만듦  -->
         <!-- 쿼리문은 주형이가 짤테니 넌 그냥 여기서 받는거만 만들면 돼-->
-        <div> <!-- 이 div 태그부터 v-for 적용-->
+        <div > <!-- 이 div 태그부터 v-for 적용-->
           <div v-if="!search" class=" d-flex flex-column w-100 h-25">
             <div class="container">
               <label>인원수</label>
@@ -87,7 +87,7 @@ const defaultDay = dayjs();
 const currentTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
 const dtabase = ref();
 const search = ref(true)
-
+const
 const incrementPerson = () => {
   personCount.value++;
   console.log(`인원수증가`);
