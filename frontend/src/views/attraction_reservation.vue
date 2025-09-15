@@ -8,19 +8,16 @@
     <div class="card"> <!--카드로 감싸기-->
     <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand">예약 가능 어트렉션 조회{{ selected }}</a>
+    <a class="navbar-brand">예약 가능 어트렉션 조회{{ selectedRideName }}</a>
     <form class="d-flex">
-      <select v-modle="selected">
+      <select v-model="selected">
         <option disabled value="">하나를 선택하세요</option>
-        <option>후름라이드</option>
-        <option>스페인 해적선</option>
-        <option>자이롱스윙</option>
-        <option>혜성특급</option>
-        <option>아트란티스</option>
-        <option>신밧드의 모험</option>
-        <option>파라오 분노</option>
-        <option>자이롭 드롭</option>
-      </select>
+        <option v-for="r in rides" :key="r.rideBookNo" value="r.rideBookNo">
+          <select>
+            {{  }}
+          </select>
+        </option>
+        </select>
       <button class="btn btn-outline-success" type="submit">예약</button><!--검색 버튼 생성-->
     </form>
   </div>
@@ -45,7 +42,7 @@
       </button>
 
        <span class="label">인원{{ personCount}}</span>
-      <button type="button" class="count-btn" @click="incrementAdults">
+      <button type="button" class="count-btn" @click="incrementPerson">
        <i class="bi bi-plus-square"></i>  
       </button>
       
@@ -78,7 +75,7 @@ import { Calendar } from 'v-calendar';
 import 'v-calendar/style.css';
 import{Modal} from 'bootstrap';
 import dayjs from "dayjs";
-
+import axios from 'axios'; //api 호출을 위한 추가
 // 오늘 날짜를 기준으로 초기 페이지를 설정합니다.
 
 // 달력에 표시할 데이터를 정의하는 부분입니다. (핵심!)
@@ -87,10 +84,10 @@ const selected = ref()
 const personCount = ref(0); //어른 반응형 함수 
 const defaultDay = dayjs();
 const currentTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
-const params ={
 
-}
-const incrementAdults = () => {
+const selectedRideNo = ref(''); //선택한 어트렉션 번호
+const userNo = ref(1);
+const incrementPerson = () => {
   personCount.value++;
   console.log(`인원수증가`);
 }
@@ -102,6 +99,9 @@ console.log(`인원수감소`);
 onMounted(()=>{
 
 })
+const rides: {
+  
+}
 
 </script>
 
