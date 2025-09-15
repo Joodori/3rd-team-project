@@ -197,6 +197,11 @@ const ticket_reservation = () => {
 const ride_faclityinfo = () => {
   router.push('/ride_faclity_map')
 }
+//인구밀도 히트맵 조회하기 W
+const event =() => {
+  router.push('/event.vue')
+
+}
 
 const event = () => {
   console.log('이벤트 조회하기')

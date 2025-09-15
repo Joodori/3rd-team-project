@@ -1,6 +1,6 @@
 <template>
   <!-- position-relative와 vh-100 클래스로 컨테이너를 화면 전체에 맞게 설정 -->
-  <div class="position-absolute top-0 bottom-0 start-0 end-0">
+  <div class="position-absolute top-0 bottom-0 start-0 end-0"><!--크기너무큼 좀 줄여랴 할듯 부모영역 기준으로-->
     <!-- 지도가 표시될 DOM 요소 -->
     <div id="map" class="w-100 h-100"></div>
 
@@ -40,13 +40,11 @@ let map = null;
 let heatmapLayer = null;
 
 // --- 설정 변수 ---
-// 데이터를 요청할 API의 기본 URL 주소입니다.
-const BASE_API_URL = 'http://localhost/heatmap/points';
-
-// 지도의 기본 중심 좌표입니다. (예: 구로디지털단지 근처)
-const CENTER_COORD = { lat: 37.494665, lng: 126.887733 };
-
-// 데이터를 자동으로 다시 불러올 시간 간격입니다. (60000 밀리초 = 1분)
+// API 기본 URL (파라미터 제외)
+const BASE_API_URL = 'http://localhost/heatmap/points'; //api 주소간소화
+// 지도 중심 좌표
+const CENTER_COORD = { lat: 37.494665, lng: 126.887733 };//구로구청
+// 데이터 자동 갱신 주기 (밀리초 단위, 예: 60000ms = 1분)
 const UPDATE_INTERVAL = 60000;
 
 // --- 반응형 상태 (Reactivity State) ---
@@ -62,8 +60,8 @@ const endTime = ref();
 const fetchDataAndUpdateHeatmap = async () => {
   // try-catch 문으로 API 요청 중 발생할 수 있는 오류를 처리합니다.
   try {
-    // startTime와 endTime 현재 값을 이용해 전체 API URL을 동적으로 만듭니다. (예: .../points?startTime=?endTime=)
-    const apiUrl = `${BASE_API_URL}?startTime=${startTime.value}&endTime=${endTime.value}`;
+    // selectedMinutes 값을 사용하여 동적으로 API URL을 생성합니다.
+    const apiUrl = `${BASE_API_URL}?minutes=${selectedMinutes.value}`; //이러한 형식으로 보내기 
 
     // 개발자 도구 콘솔에 현재 진행 상황을 로그로 남깁니다.
     console.log(`데이터를 가져오는 중... (URL: ${apiUrl})`);
@@ -142,10 +140,7 @@ onMounted(() => {
   } else {
     // 스크립트가 없다면, 동적으로 <script> 태그를 생성합니다.
     const script = document.createElement('script');
-    // 생성된 스크립트 태그의 소스(src)를 Google Maps API 주소로 설정합니다.
-    // key 부분에는 발급받은 API 키가 들어가며, 'visualization' 라이브러리를 함께 로드합니다.
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAIX1c39RvGr95miO1ux6IRfxYDssqSNfU&libraries=visualization`;
-    // async, defer 속성으로 비동기 로드를 설정하여 페이지 렌더링을 방해하지 않도록 합니다.
+    //script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAIX1c39RvGr95miO1ux6IRfxYDssqSNfU&libraries=visualization`;
     script.async = true;
     script.defer = true;
     // 생성된 스크립트 태그를 HTML의 <head> 부분에 추가하여 로드를 시작합니다.
@@ -159,5 +154,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 </style>
 
