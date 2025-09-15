@@ -13,12 +13,11 @@
       <select v-model="selected">
         <option disabled value="">하나를 선택하세요</option>
         <option v-for="facility in facilityList"
-        :key="facility.FAICLITY_NO"
-        :value="facility.FACILITY_NO">
-        {{ facility.FACILITY_NAME }}
+        :key="facility.facilityNo">
+        {{ facility.facilityName }}
       </option>
         </select>
-      <button class="btn btn-outline-success" type="submit">예약</button><!--검색 버튼 생성-->
+      <button class="btn btn-outline-success" type="submit">조회</button><!--검색 버튼 생성-->
     </form>
   </div>
   <div class="container d-flex flex-column w-100 h-50">
@@ -94,16 +93,40 @@ const decrementAdults =() =>{
   personCount.value--;
 console.log(`인원수감소`);
 }
-//시설 목록을 데이터 베이스에서 불러옴
-const loadFacilities = async () =>{
-  try {
-    const response = await axios.get('http://localhost:8080/reserveRide'); //원격 데이터 베이스에서 가져와야ㅐ됨
+// 주형수정
+async function loadFacilities() {
+    try {
+    const response = await axios.post('http://localhost/getRideReserveList'); //원격 데이터 베이스에서 가져와야ㅐ됨
+    // response라고 대답을 받아왔어
+    // 무슨 말로 했지? 일단 나는 대답은 알고있긴한데 무슨 언어로 말했는지를 모르겠어 일본어?> 영어? 스페인어? 뭐지?
+    console.log(`응답 -> ${response}`)
+
+    
     facilityList.value = response.data;
     console.log('시설 목록 로드 완료:', facilityList.value);
-  }catch(err){
+  }catch(error){
     console.error('시설 목록 로드 실패:', error);
   }
 }
+
+
+//시설 목록을 데이터 베이스에서 불러옴
+const loadFacilities2 = async () =>{
+  try {
+    const response = await axios.post('http://localhost/getRideReserveList'); //원격 데이터 베이스에서 가져와야ㅐ됨
+    // response라고 대답을 받아왔어
+    // 무슨 말로 했지? 일단 나는 대답은 알고있긴한데 무슨 언어로 말했는지를 모르겠어 일본어?> 영어? 스페인어? 뭐지?
+    console.log(`응답 -> ${response}`)
+
+    
+    facilityList.value = response.data;
+    console.log('시설 목록 로드 완료:', facilityList.value);
+  }catch(error){
+    console.error('시설 목록 로드 실패:', error);
+  }
+}
+
+
 const handleSubmit = async () =>{
   if(!selected.value){
     alert('시설을 선택해주세요.');
@@ -118,7 +141,7 @@ const handleSubmit = async () =>{
       facilityNo: selected.value,
       personCount: personCount.value
     };
-    const response =await axios.post('http://localhost:8080/getRideBookList',params, {
+    const response =await axios.post('http://localhost/getRideReserveList',params, {
       headers: {
         'Content-Type': 'application/json'
       }
