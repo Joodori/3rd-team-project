@@ -28,4 +28,9 @@
 		where ride_book_info_no = #{rideBookNo}
 			and ride_book_info_amount >= #{rideBookPersonAmount}
 	</update>
+	
+	<delete id="deleteRideBookConfirm" parameterType="int">
+		delete from ride_book_confirm 
+		where ride_book_confirm_no = #{ride_book_confirm_no}
+	</delete>
 </mapper>
