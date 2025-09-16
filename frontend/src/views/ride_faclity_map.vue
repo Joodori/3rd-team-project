@@ -154,7 +154,6 @@ const initMap = () => {
     zoom: 18,
   });
 
-
   // 2. 그 위에 경계선 폴리곤과 마커 그리기
   createParkBoundaryPolygon(map, parkBoundaryCoords);
   createRideMarkers(map, ridesData);

@@ -3,7 +3,7 @@
 -- =================================================================
 
 use  land;
--- 1. 테이블 생성 (기존과 동일)
+-- 1. 테이블 생성
 -- -----------------------------------------------------------------
 DROP TABLE IF EXISTS `crowd_log`;
 
@@ -28,7 +28,7 @@ BEGIN
     DECLARE i INT DEFAULT 1;
     DECLARE total_points INT DEFAULT 2000; -- 생성할 총 포인트 수
     
-    -- 랜덤 시간 생성을 위한 변수 (기존과 동일)
+    -- 랜덤 시간 생성을 위한 변수
     DECLARE v_start_time DATETIME DEFAULT '2025-09-16 09:00:00';
     DECLARE v_end_time   DATETIME DEFAULT '2025-09-16 18:00:00';
     
@@ -44,7 +44,7 @@ BEGIN
     DECLARE spread DECIMAL(10, 8) DEFAULT 0.0005; -- 좌표가 흩어지는 범위 (이 값을 조절하여 군집 크기 변경)
 
     WHILE i <= total_points DO
-        -- 1. 4개의 핫스팟 중 하나를 랜덤으로 선택
+        -- 1. 3개의 핫스팟 중 하나를 랜덤으로 선택
         SET hotspot_index = FLOOR(1 + RAND() * 3);
 
         -- 2. 선택된 핫스팟의 기본 좌표를 설정 (CASE 문 사용)
@@ -67,7 +67,7 @@ BEGIN
             base_lat + (RAND() * 2 - 1) * spread,
             -- 기본 경도 ± 랜덤 오프셋
             base_lng + (RAND() * 2 - 1) * spread,
-            -- 랜덤 시간 (기존과 동일)
+            -- 랜덤 시간
             FROM_UNIXTIME(v_start_unix + FLOOR(RAND() * v_time_range))
         );
         SET i = i + 1;
