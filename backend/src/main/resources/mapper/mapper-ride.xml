@@ -19,7 +19,7 @@
 
 	<select id="getRideReserveList"
 		resultType="lx.edu.levelup.feature.ride.RideResponseDTO">
-		SELECT f.facility_name, i.ride_book_time, f.facility_no
+		SELECT DISTINCT f.facility_name, i.ride_book_time, f.facility_no
 		FROM facility f
 		INNER JOIN ride_book_infos i ON f.facility_no = i.facility_no;
 	</select>

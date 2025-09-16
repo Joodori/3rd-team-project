@@ -13,7 +13,7 @@
                 <select v-model="facility_selected">
                   <option disabled value="">하나를 선택하세요</option>
                   <option v-for="facility in facilityList" :key="facility.facilityNo" :value="facility.facilityNo">
-                    {{ facility.facilityName }}, {{ facility.facilityNo }}
+                    {{ facility.facilityName }}
                   </option>
                 </select>
                 <button class="btn btn-outline-success" type="submit">조회</button>

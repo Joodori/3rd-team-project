@@ -14,7 +14,8 @@
         <label v-for="option in ticketOptions" :key="option.value"
           class="ticket-option d-flex align-items-center justify-content-between p-3 rounded">
           <div class="d-flex align-items-center gap-2">
-            <input type="radio" class="form-check-input" :value="option" v-model="selectedTicket" name="ticketType" />
+            <input type="radio" class="form-check-input" :value="option"
+             v-model="selectedTicket" name="ticketType" />
             <span class="fw-bold text-dark fs-4">{{ option.name }}</span>
           </div>
           <span class="price-tag">{{ option.value.toLocaleString() }}원</span>
@@ -53,7 +54,8 @@ import { useUserInfo } from '@/stores/user'
 const router = useRouter()
 const userStore = useUserInfo()
 const { user_info, loginStatus } = storeToRefs(userStore)
-// 주형 수정 티켓 선택 부분 option리스트에 박아놓음
+
+// 주형 수정 티켓 선택 부분 option리스트에서 출력
 const ticketOptions = ref([
   { name: '자유이용권', value: 35000 },
   { name: '오후권', value: 20000 },
