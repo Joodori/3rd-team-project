@@ -18,8 +18,7 @@ public class UserController {
 	UserRepository repo;
 
 	/*
-	 * 회원가입
-	 * 행 개수 반환 (성공시 1 반환), 근데 null 값 있어도 1 반환 하니까 프론트에서 입력값 없으면 입력하라고 해야됨.
+	 * 회원가입 / 행 개수 반환 (성공시 1반환), 근데 null 값 있어도 1 반환하니까 입력값 없으면 입력하라고 프론트에서 ㄱㄱ
 	 */
 	@PostMapping("/insert")
 	public int insert(@RequestBody UserVO vo) {
@@ -28,8 +27,7 @@ public class UserController {
 	}
 
 	/*
-	 * 아이디 중복확인
-	 * id 조회 후 해당 id를 가진 사람의 정보 반환, 없으면 빈 배열 반환
+	 * 아이디 중복확인 / id 조회 후 해당 id 가진 사람 정보 반환, 없으면 빈 배열 반환
 	 */
 	@PostMapping("/check-id")
 	public List<UserVO> checkId(@RequestBody UserVO vo) {
@@ -38,8 +36,7 @@ public class UserController {
 	}
 
 	/*
-	 * 로그인
-	 * id, pw 조회 후 해당 id 가진 사람의 정보 반환, 없으면 빈 배열 반환
+	 * 로그인 / id, pw 조회 후 해당 id 가진 사람 정보 반환, 없으면 빈 배열 반환
 	 * 이 반환값을 프론트에서 받아서 마이페이지에 적용
 	 * 세션 사용 안하니까 프론트에서 관리자 아이디 구분해서 관리해야됨. userNo도
 	 */
@@ -50,9 +47,8 @@ public class UserController {
 	}
 
 	/*
-	 * 아이디 찾기 (이름, 주소 입력로)
-	 * 있으면 아이디 반환
-	 * 없으면 1 반환 (null 문자열) -> 스프링 json 변환시 null을 그대로 못주고 1같은 기본 값으로 변환됨.
+	 * 아이디 찾기 (이름, 주소 입력로) / 있으면 아이디 반환, 없으면 1반환 (null 문자열)
+	 * 스프링 json 변환시 null을 그대로 못주고 1같은 기본 값으로 변환됨.
 	 */
 	@PostMapping("/find-id")
 	public String findId(@RequestBody UserVO vo) {
@@ -61,9 +57,7 @@ public class UserController {
 	}
 
 	/*
-	 * 비밀번호 찾기 (이름, 이메일, 아이디로)
-	 * 있으면 비밀번호 반환
-	 * 없으면 1 반환 (null 문자열)
+	 * 비밀번호 찾기 (이름, 이메일, 아이디로) / 있으면 비밀번호 반환, 없으면 1 반환
 	 */
 	@PostMapping("/find-pw")
 	public String findPw(@RequestBody UserVO vo) {
