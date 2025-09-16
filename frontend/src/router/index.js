@@ -34,12 +34,11 @@ const router = createRouter({
       name: 'ticket_purchase',
       component: () => import('../views/ticket_purchase.vue'),
     },
-    /*
-    {
-      path: '/admin_reservation', //관리자 예약 하는거 뷰화면 만들기 
-      name: 'admin_reservation',
-      component: () => import('../views/admin_reservation.vue'),
-    },
+      {
+          path: '/ride_faclity_map',
+          name: 'ride_faclity_map',
+          component: () => import('../views/ride_faclity_map.vue'),
+      },
   ],
 })
 

@@ -69,8 +69,7 @@
 </template>
 
 <script setup>
-import { usePagination } from '@/util/pagination.js'
-import { onMounted ,ref,computed } from 'vue'; // 페이지 실행되고 바로실행
+import { onMounted ,ref } from 'vue'; // 페이지 실행되고 바로실행
 import 'v-calendar/style.css';
 import{Modal} from 'bootstrap';
 import dayjs from "dayjs";
@@ -97,7 +96,7 @@ console.log(`인원수감소`);
 //시설 목록을 데이터 베이스에서 불러옴
 const loadFacilities = async () =>{
   try {
-    const response = await axios.get('http://localhost:8080/api/facilities');
+    const response = await axios.get('http://localhost/api/facilities');
     facilityList.value = response.data;
     console.log('시설 목록 로드 완료:', facilityList.value);
   }catch(err){
@@ -118,7 +117,7 @@ const handleSubmit = async () =>{
       facilityNo: selected.value,
       personCount: personCount.value
     };
-    const response =await axios.post('http://localhost:8080/api/attraction_reservation',params, {
+    const response =await axios.post('http://localhost/api/attraction_reservation',params, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -132,11 +131,5 @@ const handleSubmit = async () =>{
 </script>
 
 <style scoped>
-.calendar-container {
-  max-width: 800px; /* 달력의 최대 너비 지정 */
-  margin: 20px auto; /* 페이지 중앙에 위치 */
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
+
 </style>
