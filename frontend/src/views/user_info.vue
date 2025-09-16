@@ -171,14 +171,6 @@ function checkLogin() {
 // 로그아웃 함수
 function logout() {
     alert(`로그아웃 되었습니다.`)
-    user_info.vlaue = {
-        user_id: '',
-        user_name: '',
-        user_birth_date: '',
-        user_age: '',
-        user_address: '',
-        user_mobile: ''
-    }
     loginStatus.value = false
     router.push('/')
 }
@@ -200,16 +192,184 @@ async function quit() {
 }
 
 // 입장권 내역
-async function readTickets() { /* ...원본 그대로... */ }
+async function readTickets() {
+    // 일반 사용자일때 사용자No로 입장권 내역 가져옴
+    if (config.value === 'user') {
+        try {
+
+            const response = await axios.get(`http://localhost/getticket?user_no=${user_info.value.user_no}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log(`응답 -> ${JSON.stringify(response.data)}`)
+            // 여기서 response.data는 list형태로 나옴
+            // ticket이라는 store변수는 ref([]) 배열형태로 만들어놓았기 때문에
+            // 들어온거(배열_response.data) => 넣음을 당하는거(배열_ticket이라는 stroe변수)
+            ticket.value = response.data
+            if (ticket.value.length == 0) {
+                console.log(`입장권 구매내역이 없어요`)
+            }
+
+        } catch (err) {
+            console.error(`물품목록::에러발생 -> ${err}`)
+        }
+    }
+
+    // 관리자일때는 모든 사용자의 입장권구매내역이 나옴
+    else {
+        try {
+
+            const response = await axios.get(`http://localhost/getticketAdmin`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log(`응답 -> ${JSON.stringify(response.data)}`)
+            ticket.value = response.data
+            if (ticket.value.length == 0) {
+                console.log(`입장권을 구매한 사용자가 없어요`)
+            }
+
+        } catch (err) {
+            console.error(`물품목록::에러발생 -> ${err}`)
+        }
+
+    }
+}
 
 // 놀이기구예약
-async function readRideBooks() { /* ...원본 그대로... */ }
+async function readRideBooks() {
+    // 관리자가 로그인 한 경우에는 return시킴
+    if (config.value === 'admin') {
+        return
+    }
 
-// 입장권 입금 & 관리자 확인
-async function send_money(ticket_no, moneyStatus) { /* ...원본 그대로... */ }
+    try {
+        const response = await axios.get(`http://localhost/getRideBookList?user_no=${user_info.value.user_no}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        console.log(`응답 -> ${JSON.stringify(response.data)}`)
+        console.log(`time data type : ${typeof (response.data[0].rideBookTime)}`)
+        ride.value = response.data
+
+        if (ride.value.length != 0) {
+            no_reserve.value = false
+        } else {
+            console.log(`놀이기구 예약내역 없음`)
+        }
+    } catch (err) {
+        console.error(`물품목록::에러발생 -> ${err}`)
+    }
+}
+
+// 입장권 입금 함수 + 관리자 입금확인 함수
+async function send_money(ticket_no, moneyStatus) {
+    console.log(`send_money 호출됨`)
+    if (moneyStatus != "입금대기") {
+        return
+    }
+    // 일반 사용자일때 입금대기 -> 입금완료로 바뀌게 만듦
+    if (config.value === "user") {
+
+        if (confirm(`XX은행 1002-757-04-8585 에 입금하셨습니까?`)) {
+
+            try {
+                const params = {
+                    "ticketNo": ticket_no
+                }
+
+                const response = await axios.patch('http://localhost/updateMoneyStatusUser', params, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log(`응답 -> ${JSON.stringify(response.date)}`)
+
+                // 만약 update에 실패했다면
+                if (response.data == "") {
+                    alert(`응답이없으,,ㅁ`)
+                }
+                readTickets()
+
+            } catch (error) {
+
+            }
+        }
+    } else {
+
+        if (moneyStatus === "입금대기") {
+            alert(`회원이 입금하기 전입니다.`)
+            return
+        }
+
+        if (moneyStatus === "예약확정") {
+            alert(`이미 처리되었습니다.`)
+            return
+        }
+
+
+        if (confirm(`입급확인 처리하시겠습니까?`)) {
+
+            try {
+                const params = {
+                    "ticketNo": ticket_no,
+                }
+
+                const response = await axios.patch('http://localhost/updateMoneyStatusManager', params, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log(`응답 -> ${JSON.stringify(response.date)}`)
+
+                // 만약 update에 실패했다면
+                if (response.data == "") {
+                    alert(`서버측에 문의해주세요`)
+                }
+                readTickets()
+
+            } catch (error) {
+
+            }
+        }
+    }
+
+}
 
 // 예약 취소
-async function cancelReservation(reserve_no, facility_name) { /* ...원본 그대로... */ }
+async function cancelReservation(reserve_no,facility_name) {
+    console.log(typeof(reserve_no))
+    try {
+
+        const response = await axios.delete(`http://localhost/cancelReservation?ride_book_confirm_no=${reserve_no}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        console.log(`응답 -> ${JSON.stringify(response.date)}`)
+
+        // 만약 update에 실패했다면
+        if (response.data == "") {
+            alert(`응답이없으,,ㅁ`)
+        } else {
+            alert(`놀이기구명 : ${facility_name} 예약이 취소되었습니다.`)
+        }
+        readRideBooks()
+
+    } catch (err) {
+        console.error(`취소 중 에러발생 -> ${err}`)
+    }
+}
+
 
 // 홈 이동
 function goToHome() {
