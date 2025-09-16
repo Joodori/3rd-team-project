@@ -187,14 +187,11 @@
 
  async function login() {
 
-
-
    // 아이디와 비밀번호 입력 안된 부분이 있을 떄 alert => return
    if (!id.value || !password.value) {
      alert(`아이디와 비밀번호를 모두 입력해주세요`)
      return
    }
-
 
    try {
      const params = {
@@ -214,12 +211,7 @@
          router.push('/sign-up')
        }
      }
-     console.log(`userProfile : ${userProfile.userId}`)
-     console.log(`응답 -> ${JSON.stringify(response.status)}`)
      console.log(`응답 -> ${JSON.stringify(response.data)}`)
-     console.log(`userID :  ${JSON.stringify(response.data.userName)}`)
-
-
 
      if (userProfile == []) {
        console.log(`없음`)
@@ -228,8 +220,6 @@
 
 
      if (userProfile.length != 0) {
-
-
 
        // isadmin이라는 컬럼의 값이 null인경우 = 일반사용자
        // isadmin이라는 컬럼의 값이 있을 경우 = 관리자
