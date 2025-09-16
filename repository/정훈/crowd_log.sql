@@ -23,15 +23,18 @@ DROP PROCEDURE IF EXISTS InsertNaturalCoordinates;
 DELIMITER $$
 
 CREATE PROCEDURE InsertNaturalCoordinates()
+
 BEGIN
     DECLARE i INT DEFAULT 1;
     DECLARE total_points INT DEFAULT 2000; -- 생성할 총 포인트 수
     
     -- 랜덤 시간 생성을 위한 변수 (기존과 동일)
-    DECLARE v_start_time DATETIME DEFAULT '2025-09-14 09:00:00';
-    DECLARE v_end_time   DATETIME DEFAULT '2025-09-14 18:00:00';
+    DECLARE v_start_time DATETIME DEFAULT '2025-09-16 09:00:00';
+    DECLARE v_end_time   DATETIME DEFAULT '2025-09-16 18:00:00';
+    
     DECLARE v_start_unix INT DEFAULT UNIX_TIMESTAMP(v_start_time);
     DECLARE v_end_unix   INT DEFAULT UNIX_TIMESTAMP(v_end_time);
+    
     DECLARE v_time_range INT DEFAULT v_end_unix - v_start_unix;
 
     -- 핫스팟 주변 좌표 생성을 위한 변수
@@ -67,7 +70,6 @@ BEGIN
             -- 랜덤 시간 (기존과 동일)
             FROM_UNIXTIME(v_start_unix + FLOOR(RAND() * v_time_range))
         );
-
         SET i = i + 1;
     END WHILE;
 END$$
