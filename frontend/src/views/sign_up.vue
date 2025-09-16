@@ -1,76 +1,103 @@
+<!-- SignupPage.vue -->
 <template>
+  <!-- 중앙 카드 -->
   <div class="d-flex justify-content-center">
-    <div class="d-flex flex-column justify-content-center align-items-center p-4 my-5"
-      style="width: 400px; background: #fff; border-radius: 12px;">
+    <div class="d-flex flex-column align-items-center p-5 my-5 bg-white rounded-4 shadow-lg" style="width:420px;">
+      <h2 class="mb-4 fw-bold text-center">🎪 회원가입</h2>
 
-      <h2 class="mb-4 fw-bold" style="text-align: center;">회원가입</h2>
-
-      <!-- 아이디 입력 -->
-      <div class="d-flex flex-column align-self-start mb-3 w-100">
-        <label class="form-label fw-bold">아이디 입력</label>
+      <!-- 아이디 -->
+      <div class="w-100 mb-3">
+        <label class="form-label fw-semibold">아이디</label>
         <div class="d-flex gap-2">
-          <input type="text" placeholder="아이디를 입력하세요" v-model="id" class="form-control" :disabled="!check" />
-          <div class="d-flex align-self-end">
-            <button v-if="!checked" class="btn btn-light-danger" style="width:120px" @click="searchSameID">중복확인</button>
-          </div>
+          <input type="text"
+                 class="form-control"
+                 placeholder="아이디를 입력하세요"
+                 v-model="id"
+                 :disabled="!check" />
+          <button v-if="!checked"
+                  class="btn btn-light-danger fw-bold"
+                  style="width:120px"
+                  @click="searchSameID">
+            중복확인
+          </button>
         </div>
       </div>
 
-      <!-- 비밀번호 입력 -->
-      <div class="d-flex flex-column align-self-start mb-3 w-100">
-        <label class="form-label fw-bold">비밀번호 입력</label>
-        <input type="password" placeholder="비밀번호를 입력하세요" v-model="password" class="form-control" />
+      <!-- 비밀번호 -->
+      <div class="w-100 mb-3">
+        <label class="form-label fw-semibold">비밀번호</label>
+        <input type="password"
+               class="form-control"
+               placeholder="비밀번호를 입력하세요"
+               v-model="password" />
       </div>
 
       <!-- 비밀번호 확인 -->
-      <div class="d-flex flex-column align-self-start mb-3 w-100">
-        <label class="form-label fw-bold">비밀번호 확인</label>
-        <input type="password" placeholder="비밀번호 재확인" v-model="password_re" ref="passwordCheck" class="form-control" />
+      <div class="w-100 mb-3">
+        <label class="form-label fw-semibold">비밀번호 확인</label>
+        <input type="password"
+               class="form-control"
+               placeholder="비밀번호 재확인"
+               v-model="password_re"
+               ref="passwordCheck" />
       </div>
 
-      <!-- 이름 입력 -->
-      <div class="d-flex flex-column align-self-start mb-3 w-100">
-        <label class="form-label fw-bold">이름</label>
-        <input type="text" placeholder="사용하실 이름을 입력하세요" v-model="user_name" class="form-control" />
+      <!-- 이름 -->
+      <div class="w-100 mb-3">
+        <label class="form-label fw-semibold">이름</label>
+        <input type="text"
+               class="form-control"
+               placeholder="사용하실 이름을 입력하세요"
+               v-model="user_name" />
       </div>
 
-      <!-- 생일 입력 -->
-      <div class="d-flex flex-column align-self-start mb-3 w-100">
-        <label class="form-label fw-bold">생년월일</label>
-        <input type="date" v-model="user_birth_date" class="form-control"></input>
+      <!-- 생년월일 -->
+      <div class="w-100 mb-3">
+        <label class="form-label fw-semibold">생년월일</label>
+        <input type="date"
+               class="form-control"
+               v-model="user_birth_date" />
       </div>
 
-      <!-- 나이 입력 -->
-      <div class="d-flex flex-column align-self-start mb-3 w-100">
-        <label class="form-label fw-bold">나이</label>
-        <input type="text" placeholder="나이를 입력하세요" v-model="user_age" ref="ageInput" class="form-control" />
+      <!-- 나이 -->
+      <div class="w-100 mb-3">
+        <label class="form-label fw-semibold">나이</label>
+        <input type="text"
+               class="form-control"
+               placeholder="나이를 입력하세요"
+               v-model="user_age"
+               ref="ageInput" />
       </div>
 
-      <!-- 이메일주소 입력 -->
-      <div class="d-flex flex-column align-self-start mb-3 w-100">
-        <label class="form-label fw-bold">이메일주소</label>
-        <input type="email" placeholder="이메일주소를 입력해주세요" v-model="user_address" class="form-control" />
+      <!-- 이메일 -->
+      <div class="w-100 mb-3">
+        <label class="form-label fw-semibold">이메일주소</label>
+        <input type="email"
+               class="form-control"
+               placeholder="이메일주소를 입력해주세요"
+               v-model="user_address" />
       </div>
 
-      <!-- 핸드폰번호 입력 -->
-      <div class="d-flex flex-column align-self-start mb-4 w-100">
-        <label class="form-label fw-bold">핸드폰번호</label>
-        <input type="tel" placeholder="전화번호를 입력하세요" v-model="user_mobile" class="form-control" />
+      <!-- 휴대폰 -->
+      <div class="w-100 mb-4">
+        <label class="form-label fw-semibold">핸드폰번호</label>
+        <input type="tel"
+               class="form-control"
+               placeholder="전화번호를 입력하세요"
+               v-model="user_mobile" />
       </div>
 
-      <!-- 버튼들 -->
+      <!-- 액션 버튼 -->
       <div class="d-flex justify-content-between w-100">
         <button class="btn btn-secondary fw-bold px-4" @click="goToMain">취소</button>
-        <button class="btn btn-primary fw-bold px-4" @click="signup">회원가입</button>
+        <button class="btn btn-primary fw-bold px-4"  @click="signup">회원가입</button>
       </div>
-
-
     </div>
   </div>
-
 </template>
 
 <script setup>
+/* ======= 원본 script 그대로 ======= */
 
 // 입력하지 않은 부분이 있다면 체크하기위해서 ref를 불러옴
 import { ref } from 'vue'
@@ -171,17 +198,14 @@ async function signup() {
   // 쿼리문 끝남 로그인창으로 이동됨
   // ==========================================
 
-
   // ==========================================
   // 만약 뭔가를 빼먹었다면 alert사용
   else {
     console.log(`id : ${id.value}, pw : ${password.value}, name : ${user_name.value}, age : ${user_age.value}`)
 
     alert('입력해야하는 칸을 모두 입력해주세요!');
-
   }
 }
-
 
 // ==========================================
 // 아이디 중복확인버튼 함수
@@ -225,9 +249,16 @@ async function searchSameID() {
       return
     }
 
-
   } catch (err) {
     console.log(`에러발생 -> ${err}`)
   }
 }
 </script>
+
+<style scoped>
+/* 입력 포커스 */
+.form-control:focus {
+  border-color:#ed8936;
+  box-shadow:0 0 0 0.25rem rgba(237,137,54,.25);
+}
+</style>

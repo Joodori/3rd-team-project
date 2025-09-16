@@ -1,6 +1,6 @@
 <template>
   <!-- position-relative와 vh-100 클래스로 컨테이너를 화면 전체에 맞게 설정 -->
-  <div class="position-absolute top-0 bottom-0 start-0 end-0"><!--크기너무큼 좀 줄여랴 할듯 부모영역 기준으로-->
+  <div class="position-absolute top-0 bottom-0 start-0 end-0">
     <!-- 지도가 표시될 DOM 요소 -->
     <div id="map" class="w-100 h-100"></div>
 
@@ -26,134 +26,172 @@
 </template>
 
 <script setup>
-// Vue의 ref(반응형 변수), onMounted(생명주기 훅)를 가져옵니다.
-// ref: 값이 바뀌면 화면이 자동으로 업데이트되는 변수를 만듭니다.
-// onMounted: 컴포넌트가 화면에 완전히 그려진 후 실행할 코드를 정의합니다.
 import { ref, onMounted } from 'vue';
-// HTTP 요청을 보내고 응답을 받기 위한 axios 라이브러리를 가져옵니다. (API 호출용)
 import axios from 'axios';
 
 // --- 지도 및 히트맵 상태 변수 ---
-// 지도 객체를 저장할 변수입니다. 처음에는 비어 있습니다(null).
 let map = null;
-// 히트맵 레이어 객체를 저장할 변수입니다.
 let heatmapLayer = null;
 
 // --- 설정 변수 ---
-// API 기본 URL (파라미터 제외)
-const BASE_API_URL = 'http://localhost/heatmap/points'; //api 주소간소화
-// 지도 중심 좌표
-const CENTER_COORD = { lat: 37.494665, lng: 126.887733 };//구로구청
-// 데이터 자동 갱신 주기 (밀리초 단위, 예: 60000ms = 1분)
+const BASE_API_URL = 'http://localhost/heatmap/points';
+const CENTER_COORD = { lat: 37.494665, lng: 126.887733 };
 const UPDATE_INTERVAL = 60000;
 
 // --- 반응형 상태 (Reactivity State) ---
-// 사용자가 선택한 시간(분)을 저장하는 반응형 변수입니다. 기본값은 10분입니다.
-// 이 값이 바뀌면 <template> 부분의 버튼 스타일이 자동으로 변경됩니다.
-const startTime = ref();
-const endTime = ref();
+const now = new Date();
+const tenMinutesAgo = new Date(now.getTime() - 10 * 60000);
+const formatForInput = (date) => date.toISOString().slice(0, 16);
+const startTime = ref(formatForInput(tenMinutesAgo));
+const endTime = ref(formatForInput(now));
+
+/**
+ * 1. 놀이기구 데이터 정의
+ */
+const ridesData = [
+  { name: '롤러코스터', position: { lat: 37.495421, lng: 126.887801 } },
+  { name: '회전목마', position: { lat: 37.494664, lng: 126.888772 } },
+  { name: '먹거리존', position: { lat: 37.494294, lng: 126.887646 } }
+];
+
+/**
+ * 2. 폴리곤 좌표 정의
+ */
+const parkBoundaryCoords = [
+  { lat: 37.495939, lng: 126.888231 },
+  { lat: 37.495863, lng: 126.888080 },
+  { lat: 37.495831, lng: 126.887776 },
+  { lat: 37.494964, lng: 126.886074 },
+  { lat: 37.493623, lng: 126.887278 },
+  { lat: 37.493893, lng: 126.888692 },
+  { lat: 37.494364, lng: 126.889432 },
+];
 
 /**
  * API 서버에서 좌표 데이터를 가져와 히트맵을 업데이트하는 함수.
  */
-// async 키워드는 이 함수가 비동기 작업을 포함하고 있음을 나타냅니다.
 const fetchDataAndUpdateHeatmap = async () => {
-  // try-catch 문으로 API 요청 중 발생할 수 있는 오류를 처리합니다.
+  console.log('fetchDataAndUpdateHeatmap::호출됨 (API에서 데이터 가져와 히트맵 업데이트)');
   try {
-    // selectedMinutes 값을 사용하여 동적으로 API URL을 생성합니다.
-    const apiUrl = `${BASE_API_URL}?minutes=${selectedMinutes.value}`; //이러한 형식으로 보내기 
-
-    // 개발자 도구 콘솔에 현재 진행 상황을 로그로 남깁니다.
-    console.log(`데이터를 가져오는 중... (URL: ${apiUrl})`);
-    // axios를 사용해 해당 URL에 GET 요청을 보내고, 응답이 올 때까지 기다립니다(await).
+    if (!startTime.value || !endTime.value) {
+      console.log('시작 시간 또는 종료 시간이 설정되지 않았습니다.');
+      return;
+    }
+    const apiUrl = `${BASE_API_URL}?startTime=${startTime.value}&endTime=${endTime.value}`;
     const response = await axios.get(apiUrl);
-    // 응답받은 데이터(JSON 배열)를 points 변수에 저장합니다.
-    const points = response.data;
+    const points = response.data.map(point => new google.maps.LatLng(point.latitude ?? point.lat, point.longitude ?? point.lng))
+        .filter(p => p !== null && !isNaN(p.lat()) && !isNaN(p.lng()));
 
-    // 서버에서 받은 데이터를 Google 지도 히트맵이 사용할 수 있는 형식으로 변환합니다.
-    const googleMapsPoints = points
-        // .map()은 배열의 각 항목을 순회하며 새로운 배열을 만듭니다.
-        .map(point => {
-          // 서버 데이터의 키 이름이 'latitude' 또는 'lat'일 수 있으므로, '??' 연산자로 둘 다 처리합니다.
-          const lat = point.latitude ?? point.lat;
-          // 경도도 'longitude' 또는 'lng' 키를 모두 처리합니다.
-          const lng = point.longitude ?? point.lng;
-
-          // 위도(lat)와 경도(lng)가 유효한 숫자인지 검사합니다.
-          if (typeof lat === 'number' && typeof lng === 'number' && !isNaN(lat) && !isNaN(lng)) {
-            // 유효하면 Google 지도의 LatLng 객체를 생성하여 반환합니다.
-            return new google.maps.LatLng(lat, lng);
-          }
-          // 데이터가 유효하지 않으면 null을 반환합니다.
-          return null;
-        })
-        // .filter()는 배열에서 특정 조건에 맞는 항목만 남깁니다.
-        // 위에서 null로 반환된 유효하지 않은 데이터들을 배열에서 제거합니다.
-        .filter(p => p !== null);
-
-
-    // 히트맵 레이어에 새로 가공된 좌표 데이터를 설정하여 화면에 표시합니다.
-    heatmapLayer.setData(googleMapsPoints);
-    // 처리 완료 후 콘솔에 로그를 남깁니다.
-    console.log(`${googleMapsPoints.length}개의 유효한 좌표로 히트맵이 업데이트되었습니다.`);
-
-    // try 블록에서 오류가 발생하면 이 catch 블록이 실행됩니다.
+    heatmapLayer.setData(points);
+    console.log(`fetchDataAndUpdateHeatmap::완료 (${points.length}개의 좌표 업데이트)`);
   } catch (error) {
-    // 콘솔에 에러 메시지를 출력합니다.
     console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
-    // 에러 발생 시 히트맵 데이터를 비워서 지도에서 사라지게 합니다.
     heatmapLayer.setData([]);
   }
 };
 
 /**
- * Google 지도를 생성하고 초기화하는 함수.
+ * 놀이기구 데이터를 받아 지도에 마커와 정보창을 생성하는 함수
+ */
+function createRideMarkers(map, ridesData) {
+  console.log('createRideMarkers::호출됨 (놀이기구 위치 마커 생성)');
+
+  const markers = [];
+
+  ridesData.forEach(ride => {
+    const marker = new google.maps.Marker({
+      position: ride.position,
+      map: map,
+      title: ride.name,
+    });
+
+    // 각 마커마다 새로운 정보창을 생성합니다.
+    const infowindow = new google.maps.InfoWindow({
+      content: `<h3>${ride.name}</h3>`,
+    });
+
+    // 마커가 생성되자마자 정보창을 엽니다 (항상 열려있게 됨).
+    infowindow.open(map, marker);
+
+    // 마커를 클릭했을 때도 정보창을 다시 엽니다.
+    marker.addListener("click", () => {
+      infowindow.open(map, marker);
+    });
+
+    markers.push(marker);
+  });
+  // 생성된 마커 배열을 반환합니다.
+  return markers;
+}
+
+/**
+ * 경계선 폴리곤 생성 함수
+ */
+function createParkBoundaryPolygon(map, coords) {
+  console.log('createParkBoundaryPolygon::호출됨 (경계 폴리곤 생성)');
+  const parkBoundary = new google.maps.Polygon({
+    paths: coords,
+    strokeColor: "#4A00E0",
+    strokeOpacity: 1,
+    strokeWeight: 5,
+    fillOpacity: 0.6, // 내부 투명도
+    fillColor: "#FFFFFF",
+    zIndex: -1
+  });
+  parkBoundary.setMap(map);
+  return parkBoundary;
+}
+
+/**
+ * Google 지도 생성 및 초기화 함수
  */
 const initMap = () => {
-  // `id="map"`인 div 요소를 찾아 Google 지도를 생성하고 map 변수에 저장합니다.
+  console.log('initMap::호출됨 (지도 초기화 시작)');
+
+  // 1. 지도 로드
   map = new google.maps.Map(document.getElementById('map'), {
-    center: CENTER_COORD, // 지도 중심 좌표 설정
-    zoom: 18,             // 지도 확대 레벨 설정
+    center: CENTER_COORD,
+    zoom: 18,
   });
 
-  // Google 지도의 시각화 라이브러리를 사용해 히트맵 레이어를 생성합니다.
+
+  // 2. 그 위에 경계선 폴리곤과 마커 그리기
+  createParkBoundaryPolygon(map, parkBoundaryCoords);
+  createRideMarkers(map, ridesData);
+
+  // 히트맵 레이어 생성 및 데이터 로드
   heatmapLayer = new google.maps.visualization.HeatmapLayer({
-    data: [],       // 초기 데이터는 비어있는 배열
-    map: map,       // 이 히트맵을 위에서 생성한 지도(map)에 연결
-    radius: 20,     // 각 데이터 포인트의 영향 반경 (픽셀 단위)
-    opacity: 0.7    // 히트맵의 불투명도 (0.0 ~ 1.0)
+    data: [],
+    map: map,
+    radius: 20,
+    opacity: 0.7
   });
-
-  // 지도가 처음 로딩될 때 데이터를 한 번 가져옵니다.
   fetchDataAndUpdateHeatmap();
-  // UPDATE_INTERVAL(1분)마다 주기적으로 fetchDataAndUpdateHeatmap 함수를 실행하여 데이터를 자동 갱신합니다.
   setInterval(fetchDataAndUpdateHeatmap, UPDATE_INTERVAL);
+
+  console.log('initMap::완료 (모든 요소 초기화 완료)');
 };
 
-
-// onMounted: Vue 컴포넌트가 화면에 마운트(준비)된 후에 이 코드가 실행됩니다.
 onMounted(() => {
-  // 만약 Google 지도 스크립트가 이미 페이지에 로드되어 있다면,
+  console.log('onMounted::호출됨 (컴포넌트 마운트 완료, 지도 API 로드 시작)');
+
+  const GOOGLE_MAPS_API_KEY = "AIzaSyAIX1c39RvGr95miO1ux6IRfxYDssqSNfU"; // 보안을 위해 환경 변수로 관리하는 것을 권장합니다.
+
   if (window.google && window.google.maps) {
-    // 바로 initMap 함수를 호출하여 지도를 초기화합니다.
+    console.log('onMounted::지도 API가 이미 로드되어 있음');
     initMap();
   } else {
-    // 스크립트가 없다면, 동적으로 <script> 태그를 생성합니다.
+    console.log('onMounted::지도 API 스크립트 동적 로드');
     const script = document.createElement('script');
-    //script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAIX1c39RvGr95miO1ux6IRfxYDssqSNfU&libraries=visualization`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=visualization`;
     script.async = true;
     script.defer = true;
-    // 생성된 스크립트 태그를 HTML의 <head> 부분에 추가하여 로드를 시작합니다.
     document.head.appendChild(script);
-
-    // 스크립트 로드가 완료되면 initMap 함수를 실행하도록 콜백을 설정합니다.
-    // 이를 통해 API가 준비되기 전에 지도를 초기화하려는 시도를 방지합니다.
     script.onload = initMap;
   }
 });
+
 </script>
-
 <style scoped>
-
 </style>
 
