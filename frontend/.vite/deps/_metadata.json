@@ -1,0 +1,37 @@
+{
+  "hash": "faa2267d",
+  "configHash": "f43ea71b",
+  "lockfileHash": "2cb3beb2",
+  "browserHash": "37d5d038",
+  "optimized": {
+    "vue": {
+      "src": "../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "c3ae2d54",
+      "needsInterop": false
+    },
+    "pinia": {
+      "src": "../../node_modules/pinia/dist/pinia.mjs",
+      "file": "pinia.js",
+      "fileHash": "0216e111",
+      "needsInterop": false
+    },
+    "v-calendar": {
+      "src": "../../node_modules/v-calendar/dist/es/index.js",
+      "file": "v-calendar.js",
+      "fileHash": "6d22bdbb",
+      "needsInterop": false
+    },
+    "vue-router": {
+      "src": "../../node_modules/vue-router/dist/vue-router.mjs",
+      "file": "vue-router.js",
+      "fileHash": "25ac92b8",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-Y7TKRIWE": {
+      "file": "chunk-Y7TKRIWE.js"
+    }
+  }
+}

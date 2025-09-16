@@ -69,8 +69,7 @@
 </template>
 
 <script setup>
-import { usePagination } from '@/util/pagination.js'
-import { onMounted, ref, computed } from 'vue'; // 페이지 실행되고 바로실행
+import { onMounted ,ref } from 'vue'; // 페이지 실행되고 바로실행
 import 'v-calendar/style.css';
 import { Modal } from 'bootstrap';
 import dayjs from "dayjs";
@@ -108,7 +107,6 @@ async function loadFacilities() {
     // response라고 대답을 받아왔어
     // 무슨 말로 했지? 일단 나는 대답은 알고있긴한데 무슨 언어로 말했는지를 모르겠어 일본어?> 영어? 스페인어? 뭐지?
     console.log(`응답 -> ${response}`)
-
     facilityList.value = response.data;
     console.log('시설 목록 로드 완료:', facilityList.value);
   } catch (error) {
