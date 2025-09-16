@@ -69,7 +69,7 @@
           
           <button v-if="ticket.ticketMoneyStatus==='입금대기'"
                   class="btn btn-sm btn-outline-primary"
-                  @click="send_money(ticket.ticketNo)">
+                  @click="send_money(ticket.ticketNo, ticket.ticketMoneyStatus)">
             입금하기
           </button>
         </div>
