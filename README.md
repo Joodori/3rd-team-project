@@ -172,3 +172,6 @@
 | `jakarta.xml.bind` | `jaxb-api` | `2.3.1` | JAXB API |
 
 -----
+
+### 👩‍🏫 발표 자료 
+- **캔바 링크**: https://www.canva.com/design/DAGy7nLsVnI/2Pa7xiMnige5vsxFMoaaCg/edit?utm_content=DAGy7nLsVnI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
