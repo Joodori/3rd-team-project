@@ -28,7 +28,7 @@ public class RideController {
 		return rideService.getRideReserveList();
 	}
 
-	@PostMapping("/getRideReserveByNo")
+	@GetMapping("/getRideReserveByNo")
 	public List<RideResponseDTO> getRideReserveByNo(@RequestParam("facility_no") int facility_no){
 		return rideService.getRideReserveByNo(facility_no);
 	}
