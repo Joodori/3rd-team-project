@@ -63,10 +63,10 @@
 
 
     </div><!--두번째-->
-
-
-
   </div><!--전체-->
+  <div class="d-flex flex-column align-items-end w-25 h-25">
+    <button @click="handleReservation" console.log(`버튼 눌림;`)>예약</button>
+  </div>
 </template>
 
 <script setup>
@@ -76,6 +76,15 @@ import { Modal } from 'bootstrap';
 import dayjs from "dayjs";
 import axios from 'axios'; //api 호출을 위한 추가
 // 오늘 날짜를 기준으로 초기 페이지를 설정합니다.
+const today = new Date(); // 최소 날짜 (오늘)
+const oneWeekLater = new Date(); // 최대 날짜 (7일 뒤)
+oneWeekLater.setDate(today.getDate() + 7);
+
+const startPage = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1, // month는 1부터 시작
+  day: new Date().getDate()
+};
 
 // 달력에 표시할 데이터를 정의하는 부분입니다. (핵심!)
 // ref를 사용해 반응형 데이터로 만듭니다.
@@ -171,6 +180,7 @@ onMounted(async () => {
 
 <style scoped>
 .calendar-container {
+
   max-width: 800px;
   /* 달력의 최대 너비 지정 */
   margin: 20px auto;
