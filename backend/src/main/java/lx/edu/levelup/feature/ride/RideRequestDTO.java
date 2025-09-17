@@ -11,5 +11,6 @@ public class RideRequestDTO {
 	private int rideBookNo;
 	private int rideBookPersonAmount;
 	private int rideBookConfirmNo; // 예약 확정 고유번호
+	private int facilityNo;
 
 }

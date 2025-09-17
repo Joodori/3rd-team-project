@@ -11,6 +11,8 @@ export const useUserInfo = defineStore('user', () => {
 
     const loginStatus = ref(false)
 
+    const name = ref('')
+
     const user_info = ref({
         user_no: '',
         user_id : '',
@@ -26,7 +28,7 @@ export const useUserInfo = defineStore('user', () => {
 
 
     return{
-        user, no_reserve, config, loginStatus, user_info, ticket, ride
+        user, no_reserve, config, loginStatus, user_info, ticket, ride, name
     }
 
 })

@@ -29,7 +29,7 @@
     </div>
 
     <!-- 메인 영역, flex-grow-1 : 남아있는 여유공간을 모두 차지함, overflow-auto : 내용물이 영역을 넘어가는 경우 스크롤이 자동으로 생김-->
-    <div class="d-flex flex-column flex-root app-root" style="height : 100%" id="kt_app_root">
+    <div class="d-flex flex-column flex-root app-root pb-20" style="height : 100%" id="kt_app_root">
       <RouterView />
     </div>
 
@@ -57,7 +57,7 @@
               <span class="path3"></span>
             </i>
           </span>
-          <span class="menu-title">찾기</span>
+          <span class="menu-title">로그인</span>
         </div>
 
         <div class="menu-item flex-column align-items-center flex-fill mx-4 tab-btn"
@@ -216,24 +216,11 @@ function goToHome() {
   router.push('/');
 }
 
-function goToSearch() {
-  router.push('/search')
-}
-
 function goToProfile() {
   router.push('/user-info')
 }
 
-function goToDoc() {
-  router.push('/document')
-}
-
-function goToMore() {
-  router.push('/more')
-}
-
 function goToLogin() {
-
   router.push('/login');
 }
 

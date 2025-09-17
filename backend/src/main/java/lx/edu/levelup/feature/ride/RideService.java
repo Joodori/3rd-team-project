@@ -45,6 +45,11 @@ public class RideService {
 	public List<RideResponseDTO> getRideReserveList(){
 		return rideMapper.getRideReserveList();
 	}
+
+	public List<RideResponseDTO> getRideReserveByNo(int facility_no){
+		return rideMapper.getRideReserveByNo(facility_no);
+	}
+	
 	
 	public boolean cancelResevation(int ride_book_confirm_no) {
 		int deleteRow = rideMapper.deleteRideBookConfirm(ride_book_confirm_no);
