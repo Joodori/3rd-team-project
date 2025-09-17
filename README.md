@@ -38,25 +38,20 @@
 └── lx.edu.levelup
     ├── common
     │   ├── config
-    │   │   ├── SpringConfig.java
-    │   │   ├── WebInitializer.java
-    │   │   └── WebMVCConfig.java
-    │   └── filter
-    │       └── Filter.java
+    │   │      ├─ SpringConfig.java
+    │   │      ├─ WebInitializer.java
+    │   │      └─ WebMVCConfig.java
     ├── feature
-    │   ├── aop.domain
     │   ├── heatmap
     │   │   ├── HeatMapController.java
     │   │   ├── HeatMapService.java
     │   │   ├── HeatMapRepository.java
     │   │   ├── HeatMapDTO.java
     │   │   └── HeatMapVO.java
-    │   ├── locationsharing
-    │   ├── taxi
     │   ├── ticket
+    │   ├── ride
     │   └── user
-    │       ├── UserController.java
-    │       └── UserRepository.java
+    │       
     └── HomeController.java
 ```
 
@@ -66,8 +61,7 @@
 └── resources
     ├── mapper
     │   ├── mapper-heatmap.xml
-    │   ├── mapper-locationsharing.xml
-    │   ├── mapper-taxi.xml
+    │   ├── mapper-ride.xml
     │   ├── mapper-ticket.xml
     │   └── mapper-user.xml
     ├── application.properties
